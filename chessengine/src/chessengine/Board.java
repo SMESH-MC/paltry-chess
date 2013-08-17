@@ -50,19 +50,19 @@ public class Board implements BoardInterface  {
 	}
 	
 	public int[] FenDecode(String s) {
-		int i = 0; //pos im Feld
 		int[] ausgabe = new int[128];
-		Character fen;
+		Character fenPart;
 		
 		if (s.equals(boardStart) ) {
 			InitBoard();
 		}
 		
 		while (s != " ") {
+			int i = 0; //pos im Feld
 			int pos = 0; //pos in FenString
-			fen = s.charAt(pos);
+			fenPart = s.charAt(pos);
 			
-			switch (fen) {
+			switch (fenPart) {
 			case 'p':
 				ausgabe[i] = 1;
 				break;
@@ -100,7 +100,7 @@ public class Board implements BoardInterface  {
 				ausgabe[i] = 16;
 				break;
 			case ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'):
-				int leerFelder = Integer.parseInt( fen.toString() );
+				int leerFelder = Integer.parseInt( fenPart.toString() );
 				for (int j = 0; j < leerFelder; j++) {
 					ausgabe[i] = 0;
 					i++;
@@ -128,4 +128,5 @@ public class Board implements BoardInterface  {
 	public void IntToFen() {
 		
 	}
+	 
 }
