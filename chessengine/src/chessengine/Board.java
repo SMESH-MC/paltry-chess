@@ -152,7 +152,7 @@ public class Board implements BoardInterface  {
 		case 16:
 			return 'K';
 		default:
-			return ' ';
+			return '1';
 		}
 	}
 	 
