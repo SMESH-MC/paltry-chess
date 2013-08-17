@@ -125,44 +125,35 @@ public class Board implements BoardInterface  {
 		
 	}
 	
-	public char IntToFen(int toConvert) {
+	public Character IntToFen(int toConvert) {
 		switch (toConvert) {
 		case 1:
 			return 'p';
-			break;
 		case 11:
 			return 'P';
-			break;
 		case 2:
 			return 'r';
-			break;
 		case 12:
 			return 'R';
-			break;
 		case 3:
 			return 'n';
-			break;
 		case 13:
 			return 'N';
-			break;
 		case 4:
 			return 'b';
-			break;
 		case 14:
 			return 'B';
-			break;
 		case 5:
 			return 'q';
-			break;
 		case 15:
 			return 'Q';
-			break;
 		case 6:
 			return 'k';
-			break;
 		case 16:
 			return 'K';
-			break;
+		default:
+			return ' ';
+		}
 	}
 	 
 }
