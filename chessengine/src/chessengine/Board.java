@@ -10,6 +10,8 @@ public class Board implements BoardInterface  {
 	//Variablendeklaration
 	
 	public int[] boardArray;
+	
+	//true = weiss  ;  false = schwarz
 	public boolean color;
 	
 	
