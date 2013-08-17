@@ -19,6 +19,7 @@ public class Board implements BoardInterface  {
 	
 	public Board() {
 		boardArray = new int[128];
+		color = true;
 		
 	}
 	
