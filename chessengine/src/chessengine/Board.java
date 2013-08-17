@@ -1,10 +1,8 @@
-/**
- * 
- */
+
 package chessengine;
 
 /**
- * @author
+ * @author Christian Koenig & Dominik Erb
  *
  */
 public class Board implements BoardInterface  {
@@ -12,6 +10,8 @@ public class Board implements BoardInterface  {
 	//Variablendeklaration
 	
 	public int[] boardArray;
+	public boolean color;
+	
 	
 	//Ende Variablendeklaration
 	
