@@ -4,6 +4,7 @@ package chessengine;
 /**
  * @author Christian Koenig & Dominik Erb
  *
+ * what a fuck...
  */
 public class Board implements BoardInterface  {
 	
