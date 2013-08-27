@@ -11,23 +11,21 @@ public class Board implements BoardInterface  {
 	private static final String boardStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	
 	public int[] boardArray;
-	
-	//true = weiss  ;  false = schwarz
-	public boolean color;
-	
+	public boolean color;		//true = weiss  ;  false = schwarz
 	public String boardFen;
 	public String IncomingFen;
 	public String OutgoingFen;
-	
-	
+	private boolean enPassent;
+	private int rochade;
 	
 	//Ende Variablendeklaration
 	
 	public Board() {
-		boardArray = new int[128];
-		color = true;
-		
-		
+		boardArray = new int[128];	//Boardarray
+		color = true;				//Farbe am Zug, true = weiss; false = schwarz
+		enPassent = false;			//En Passents Verfuegbarkeit, true = ja; false= nein
+		rochade = 0;				//Rochade? 0= keine; 1=weiss; 2=schwarz; 3=beide
+			
 	}
 	
 	public void InitBoard() {
@@ -37,7 +35,11 @@ public class Board implements BoardInterface  {
 		
 	}
 	
-	public void ResetBoard() {
+	public boolean ResetBoard() {
+		IncomingFen = boardStart;
+		FenDecode(IncomingFen);
+		
+		return true;
 		
 	}
 
