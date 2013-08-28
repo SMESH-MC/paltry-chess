@@ -4,7 +4,6 @@
 package chessengine;
 
 import java.io.BufferedReader;
-import java.io.IOError;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -29,14 +28,21 @@ public class UCI {
     private static final String uciok = "uciok";
     private static final String isready = "isready";
     private static final String readyok = "readyok";
+    private static final String position = "position";
+    private static final String splitpoint = "\\s+";
+    private String fen = null;
 
     public void input() throws IOException {
         String cmdIN = null;
+        String[] cmdArray = null;
+        String cmd = null;
         reader = new BufferedReader(new InputStreamReader(System.in));
         while (!cmdIN.equals(quit)) {
             cmdIN = reader.readLine();
+            cmdArray = cmdIN.split(splitpoint);
+            cmd = cmdArray[0];
             // Fallunterscheidung fuer die versch. Befehle
-            switch (cmdIN) {
+            switch (cmd) {
                 case uci:
                     id();
                     System.out.println(uciok);
@@ -44,7 +50,11 @@ public class UCI {
                 case isready:
                     System.out.println(readyok);
                     break;
-                // usw...
+                case position:
+                    for (int i = 0; i < cmdArray.length; i++) {
+                        fen += cmdArray[i];
+                    }
+                    break;
             }
         }
     }
