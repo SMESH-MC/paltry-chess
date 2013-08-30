@@ -4,7 +4,7 @@ package chessengine;
  *	@author Schuhmacher, Kaub
  *	@version 201308301556
  */
-public class MoveGenerator {
+public class MoveGenerator implements MoveGeneratorInterface {
 	private String newFEN = "";
     private String[] splittedFEN = new String[13];
     
