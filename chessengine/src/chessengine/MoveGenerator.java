@@ -1,6 +1,3 @@
-/**
- * 
- */
 package chessengine;
 
 /**
@@ -8,41 +5,44 @@ package chessengine;
  *	@version 201308301025
  */
 public class MoveGenerator {
-	private String incomingFEN;
-	private String newFEN;
-    private String[] splittedFEN;
+	private String newFEN = "";
+    private String[] splittedFEN = new String[13];
     
-	private void unravelFEN () {
-		//get FEN-String and put into variable
-        incomingFEN = Manager.getFEN();
-        //split FEN-String at blanks
-        splittedFEN = incomingFEN.split("[ /]+");
+	private void unravelFEN() {
+		//FEN-String vom Manager holen und an Leerzeichen und Slashes trennen
+        splittedFEN = Manager.getFEN().split("[ /]");
         /* =>
-         * splitFEN[0] = piece placement    rank1/rank2/rank3/rank4/rank5/rank6/rank7/rank8
-         * splitFEN[1] = activeColor        w|b
-         * splitFEN[2] = castlingOption     K[Q][k][q] | Q[k][q] | k[q] | q | -
-         * splitFEN[3] = enPassant          - | ( a|b|c|d|e|f|g|h 3|6   )
-         * splitFEN[4] = halfmoveClock      0 | positive integer
-         * splitFEN[5] = fullmoveNumber     positive integer
+         * //Stellungen:
+         * splittedFEN[0] = Reihe 1
+         * splittedFEN[1] = Reihe 2
+         * splittedFEN[2] = Reihe 3
+         * splittedFEN[3] = Reihe 4
+         * splittedFEN[4] = Reihe 5
+         * splittedFEN[5] = Reihe 6
+         * splittedFEN[6] = Reihe 7
+         * splittedFEN[7] = Reihe 8
+         * jede Reihe besteht entweder aus Figuren oder aus einer Anzahl aufeinanderfolgender Leerfelder
+         * z.B. 8 (leere Reihe), rnbqkbnr (Anfangsstellung weiss), Nb1P3n (im Spiel)
+         * //sonstiges:
+         * splittedFEN[8] = activeColor		w|b
+         * splittedFEN[9] = castlingOption		K[Q][k][q] | Q[k][q] | k[q] | q | -
+         * splittedFEN[10] = enPassant			- | ( a|b|c|d|e|f|g|h 3|6   )  //ohne Leerzeichen 
+         * splittedFEN[11] = halfmoveClock		0 | positive Ganzzahl
+         * splittedFEN[12] = fullmoveNumber	positive Ganzzahl
          */
         
-        //Split piece placement at slashes
-        String[] splitPiecePlacement = splitFEN[0].split("/");
-        /*
-         * splitPlacement[0] = rank1
-         * splitPlacement[1] = rank2
-         * splitPlacement[2] = rank3
-         * splitPlacement[3] = rank4
-         * splitPlacement[4] = rank5
-         * splitPlacement[5] = rank6
-         * splitPlacement[6] = rank7
-         * splitPlacement[7] = rank8
-         * each rank consists of either a piece or a number of sequential blank squares
-         */
-    }
+        
+        //testweiser Aufruf zum zusammenmatschen des FEN
+        setFEN(splittedFEN);
+	}
 	
-	//getter + setter
-	private void setFEN(String newToSet) { newFEN = newToSet; }
+	private void setFEN(String[] unravelledFEN) {
+		newFEN =	splittedFEN[0] + "/" + splittedFEN[1] + "/" + splittedFEN[2] +"/" +  splittedFEN[3] + "/" + 
+					splittedFEN[4] + "/" + splittedFEN[5] + "/" + splittedFEN[6] + "/" + splittedFEN[7] + " " + 
+					splittedFEN[8] + " " + splittedFEN[9] + " " + splittedFEN[10] + " " + splittedFEN[11] + " " +
+					splittedFEN[12] + " ";
+	}
+
 	public String getFEN() { return newFEN; }
 
 }//end class
