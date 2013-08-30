@@ -1,6 +1,9 @@
 /**
  * The UCI protocol as publiced by Stefan-Meyer Kahlen
  */
+
+// Nur ein kleiner Testkommentar um Commit zu testen.
+
 package chessengine;
 
 import java.io.BufferedReader;
