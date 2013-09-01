@@ -2,7 +2,7 @@ package chessengine;
 
 /**
  *	@author Schuhmacher, Kaub
- *	@version 201308301556
+ *	@version 20130901
  */
 public class MoveGenerator implements MoveGeneratorInterface {
 	private String newFEN = "";
