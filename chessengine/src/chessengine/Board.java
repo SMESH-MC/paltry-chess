@@ -11,7 +11,7 @@ public class Board implements BoardInterface  {
 	private static final String boardStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	
 	public int[] boardArray;
-	public boolean color;		//true = weiss  ;  false = schwarz
+	public boolean color;			//true = weiss ; false = schwarz
 	public String boardFen;
 	public String IncomingFen;
 	public String OutgoingFen;
