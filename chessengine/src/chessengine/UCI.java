@@ -1,9 +1,7 @@
 /**
  * The UCI protocol as publiced by Stefan-Meyer Kahlen
  */
-
 // Nur ein kleiner Testkommentar um Commit zu testen.
-
 package chessengine;
 
 import java.io.BufferedReader;
@@ -24,45 +22,65 @@ public class UCI {
      * http://wbec-ridderkerk.nl/html/UCIProtocol.html), stop, ponderhit, quit
      *
      */
-    private static final String name = "Projekt Schachengine 2013\n";
-    private static final String author = "Projektgruppe Schachengine\n";
-    private static final String quit = "quit";
-    private static final String uci = "uci";
-    private static final String uciok = "uciok";
-    private static final String isready = "isready";
-    private static final String readyok = "readyok";
-    private static final String position = "position";
-    private static final String splitpoint = "\\s+";
-    private String fen = null;
+    private static final String NAME = "Projekt Schachengine 2013\n";
+    private static final String AUTHOR = "Projektgruppe Schachengine\n";
+    private static final String QUIT = "quit";
+    private static final String UCI = "uci";
+    private static final String UCIOK = "uciok";
+    private static final String ISREADY = "isready";
+    private static final String READYOK = "readyok";
+    private static final String POSITION = "position";
+    private static final String SPLITPOINT = "\\s+";
+    private static final String UNKNOWN_CMD = "Kommando nicht erkannt!";
+    private static final String SPACE = " ";
+    private String fen;
+
+    public UCI() {
+        //FEN initialisiert mit Standard Startposition
+        fen ="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        reader = new BufferedReader(new InputStreamReader(System.in));
+    }
 
     public void input() throws IOException {
         String cmdIN = null;
         String[] cmdArray = null;
         String cmd = null;
-        reader = new BufferedReader(new InputStreamReader(System.in));
-        while (!cmdIN.equals(quit)) {
+        while (!cmdIN.equals(QUIT)) {
             cmdIN = reader.readLine();
-            cmdArray = cmdIN.split(splitpoint);
+            cmdArray = cmdIN.split(SPLITPOINT);
             cmd = cmdArray[0];
             // Fallunterscheidung fuer die versch. Befehle
             switch (cmd) {
-                case uci:
+                case UCI:
                     id();
-                    System.out.println(uciok);
+                    System.out.println(UCIOK);
                     break;
-                case isready:
-                    System.out.println(readyok);
+                case ISREADY:
+                    System.out.println(READYOK);
                     break;
-                case position:
-                    for (int i = 0; i < cmdArray.length; i++) {
-                        fen += cmdArray[i];
+                case POSITION:
+                    if (cmdArray[1].equals("fen")) {
+                        String newFen = null;
+                        for (int i = 2; i < cmdArray.length; i++) {
+                            newFen += cmdArray[i] + " ";
+                        }
+                        fen = newFen;
                     }
                     break;
+                default:
+                    System.err.println(UNKNOWN_CMD);
             }
         }
     }
 
-    public void id() {
-        System.out.print("id name " + name + "id author " + author);
+    private void id() {
+        System.out.print("id name " + NAME + "\nid author " + AUTHOR);
+    }
+
+    public void output(String out) {
+    }
+
+    public String getFEN() {
+        return fen;
     }
 }
