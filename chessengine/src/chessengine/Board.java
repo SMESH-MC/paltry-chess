@@ -61,7 +61,7 @@ public class Board implements BoardInterface  {
 		//rochademoeglichkeit initialisieren
 		rochade_gross = 0;
 		rochade_klein = 0;
-		//enPassant reset
+		//enPassant reset, notwendig da '-' nicht behandelt wird 
 		enPassent = false;
 		Character fenPart;
 		int spaces = 0;
@@ -71,6 +71,18 @@ public class Board implements BoardInterface  {
 		while (spaces < 4) {
 			fenPart = s.charAt(pos);
 			
+			/**How it works
+			 * zu beginn werden moegliche Rochaden auf 0 gesetzt
+			 * durch addition ergeben sich ab dann die Rochedemoeglichkeiten
+			 * K ist kleine Rochade fuer weiss und hat den Wert 1
+			 * k ist kleine Rochade fuer schwarz und hat den Wert 2 
+			 * Q,q simultan für grosse rochade
+			 * ist eine Rochade nicht moeglich so setzt sie keinen Wert
+			 * so ergibt sich 1 für weiss 2 für schwarz und 3 sollten beide die 
+			 * moeglichkeit haben. 0 sollte keiner rochieren koennen
+			 * Aendert sich dies nach einem Zug wird beim naechsten fen-decode 
+			 * dementsprechen der wert angepasst da startwert erneut 0 
+			 */
 			switch (fenPart) {
 			case ' ':
 				spaces++;
@@ -95,19 +107,31 @@ public class Board implements BoardInterface  {
 			}
 			pos++;
 		}
-		//Halbzuege
+		/**Halbzuege
+		 * hier werden die Halbzuege ermittelt
+		 * und aus dem String gezogen
+		 * nicht mit case da werte von 1 bis 50 ohne weiteres entstehen
+		 */
 		while ( s.charAt(pos) != ' ') { 
 			numberOfMoves.append(s.charAt(pos));
 			pos++;
 		} 
 		halbzuege = Integer.parseInt(numberOfMoves.toString());
+		//zuruecksetzen des numberOfMoves damit keine falschen Zugzahlen entstehen
 		numberOfMoves.delete(0, numberOfMoves.length());
-		//Zuege
+		/**Zuege
+		 * hier werden die Zuege ermittelt
+		 * und aus dem String gezogen
+		 * nicht mit case da werte von 1 bis 50 ohne weiteres entstehen
+		 */
 		while ( pos <= laengeString) {
 			numberOfMoves.append(s.charAt(pos));
 			pos++;
 		}
 		zugnummer = Integer.parseInt(numberOfMoves.toString());
+		/**zuruecksetzen des numberOfMoves damit keine falschen Zugzahlen entstehen
+		 * bei einer erneuten ausfuehrung des Fen-decodes
+		 */
 		numberOfMoves.delete(0, numberOfMoves.length());
 	}
 	
