@@ -27,8 +27,8 @@ public class Board implements BoardInterface  {
 		boardArray = new int[128];	//Boardarray
 		color = true;				//Farbe am Zug, true = weiss; false = schwarz
 		enPassent = false;			//En Passents Verfuegbarkeit, true = ja; false= nein
-		rochade_gross = -1;			//
-		rochade_klein = -1;			//
+		rochade_gross = 0;			//0 keiner,	1 weiss, 2 schwarz, 3 beide
+		rochade_klein = 0;			//0 keiner,	1 weiss, 2 schwarz, 3 beide
 		zugnummer = 0;				//
 		halbzuege = 0;				//
 			
@@ -57,9 +57,65 @@ public class Board implements BoardInterface  {
 		return boardArray;
 	}
 	
+	private void fenRemainingParts(String s, int pos) {
+		//rochademoeglichkeit initialisieren
+		rochade_gross = 0;
+		rochade_klein = 0;
+		//enPassant reset
+		enPassent = false;
+		Character fenPart;
+		int spaces = 0;
+		StringBuffer numberOfMoves = new StringBuffer();
+		int laengeString = s.length();
+		
+		while (spaces < 4) {
+			fenPart = s.charAt(pos);
+			
+			switch (fenPart) {
+			case ' ':
+				spaces++;
+			case 'K':
+				rochade_klein = rochade_klein + 1;
+				break;
+			case 'Q':
+				rochade_gross = rochade_gross + 1;
+				break;
+			case 'k':
+				rochade_klein = rochade_klein + 2;
+				break;
+			case 'q':
+				rochade_gross = rochade_gross + 2;
+				break;
+			case ('a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'):
+				enPassent = true;
+			    pos++;
+				break;
+			default:
+				break;
+			}
+			pos++;
+		}
+		//Halbzuege
+		while ( s.charAt(pos) != ' ') { 
+			numberOfMoves.append(s.charAt(pos));
+			pos++;
+		} 
+		halbzuege = Integer.parseInt(numberOfMoves.toString());
+		numberOfMoves.delete(0, numberOfMoves.length());
+		//Zuege
+		while ( pos <= laengeString) {
+			numberOfMoves.append(s.charAt(pos));
+			pos++;
+		}
+		zugnummer = Integer.parseInt(numberOfMoves.toString());
+		numberOfMoves.delete(0, numberOfMoves.length());
+	}
+	
+	
 	public int[] FenDecode(String s) {
 		int[] ausgabe = new int[128];
 		Character fenPart;
+		int pos = 0; //pos in FenString
 		
 		if (s.equals(boardStart) ) {
 			InitBoard();
@@ -67,7 +123,6 @@ public class Board implements BoardInterface  {
 		
 		while (s != " ") {
 			int i = 0; //pos im Feld
-			int pos = 0; //pos in FenString
 			fenPart = s.charAt(pos);
 			
 			switch (fenPart) {
@@ -121,7 +176,8 @@ public class Board implements BoardInterface  {
 			i++;
 			pos++;
 		} //endWhile
-
+		fenRemainingParts(s, pos);
+		
 		return ausgabe;
 		
 	}
