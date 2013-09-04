@@ -53,8 +53,9 @@ public class Board implements BoardInterface  {
 		
 	}
 	
-	public int[] getBoard() {
-		return boardArray;
+	public Board getBoard() {
+		Board currentBoard = new Board();
+		return currentBoard;
 	}
 	
 	private void fenRemainingParts(String s, int pos) {
