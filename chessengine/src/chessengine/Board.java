@@ -29,8 +29,8 @@ public class Board implements BoardInterface  {
 		enPassent = false;			//En Passents Verfuegbarkeit, true = ja; false= nein
 		rochade_gross = 0;			//0 keiner,	1 weiss, 2 schwarz, 3 beide
 		rochade_klein = 0;			//0 keiner,	1 weiss, 2 schwarz, 3 beide
-		zugnummer = 0;				//
-		halbzuege = 0;				//
+		zugnummer = 0;				
+		halbzuege = 0;				
 			
 	}
 	
