@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
  * @author Alexander Kessler
  *
  */
-public class UCI {
+public class UCI implements UCI_Interface {
 
     public BufferedReader reader;
     /**
@@ -32,23 +32,31 @@ public class UCI {
     private static final String POSITION = "position";
     private static final String SPLITPOINT = "\\s+";
     private static final String UNKNOWN_CMD = "Kommando nicht erkannt!";
+    private static final String MOVES = "moves";
     private static final String SPACE = " ";
     private String fen;
 
     public UCI() {
         //FEN initialisiert mit Standard Startposition
-        fen ="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
+        fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
         reader = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            input();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
-    public void input() throws IOException {
+    private void input() throws IOException {
         String cmdIN = null;
         String[] cmdArray = null;
         String cmd = null;
+        int movesIndex = -1;
         while (!cmdIN.equals(QUIT)) {
             cmdIN = reader.readLine();
             cmdArray = cmdIN.split(SPLITPOINT);
             cmd = cmdArray[0];
+
             // Fallunterscheidung fuer die versch. Befehle
             switch (cmd) {
                 case UCI:
@@ -59,10 +67,18 @@ public class UCI {
                     System.out.println(READYOK);
                     break;
                 case POSITION:
+                    movesIndex = cmdIN.indexOf(MOVES);
                     if (cmdArray[1].equals("fen")) {
                         String newFen = null;
-                        for (int i = 2; i < cmdArray.length; i++) {
-                            newFen += cmdArray[i] + " ";
+                        if (movesIndex == -1) {
+                            for (int i = 2; i < cmdArray.length; i++) {
+                                newFen += cmdArray[i] + " ";
+                            }
+
+                        } else {
+                            for (int i = 2; i < movesIndex; i++) {
+                                newFen += cmdArray[i] + " ";
+                            }
                         }
                         fen = newFen;
                     }
@@ -77,7 +93,7 @@ public class UCI {
         System.out.print("id name " + NAME + "\nid author " + AUTHOR);
     }
 
-    public void output(String out) {
+    private void output(String out) {
     }
 
     public String getFEN() {
