@@ -16,7 +16,10 @@ public class Board implements BoardInterface  {
 	public String IncomingFen;
 	public String OutgoingFen;
 	private boolean enPassent;
-	private int rochade;
+	private int rochade_gross;
+	private int rochade_klein;
+	private int zugnummer;
+	private int halbzuege;
 	
 	//Ende Variablendeklaration
 	
@@ -24,7 +27,10 @@ public class Board implements BoardInterface  {
 		boardArray = new int[128];	//Boardarray
 		color = true;				//Farbe am Zug, true = weiss; false = schwarz
 		enPassent = false;			//En Passents Verfuegbarkeit, true = ja; false= nein
-		rochade = 0;				//Rochade? 0= keine; 1=weiss; 2=schwarz; 3=beide
+		rochade_gross = -1;			//
+		rochade_klein = -1;			//
+		zugnummer = 0;				//
+		halbzuege = 0;				//
 			
 	}
 	
