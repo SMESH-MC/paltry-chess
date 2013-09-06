@@ -1,11 +1,11 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 import java.util.LinkedList;
 import java.util.Stack;
 
-import tools.FenDecoder;
-import tools.Figur;
-import tools.SchachPosition;
+import chessengine.tools.FenDecoder;
+import chessengine.tools.Figur;
+import chessengine.tools.SchachPosition;
 
 /**
  * stand 05.08.2013  

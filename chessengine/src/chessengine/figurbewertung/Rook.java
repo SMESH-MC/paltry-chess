@@ -1,9 +1,9 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 import java.util.LinkedList;
 import java.util.Stack;
 
-import tools.SchachPosition;
+import chessengine.tools.SchachPosition;
 
 public class Rook extends OberFigur{
 

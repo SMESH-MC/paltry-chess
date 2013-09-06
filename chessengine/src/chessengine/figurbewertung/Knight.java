@@ -1,10 +1,10 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 import java.util.LinkedList;
 import java.util.Stack;
 
-import tools.Figur;
-import tools.SchachPosition;
+import chessengine.tools.Figur;
+import chessengine.tools.SchachPosition;
 
 public class Knight extends OberFigur{
 

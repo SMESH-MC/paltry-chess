@@ -1,4 +1,4 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 /**
  * author Philip
@@ -6,8 +6,8 @@ package figurbewertung;
  */
 import java.util.LinkedList;
 
-import tools.Figur;
-import tools.SchachPosition;
+import chessengine.tools.Figur;
+import chessengine.tools.SchachPosition;
 /**
  * 
  * @author Philip

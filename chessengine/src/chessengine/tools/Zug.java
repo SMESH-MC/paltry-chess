@@ -1,4 +1,4 @@
-package tools;
+package chessengine.tools;
 
 public class Zug extends SchachPosition{
 

@@ -1,4 +1,4 @@
-package tools;
+package chessengine.tools;
 /*
  * Author Philip
  * Stand 05.08.2013

@@ -1,10 +1,10 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 
 import java.util.LinkedList;
-import tools.Figur;
-import tools.SchachPosition;
-import tools.FenDecoder;
+import chessengine.tools.Figur;
+import chessengine.tools.SchachPosition;
+import chessengine.tools.FenDecoder;
 public class TestKlasse {
 
 

@@ -1,6 +1,6 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
-import tools.*;
+import chessengine.tools.*;
 import java.util.LinkedList;
 
 public class FigurBewertung {

@@ -1,8 +1,8 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 import java.util.LinkedList;
 
-import tools.SchachPosition;
+import chessengine.tools.SchachPosition;
 
 public class Queen extends OberFigur{
 
