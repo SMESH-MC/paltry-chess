@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
  * @author Alexander Kessler
  *
  */
-public class UCI implements UCI_Interface {
+public class UCI implements UCI_Interface  {
 
     public BufferedReader reader;
     /**
@@ -34,20 +34,19 @@ public class UCI implements UCI_Interface {
     private static final String UNKNOWN_CMD = "Kommando nicht erkannt!";
     private static final String MOVES = "moves";
     private static final String SPACE = " ";
+    private static final String STOP = "stop";
     private String fen;
+    private boolean stop;
 
     public UCI() {
         //FEN initialisiert mit Standard Startposition
         fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
         reader = new BufferedReader(new InputStreamReader(System.in));
-        try {
-            input();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        stop = false;
     }
 
-    private void input() throws IOException {
+    @Override
+    public void input() throws IOException {
         String cmdIN = null;
         String[] cmdArray = null;
         String cmd = null;
@@ -55,7 +54,9 @@ public class UCI implements UCI_Interface {
         while (!cmdIN.equals(QUIT)) {
             cmdIN = reader.readLine();
             cmdArray = cmdIN.split(SPLITPOINT);
-            cmd = cmdArray[0];
+            //nimmt das erste "Wort" des Befehls und konvertiert ihn in 
+            //Kleinbuchstaben
+            cmd = cmdArray[0].toLowerCase();
 
             // Fallunterscheidung fuer die versch. Befehle
             switch (cmd) {
@@ -68,13 +69,12 @@ public class UCI implements UCI_Interface {
                     break;
                 case POSITION:
                     movesIndex = cmdIN.indexOf(MOVES);
-                    if (cmdArray[1].equals("fen")) {
+                    if (cmdArray[1].equalsIgnoreCase("fen")) {
                         String newFen = null;
                         if (movesIndex == -1) {
                             for (int i = 2; i < cmdArray.length; i++) {
                                 newFen += cmdArray[i] + " ";
                             }
-
                         } else {
                             for (int i = 2; i < movesIndex; i++) {
                                 newFen += cmdArray[i] + " ";
@@ -83,9 +83,13 @@ public class UCI implements UCI_Interface {
                         fen = newFen;
                     }
                     break;
+                case STOP:
+                    stop = true;
+                    break;
                 default:
                     System.err.println(UNKNOWN_CMD);
             }
+            System.exit(0);
         }
     }
 
@@ -93,10 +97,24 @@ public class UCI implements UCI_Interface {
         System.out.print("id name " + NAME + "\nid author " + AUTHOR);
     }
 
-    private void output(String out) {
+    /**
+     *
+     * @param move - der beste Zug, der durch die Engine gefunden wurde
+     */
+    @Override
+    public void bestmove(String move) {
+        //Stop wird auf false gesetzt, fuer den naechsten Zug
+        stop = false;
+        System.out.println("bestmove " + move);
     }
 
+    @Override
     public String getFEN() {
         return fen;
+    }
+
+    @Override
+    public boolean getStop() {
+        return stop;
     }
 }
