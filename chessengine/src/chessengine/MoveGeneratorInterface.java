@@ -1,10 +1,13 @@
 package chessengine;
 
+import java.util.LinkedList;
+
+
 /**
  * @author Schuhmacher, Kaub
  *
  */
 public interface MoveGeneratorInterface {
 
-	public String getFENList();
+	public LinkedList<String> getFENList();
 }
