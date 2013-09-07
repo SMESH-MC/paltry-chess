@@ -87,6 +87,7 @@ public class UCI implements UCI_Interface  {
                     stop = true;
                     break;
                 default:
+                    // TODO falsche kommandos sollen ignoriert werden. Keine fehlermeldung?
                     System.err.println(UNKNOWN_CMD);
             }
             System.exit(0);
