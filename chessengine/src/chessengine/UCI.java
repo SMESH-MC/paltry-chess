@@ -94,6 +94,9 @@ public class UCI implements UCI_Interface  {
         }
     }
 
+    /**
+     * Gibt die ID der Engine auf stdout aus.
+     */
     private void id() {
         System.out.print("id name " + NAME + "\nid author " + AUTHOR);
     }
@@ -109,6 +112,10 @@ public class UCI implements UCI_Interface  {
         System.out.println("bestmove " + move);
     }
 
+    /**
+     * Die Methode getFEN liefert den gespeicherten FEN-String zurueck.
+     * @return String FEN-String
+     */
     @Override
     public String getFEN() {
         return fen;
