@@ -5,12 +5,13 @@ import java.util.LinkedList;
 
 /**
  *	@author Schuhmacher, Kaub
- *	@version 20130906
+ *	@version 20130908
  */
 public class MoveGenerator implements MoveGeneratorInterface {
-	private String incomingFEN = "";
-    private String[] splittedFEN = new String[13];
+	private String		incomingFEN = "";
+    private String[] 	splittedFEN = new String[13];
     private LinkedList<String> outgoingFEN = new LinkedList<String>();
+    private int[]		board		= new int[128];
     
     
 	private void unravelFEN() {
@@ -39,7 +40,8 @@ public class MoveGenerator implements MoveGeneratorInterface {
          */
         
      
-      //wenn der Inhalt NICHT "-" ist, stosse Rochadenueberpruefung an
+      /* wenn der Inhalt NICHT "-" ist, stosse Rochadenueberpruefung an, die dann eventuell moegliche Rochadenzuege in die Liste
+       * der moeglichen Zuege schreibt */
         if (!splittedFEN[9].equals("-")) {
         	if (splittedFEN[8].equals("w")) {
         		berechneWhiteRochade(splittedFEN);
@@ -47,7 +49,83 @@ public class MoveGenerator implements MoveGeneratorInterface {
         		berechneBlackRochade(splittedFEN);
         	}
         }
+        
+        board = fenStringTo0x88Array(appendStellungsStrings());
+        System.out.println(board); //return schachbrett (nur das nich gelb untersrich) //Komentar iknorisieren
 	}//end unravel()
+	
+	private String appendStellungsStrings() {
+		String kompletter0x88String =
+				leerfelderTrennen(splittedFEN[7]) + "xxxxxxxx" +
+				leerfelderTrennen(splittedFEN[6]) + "xxxxxxxx" +
+				leerfelderTrennen(splittedFEN[5]) + "xxxxxxxx" +
+				leerfelderTrennen(splittedFEN[4]) + "xxxxxxxx" +
+				leerfelderTrennen(splittedFEN[3]) + "xxxxxxxx" +
+				leerfelderTrennen(splittedFEN[2]) + "xxxxxxxx" +
+				leerfelderTrennen(splittedFEN[1]) + "xxxxxxxx" +
+				leerfelderTrennen(splittedFEN[0]) + "xxxxxxxx";
+		return kompletter0x88String ;
+	}
+	
+	private String leerfelderTrennen(String fenReihe) {
+		fenReihe.replace("2","11");
+		fenReihe.replace("3","111");
+		fenReihe.replace("4","1111");
+		fenReihe.replace("5","11111");
+		fenReihe.replace("6","111111");
+		fenReihe.replace("7","1111111");
+		fenReihe.replace("8","11111111");
+		return fenReihe;
+	}
+	
+	private int[] fenStringTo0x88Array(String fen0x88komplett) {
+		int[] intReihe = new int[128];
+		for (int i=0; i<128; i++) {
+			switch (fen0x88komplett.charAt(i)) {
+			/*
+			 * x = Feld des 0x88-"Geisterboards"
+			 * empty=	0
+			 * pawn=	1
+			 * knight=	2
+			 * king=	3
+			 * bishop=	5
+			 * rook=	6
+			 * queen=	7
+			 * white +, black -
+			 */
+			case 'x' : intReihe[i] = 136;
+				break;
+			case '1' : intReihe[i] = 0;
+				break;
+			case 'P' : intReihe[i] = 1;
+				break;
+			case 'p' : intReihe[i] = -1;
+				break;
+			case 'R' : intReihe[i] = 6;
+				break;
+			case 'r' : intReihe[i] = -6;
+				break;
+			case 'N' : intReihe[i] = 2;
+				break;
+			case 'n' : intReihe[i] = -2;
+				break;
+			case 'B' : intReihe[i] = 5;
+				break;
+			case 'b' : intReihe[i] = -5;
+				break;
+			case 'K' : intReihe[i] = 3;
+				break;
+			case 'k' : intReihe[i] = -3;
+				break;
+			case 'Q' : intReihe[i] = 7;
+				break;
+			case 'q' : intReihe[i] = -7;
+				break;
+			}
+		}
+		return intReihe;
+	}
+	
 	
 	private void berechneWhiteRochade(String[] splittedFEN) {
 		for (int i=0; i < splittedFEN[9].length(); i++) {
@@ -61,10 +139,13 @@ public class MoveGenerator implements MoveGeneratorInterface {
 	
 	private void rochiereKurzW(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				
 				//&& //uberpruefen, ob Zwischenraum frei ist
 				splittedFEN[7].charAt( (splittedFEN[7].length()) - 1 ) == '2'
 				//&& //ueberpruefen, ob das Zielfeld des Turms nicht bedroht wird
+				
 				//&& //ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
+				
 				) {
 					String[] newSplittedFEN = splittedFEN.clone();
 					newSplittedFEN[7] = splittedFEN[7].replace("K2R", "1RK1");
@@ -87,10 +168,13 @@ public class MoveGenerator implements MoveGeneratorInterface {
 
 	private void rochiereLangW(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				
 			//&& //uberpruefen, ob Zwischenraum frei ist
 			splittedFEN[7].charAt(1) == '3' 	
 			//&& //ueberpruefen, ob das Zielfeld des Turms nicht bedroht wird
+			
 			//&& //ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
+			
 			) {
 				String[] newSplittedFEN = splittedFEN.clone();
 				newSplittedFEN[7] = splittedFEN[7].replace("R3K", "2KR1");
@@ -128,10 +212,13 @@ public class MoveGenerator implements MoveGeneratorInterface {
 
 	private void rochiereKurzB(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				
 				//&& //uberpruefen, ob Zwischenraum frei ist
 				splittedFEN[0].charAt( (splittedFEN[0].length()) - 1 ) == '2'
 				//&& //ueberpruefen, ob das Zielfeld des Turms nicht bedroht wird
+				
 				//&& //ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
+				
 				) {
 				String[] newSplittedFEN = splittedFEN.clone();
 				newSplittedFEN[0] = splittedFEN[0].replace("k2r", "1rk1");
@@ -154,10 +241,13 @@ public class MoveGenerator implements MoveGeneratorInterface {
 	
 	private void rochiereLangB(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				
 				//&& //uberpruefen, ob Zwischenraum frei ist
 				splittedFEN[0].charAt(1) == '3'
 				//&& //ueberpruefen, ob das Zielfeld des Turms nicht bedroht wird
+				
 				//&& //ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
+				
 				) {
 					String[] newSplittedFEN = splittedFEN.clone();
 					newSplittedFEN[0] = splittedFEN[0].replace("r3k", "2kr1");
@@ -181,7 +271,7 @@ public class MoveGenerator implements MoveGeneratorInterface {
 			}
 	}
 
-
+	
 /*	
  * 
  * 
