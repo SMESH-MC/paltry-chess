@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 /**
  *	@author Schuhmacher, Kaub
- *	@version 201309082306
+ *	@version 201309091010
  */
 public class MoveGenerator implements MoveGeneratorInterface {
 	//Klassenvariablen
@@ -45,8 +45,6 @@ public class MoveGenerator implements MoveGeneratorInterface {
         }
     	//2.: "normale" Zugmoeglichkeiten berechnen
     	berechneNormaleZuege(schachbrett);
-    	//3.: moegliche en-passant-Schlaege berechnen 
-    	
     	
     	return outgoingFEN;
     }
@@ -143,8 +141,8 @@ public class MoveGenerator implements MoveGeneratorInterface {
 			 * queen=	7
 			 * white +, black -
 			 */
-			case 'x' : intReihe[i] = 136;
-				break;
+			case 'x' : intReihe[i] = 109;	//Zahl kann beliebig geaendert werden, nicht jedoch
+				break;						//auf andere in dieser Methode stehende Zahlen
 			case '1' : intReihe[i] = 0;
 				break;
 			case 'P' : intReihe[i] = 1;
@@ -181,7 +179,13 @@ public class MoveGenerator implements MoveGeneratorInterface {
 	 * @param	board	Die aktuelle Stellung, aus der alle normalen Zuege (ohne Sonderzuege) berechnet werden sollen
 	 */
 	private void berechneNormaleZuege(int[] board) {
-		//TODO
+		//Gehe das gesamte Board-Array durch,
+		
+		for (int i=0; i<120; i++) {
+			if ((i & 136)==0) {			//TODO
+				
+			}
+		}
 	}
 	
 	
