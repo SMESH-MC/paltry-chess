@@ -8,5 +8,6 @@ import java.util.LinkedList;
  * @version 201309082306
  */
 public interface MoveGeneratorInterface {
-	public LinkedList<String> getZuege(String aktuelleFEN);
+	public LinkedList<String> getZuege();
+	public void setFEN(String aktuelleFEN);
 }
