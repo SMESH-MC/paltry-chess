@@ -9,7 +9,7 @@ public class Manager {
     private UCI newUCI;
     private boolean stop = false;
 
-    public void main(String[] Args) {
+    public void initialize (){
         try {
             newUCI = new UCI();
             //muss noch in einen extra Thread
