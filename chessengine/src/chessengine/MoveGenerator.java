@@ -13,6 +13,31 @@ public class MoveGenerator implements MoveGeneratorInterface {
     private LinkedList<String> outgoingFEN = new LinkedList<String>();	//Die Liste aller moeglichen Zuege, die zurueckgeschickt wird
     //private int[]		board		= new int[128];		//Initialisierung fuer die aktuelle Stellung in 0x88-Darstellung
     
+    //Konstante fuer leere Felder
+    private static final int leeresFeld = 0;
+    //Konstanten fur die weissen Figuren
+    private static final int pawn_w		= 1;
+	private static final int knight_w	= 2;
+    private static final int queen_w	= 3;
+    private static final int bishop_w	= 5;
+    private static final int rook_w		= 6;
+    private static final int king_w		= 7;
+    //Konstanten fur die schwarzen Figuren
+    private static final int pawn_b		= -1;
+	private static final int knight_b	= -2;
+    private static final int queen_b	= -3;
+    private static final int bishop_b	= -5;
+    private static final int rook_b		= -6;
+    private static final int king_b		= -7;
+    //KKonstanten fuer die Zuege
+    private static final int[] pawn_moves	= {16, 32, 15, 17};
+    private static final int[] bishop_moves	= {-17, -15, 15, 17};
+    private static final int[] rook_moves	= {-16, -1, 1, 16};
+    private static final int[] queen_moves	= {-17, -16, -15, -1, 1, 15, 16, 17} ;
+    private static final int[] king_moves	= {-17, -16, -15, -1, 1, 15, 16, 17};
+    private static final int[] knight_moves	= {-33, -31, -18, -14, 14, 18, 31, 33};
+  
+    												 
 	/*
 	 * Dies ist die einzige public-Methode dieser Klasse, die mit dem aktuellen FEN aufgerufen wird, diesen als Klassenvariable
 	 * speichert und dann daraus moegliche Zuege ausgibt
@@ -141,33 +166,32 @@ public class MoveGenerator implements MoveGeneratorInterface {
 			 * queen=	7
 			 * white +, black -
 			 */
-			case 'x' : intReihe[i] = 109;	//Zahl kann beliebig geaendert werden, nicht jedoch
-				break;						//auf andere in dieser Methode stehende Zahlen
-			case '1' : intReihe[i] = 0;
+			case 'x' :	break; //
+			case '1' : intReihe[i] = leeresFeld;
 				break;
-			case 'P' : intReihe[i] = 1;
+			case 'P' : intReihe[i] = pawn_w;
 				break;
-			case 'p' : intReihe[i] = -1;
+			case 'p' : intReihe[i] = pawn_b;
 				break;
-			case 'R' : intReihe[i] = 6;
+			case 'R' : intReihe[i] = rook_w;
 				break;
-			case 'r' : intReihe[i] = -6;
+			case 'r' : intReihe[i] = rook_b;
 				break;
-			case 'N' : intReihe[i] = 2;
+			case 'N' : intReihe[i] = knight_w;
 				break;
-			case 'n' : intReihe[i] = -2;
+			case 'n' : intReihe[i] = knight_b;
 				break;
-			case 'B' : intReihe[i] = 5;
+			case 'B' : intReihe[i] = bishop_w;
 				break;
-			case 'b' : intReihe[i] = -5;
+			case 'b' : intReihe[i] = bishop_b;
 				break;
-			case 'K' : intReihe[i] = 3;
+			case 'K' : intReihe[i] = king_w;
 				break;
-			case 'k' : intReihe[i] = -3;
+			case 'k' : intReihe[i] = king_b;
 				break;
-			case 'Q' : intReihe[i] = 7;
+			case 'Q' : intReihe[i] = queen_w;
 				break;
-			case 'q' : intReihe[i] = -7;
+			case 'q' : intReihe[i] = queen_b;
 				break;
 			}
 		}
@@ -179,16 +203,78 @@ public class MoveGenerator implements MoveGeneratorInterface {
 	 * @param	board	Die aktuelle Stellung, aus der alle normalen Zuege (ohne Sonderzuege) berechnet werden sollen
 	 */
 	private void berechneNormaleZuege(int[] board) {
-		//Gehe das gesamte Board-Array durch,
-		
-		for (int i=0; i<120; i++) {
-			if ((i & 136)==0) {			//TODO
-				
+		//Gehe das gesamte Board-Array durch, bis nur noch Felder des "Geisterboards" kommen
+		for (int i = 0; i < 120; i++) {
+			//wenn das Feld mit Index i ein Feld des gueltigen Schachbretts ist und dies dann kein leeres Feld ist,
+			if ((i & 136) == 0	&&	board[i] != 0) {
+				//Wenn der Wert an diesem Index positiv ist, also Weiss am Zug ist
+				if (board[i] > 0) {
+					//Uebergib das Board un den aktuellen mit der aktiven Farbe (true = weiss) und
+					//den erlaubten Zuegen der Fiugr an die Zugberechnung
+					switch (board[i]) {
+					case pawn_w :	berechneZuegeEinerFigur(board, i, true, pawn_moves);
+						break;
+					case rook_w :	berechneZuegeEinerFigur(board, i, true, rook_moves);
+						break;
+					case knight_w : berechneZuegeEinerFigur(board, i, true, knight_moves);
+						break;
+					case bishop_w :	berechneZuegeEinerFigur(board, i, true, bishop_moves);
+						break;
+					case king_w :	berechneZuegeEinerFigur(board, i, true, king_moves);
+						break;
+					case queen_w :	berechneZuegeEinerFigur(board, i, true, queen_moves);
+						break;
+					}
+				} else {	//Wenn der Inhalt an diesem Index negativ ist, also Schwarz am Zug ist
+					//Uebergib das board und den aktuellen Index mit der aktiven Farbe (false = schwarz) und
+					//den erlaubten Zuegen der Figur an die Zugberechnung
+					switch (board[i]) {
+					case pawn_b :	berechneZuegeEinerFigur(board, i, false, pawn_moves);
+						break;
+					case rook_b : 	berechneZuegeEinerFigur(board, i, false, rook_moves);
+						break;
+					case knight_b : berechneZuegeEinerFigur(board, i, false, knight_moves);
+						break;
+					case bishop_b : berechneZuegeEinerFigur(board, i, false, bishop_moves);
+						break;
+					case king_b : 	berechneZuegeEinerFigur(board, i, false, king_moves);
+						break;
+					case queen_b : 	berechneZuegeEinerFigur(board, i, false, queen_moves);
+						break;
+					}
+				}
 			}
 		}
 	}
 	
-	
+	/*
+	 * Diese Methode berechnet die moeglichen Zuege einer Figur und schreibt die daraus resultierendne
+	 * FEN-Strings in die Liste der moeglichen Zuege
+	 * 
+	 * @param board		Die aktuelle Stellung als int-Array
+	 * @param startfeld	Das Feld, auf dem zu ziehende Fgur steht
+	 * @param weiss		wenn true, ist weiﬂ am Zug, ansonsten schwarz
+	 * @param zuege		Die erlaubten Zuege einer Figur (in Schrittweiten im int-Array)
+	 */
+	private void berechneZuegeEinerFigur(int[] board, int startfeld, boolean weiss, int[] zuege) {
+		//Initialisieren des Startfeldes
+		int zielfeld = startfeld;
+			//Fuer alle angegebenen Schrittweiten = Zugmoeglichkeiten einer Figur
+			for (int i : zuege) {
+				if (weiss) {	//ist weiss am Zug, muss im Array hochgezaehlt werden,
+					zielfeld = startfeld + i;
+				} else {		// bei schwarz runtergezaehlt
+					zielfeld = startfeld - i;
+				}
+			//Initialisierung der Zielstellung
+			int[] neueStellung = board.clone();
+			
+			if (neueStellung[zielfeld] == 0) { //Wenn das Zielfeld
+				neueStellung[zielfeld] = neueStellung[startfeld];
+				neueStellung[startfeld] = leeresFeld;
+			}
+			}
+	}
 	
 	/*
 	 * Diese Methode prueft, welche Rochaden Weiss noch durchfuehren darf und berechnet diese dann
