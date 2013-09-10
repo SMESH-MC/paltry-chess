@@ -6,7 +6,7 @@ package chessengine.movegenerator;
  *
  */
 public interface Definitions {
-
+ 
     //Konstante fuer leere Felder
     public static final int leeresFeld = 0;
     //Konstanten fur die weissen Figuren

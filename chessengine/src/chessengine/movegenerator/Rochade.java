@@ -20,7 +20,7 @@ public class Rochade {
 			berechneBlackRochade(splittedFEN[9], splittedFEN);
 		}
 		
-	}
+	} 
 	/**
 	 * Diese Methode prueft, welche Rochaden Weiss noch durchfuehren darf und berechnet diese dann
 	 * 

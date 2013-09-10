@@ -11,3 +11,4 @@ public interface MoveGeneratorInterface {
 	public LinkedList<String> getZuege();
 	public void setFEN(String aktuelleFEN);
 }
+ 

@@ -17,7 +17,7 @@ implements Definitions {
 	public UnravelFEN() {
 		schachbrett = new byte[128];
 	}
-	
+	 
 	/**
 	 *	Dieser Setter trifft Vorbereitungen zur Darstellung des FEN-Strings in 0x88-Darstellung und
 	 *	ruft dann die Methode setSchachbrett mit den errechneten Variablen auf

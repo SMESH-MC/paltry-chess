@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public class MoveGenerator
 implements MoveGeneratorInterface, Definitions {
-	
+	 
 	private LinkedList<String> 	outgoingFEN;	//Die Liste aller moeglichen Zuege, die zurueckgeschickt wird
 	private byte[]				schachbrett;	//Die aktuelle FEN als Byte-Array		
 	

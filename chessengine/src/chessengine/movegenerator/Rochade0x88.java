@@ -14,7 +14,7 @@ implements Definitions {
 	
 	public void setSchachbrett(byte[] schachbrett) {
 
-		
+		 
 	}
 
 	public  getZuege() {
