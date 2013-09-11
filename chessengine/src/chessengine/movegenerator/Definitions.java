@@ -23,12 +23,12 @@ public interface Definitions {
     public static final int bishop_b	= -5;
     public static final int rook_b		= -6;
     public static final int king_b		= -7;
-    //KKonstanten fuer die Zuege
+    //Konstanten fuer die Zuege
     public static final int[] pawn_moves	= {16, 32, 15, 17};
     public static final int[] bishop_moves	= {-17, -15, 15, 17};
     public static final int[] rook_moves	= {-16, -1, 1, 16};
     public static final int[] queen_moves	= {-17, -16, -15, -1, 1, 15, 16, 17} ;
     public static final int[] king_moves	= {-17, -16, -15, -1, 1, 15, 16, 17};
     public static final int[] knight_moves	= {-33, -31, -18, -14, 14, 18, 31, 33};
-
+    
 }

@@ -8,9 +8,19 @@ import java.util.LinkedList;
  */
 public class MoveGenerator
 implements MoveGeneratorInterface, Definitions {
-	 
-	private LinkedList<String> 	outgoingFEN;	//Die Liste aller moeglichen Zuege, die zurueckgeschickt wird
-	private byte[]				schachbrett;	//Die aktuelle FEN als Byte-Array		
+	//Die Liste aller moeglichen Zuege, die zurueckgeschickt wird
+	private LinkedList<String> 	outgoingFEN;	
+
+	/* Die aktuelle FEN als Byte-Array:
+	 * schachbrett[0] bis schachbrett[119]: A1 bis H8 inkl. des "Geisterboards" rechts des normalen Boards
+	 * d.h. 0-7 gültige Felder, 8-15 ungültige, 16-23 gültig, ... 112-119 gültig
+	 * schachbrett[120] = 1 (Weiss am Zug) | 0 (Schwarz am Zug)
+	 * schachbrett[121, 122, 123, 124] = Bitmarker ( 0 | 1) fuer Rochademoeglichkeiten: K Q k q 
+	 * schachbrett[125] =  En-Passant-Feld des letzten Zuges in 0x88-Darstellung (z.B.: 83 = schachbrett[83] = D6)
+	 * schachbrett[126] = Anzahl der Halbzuege
+	 * schachbrett[127] = Zugnummer 
+	 */
+	private byte[]				schachbrett;
 	
 	/**
      * Konstruktor, der die auszugebende Liste aller moeglichen Zuege initialisiert
@@ -25,12 +35,12 @@ implements MoveGeneratorInterface, Definitions {
      * @param Die aktuelle Stellung des Schachbretts als FEN-String
      */
     public void setFEN(String aktuelleFEN) {
-		//Erstellt ein Objekt der Klasse UnravelFEN
-		UnravelFEN u1 = new UnravelFEN();
-		//uebergibt UnravelFEN die aktuelle FEN
-		u1.setFEN(aktuelleFEN);
-		//nimmt sich die von UnravelFEN in ein Array umgewandelte aktuelle Stellung
-		schachbrett  = u1.getSchachbrett();
+		//Erstellt ein Objekt der Klasse FenDecode
+    	FenDecode f1 = new FenDecode();
+		//uebergibt FenDecode die aktuelle FEN
+		f1.setFEN(aktuelleFEN);
+		//nimmt sich die von FenDecode in ein Array umgewandelte aktuelle Stellung
+		schachbrett  = f1.getSchachbrett();
 
 /* alte Version der Rochade
 		///wenn der Inhalt NICHT "-" ist, stosse Rochadenueberpruefung an, die dann eventuell moegliche Rochadenzuege in die Liste

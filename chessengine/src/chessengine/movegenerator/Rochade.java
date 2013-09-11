@@ -1,41 +1,42 @@
 package chessengine.movegenerator;
 
 import java.util.LinkedList;
+
 /**
  * 
  * @author SMESH
  *
  */
 public class Rochade {
-	////Die Liste aller moeglichen Rochaden-Zuege, die zurueckgegeben wird
-	private LinkedList<String> moeglicheRochadenZuege = new LinkedList<String>();
-	
-	/**
-	 * Konstruktor
-	 */
-	public Rochade (String[] splittedFEN, boolean weiss) {
-		if (weiss) {
-			berechneWhiteRochade(splittedFEN[9], splittedFEN);
-		} else {
-			berechneBlackRochade(splittedFEN[9], splittedFEN);
-		}
-		
+//	////Die Liste aller moeglichen Rochaden-Zuege, die zurueckgegeben wird
+//	private LinkedList<String> moeglicheRochadenZuege = new LinkedList<String>();
+//	
+//	/**
+//	 * Konstruktor
+//	 */
+//	public Rochade (String[] splittedFEN, boolean weiss) {
+//		if (weiss) {
+//			berechneWhiteRochade(splittedFEN[9], splittedFEN);
+//		} else {
+//			berechneBlackRochade(splittedFEN[9], splittedFEN);
+//		}
+//		
 	} 
-	/**
-	 * Diese Methode prueft, welche Rochaden Weiss noch durchfuehren darf und berechnet diese dann
-	 * 
-	 * @param	rochadeMoeglichkeiten		Die Rochaden, die Weiss noch durchfuehren koennte
-	 *   
-	 */
-	private void berechneWhiteRochade(String rochadeMoeglichkeiten, String[] splittedFEN) {
-		for (int i=0; i < rochadeMoeglichkeiten.length(); i++) {
-			switch (rochadeMoeglichkeiten.charAt(i)) {
-			case 'K' :	rochiereKurzW(splittedFEN);
-			case 'Q' :	rochiereLangW(splittedFEN);
-				break;
-			}
-		}
-	}
+//	/**
+//	 * Diese Methode prueft, welche Rochaden Weiss noch durchfuehren darf und berechnet diese dann
+//	 * 
+//	 * @param	rochadeMoeglichkeiten		Die Rochaden, die Weiss noch durchfuehren koennte
+//	 *   
+//	 */
+//	private void berechneWhiteRochade(String rochadeMoeglichkeiten, String[] splittedFEN) {
+//		for (int i=0; i < rochadeMoeglichkeiten.length(); i++) {
+//			switch (rochadeMoeglichkeiten.charAt(i)) {
+//			case 'K' :	rochiereKurzW(splittedFEN);
+//			case 'Q' :	rochiereLangW(splittedFEN);
+//				break;
+//			}
+//		}
+//	}
 	/**
 	 * Diese Methode fuehrt eine kurze Rochade von Weiss durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
@@ -109,20 +110,20 @@ public class Rochade {
 		
 	}
 
-	/**
-	 * Diese Methode prueft, welche Rochaden Schwarz noch durchfuehren darf und berechnet diese dann
-	 * 
-	 * @param	rochadeMoeglichkeiten		Die Rochaden, die Schwarz noch durchfuehren koennte
-	 */
-	private void berechneBlackRochade(String rochadeMoeglichkeiten, String[] splittedFEN) {
-		for (int i=0; i < rochadeMoeglichkeiten.length(); i++) {
-			switch (rochadeMoeglichkeiten.charAt(i)) {
-			case 'k' : rochiereKurzB(splittedFEN);
-			case 'q' : rochiereLangB(splittedFEN);
-				break;
-			}
-		}
-	}
+//	/**
+//	 * Diese Methode prueft, welche Rochaden Schwarz noch durchfuehren darf und berechnet diese dann
+//	 * 
+//	 * @param	rochadeMoeglichkeiten		Die Rochaden, die Schwarz noch durchfuehren koennte
+//	 */
+//	private void berechneBlackRochade(String rochadeMoeglichkeiten, String[] splittedFEN) {
+//		for (int i=0; i < rochadeMoeglichkeiten.length(); i++) {
+//			switch (rochadeMoeglichkeiten.charAt(i)) {
+//			case 'k' : rochiereKurzB(splittedFEN);
+//			case 'q' : rochiereLangB(splittedFEN);
+//				break;
+//			}
+//		}
+//	}
 	/**
 	 * Diese Methode fuehrt eine kurze Rochade von Schwarz durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
