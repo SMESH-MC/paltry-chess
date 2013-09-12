@@ -45,7 +45,7 @@ implements Definitions {
 		setSchachbrett(stellung0x88, fenInfos);
 	}
 	
-	/*
+	/**
 	 * Hilfsmethode, die im FEN-String eine Reihe aufeinanderfolgende leere Felder in aufeinanderfolge einzelne leere Felder aendert und
 	 * das "/" (Reihentrenner) durch ungueltige 0x88-Felder ("x") ersetzt
 	 * 
