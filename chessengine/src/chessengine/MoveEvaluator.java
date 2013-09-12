@@ -1,7 +1,4 @@
 package chessengine;
-import java.lang.*;
-
-
 
 public class MoveEvaluator {
 	//Variablendefinitionen
@@ -10,6 +7,7 @@ public class MoveEvaluator {
 	private int depth;
 	private int time;
 	private int timeRemaining;
+	private int userCancel;
 	
 	public String IncomingFEN;
 	public String OutgoingFEN;
@@ -25,14 +23,29 @@ public class MoveEvaluator {
 	}
 
 	public void stop() {
-		
+		//Abbruch wenn nur noch eine Sekunde verfuegbar
+		if (timeRemaining == '1') {
+			
+		}
+		//Abbruch durch Benutzer
+		if (userCancel == '1') {
+			
+		}
 	}
 	
 	public void destroy() {
-		
+		//Abbruch wenn nur noch eine Sekunde verfuegbar
+		if (timeRemaining == '1') {
+			
+		}
+		//Abbruch durch Benutzer
+		if (userCancel == '1') {
+			
+		}
 	}
 	
 	class ZugThread extends Thread {
+		//Hier Threadgenerierung
 		
 	}
 }
