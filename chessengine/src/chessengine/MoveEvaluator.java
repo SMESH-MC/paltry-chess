@@ -1,4 +1,6 @@
 package chessengine;
+import java.lang.*;
+
 
 
 public class MoveEvaluator {
@@ -12,19 +14,25 @@ public class MoveEvaluator {
 	public String IncomingFEN;
 	public String OutgoingFEN;
 	
+	//Ab hier soll Voodoo folgen (fast fertig)
 	
-	
-	void setCurrentBoard() {
-		currentBoard = Board.getBoard();
+	public void init() {
 		
 	}
 	
-	void setPreditionBoard() {
-		while (movementlist != null){
-				predictionBoard = new Board();
-				
-		}
+	public void start() {
 		
 	}
 
+	public void stop() {
+		
+	}
+	
+	public void destroy() {
+		
+	}
+	
+	class ZugThread extends Thread {
+		
+	}
 }
