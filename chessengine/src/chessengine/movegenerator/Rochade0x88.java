@@ -12,6 +12,7 @@ public class Rochade0x88
 implements Definitions {
 	//Die Liste aller moeglichen Rochaden, die zurueckgeschickt wird
 	private LinkedList<String> 	moeglicheRochaden;
+	
 	/**
 	 * Dieser Setter initialisiert die aktuelle Stellung und prueft dann, welche Rochaden noch durchgefuehrt
 	 * werden duerfen mit anschliessender Uebergabe an die jeweilige Methode zur Durchfuehrung
@@ -26,47 +27,25 @@ implements Definitions {
 	 * board[126] = Anzahl der Halbzuege
 	 * board[127] = Zugnummer 
 	 */
-	
 	public void setSchachbrett(byte[] board) {
-		for (byte i=121; i<=124; i++ ) {
-			if (board[i] == 1) {
-				byte[] boardNachRochade = new byte[128];
-				switch (i) {
-				case 121 : boardNachRochade = rochiereKurzW(board);
-					break;
-				case 122 : boardNachRochade = rochiereLangW(board);
-					break;
-				case 123 : boardNachRochade = rochiereKurzB(board);
-					break;
-				case 124 : boardNachRochade = rochiereLangB(board);
-					break; 
-				}
-				fenEncode(boardNachRochade);
-			}
-			 
-		}
+		//Erstelle ein Objekt der Klasse FenEncode
+		FenEncode f1 = new FenEncode();
+		/* Wenn die jeweiligen Rochaden moeglich sind, rufe die dazugehoerige Methode auf und
+		 * uebergib das zurueckgegebene rochierte Board an den FEN-Encoder. Schreibe die ermittelte FEN
+		 * anhschliessend in die Liste der moeglichen Rochaden.
+		 */
+		if (board[121] == 1) {f1.setBoard(rochiereKurzWeiss(board)); moeglicheRochaden.addLast(f1.getFEN());}
+		if (board[122] == 1) {f1.setBoard(rochiereLangWeiss(board)); moeglicheRochaden.addLast(f1.getFEN());}
+		if (board[123] == 1) {f1.setBoard(rochiereKurzSchwarz(board)); moeglicheRochaden.addLast(f1.getFEN());}
+		if (board[124] == 1) {f1.setBoard(rochiereLangSchwarz(board)); moeglicheRochaden.addLast(f1.getFEN());}
 	}
 
-	/**
-	 * Diese Methode prueft, ob der Koenig im Schach steht, ins Schach rochieren wuerde oder
-	 * ueber bedrohte Felder rochieren muesste
-	 * 
-	 * @param	board			Die Stellung, von der aus die Rochade ueberprueft werden soll
-	 * @param	kurzeRochade	true = kurze Rochade, false = lange Rochade
-	 * @return	weissAmZug		true = weiss am Zug, false = schwarz am Zug
-	 */
-	private boolean istRochadeLegal(byte[] board, boolean kurzeRochade, boolean weissAmZug) {
-		if
-	}
-		
-	}
-	
 	/**
 	 * Diese Methode fuehrt eine kurze Rochade von Weiss durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
 	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
 	 */
-	private byte[] rochiereKurzW(byte[] boardZuRochieren) {
+	private byte[] rochiereKurzWeiss(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (F1 und G1) frei ist
 				((boardZuRochieren[5] | boardZuRochieren[6]) == 0) &&
 				//ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
@@ -75,9 +54,14 @@ implements Definitions {
 				
 				//ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
 			
-				//legaler Rochaden-Zug:
-				istRochadeLegal(boardZuRochieren, true, true)
+				//legaler Rochaden-Zug (die letzten 3 Punkte zusammengefasst):
+				istRochadeIllegal(boardZuRochieren, true, true)
 				) {
+			byte[] boardNachRochade
+			
+			
+			/* alte FEN_Rochade
+			
 					String[] newSplittedFEN = splittedFEN.clone();
 					newSplittedFEN[7].replace("K2R", "1RK1");
 					newSplittedFEN[7].replace("11", "2");
@@ -95,6 +79,7 @@ implements Definitions {
 					String newFEN = setFEN(newSplittedFEN);
 					//fuegt diese berechnete Rochade der Liste der gueltigen Zuege hinzu 
 					outgoingFEN.addLast(newFEN);
+			*/
 		}
 	}	
 	
@@ -103,10 +88,10 @@ implements Definitions {
 	 * 
 	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
 	 */
-	private byte[] rochiereLangW(byte[] boardZuRochieren) {
+	private byte[] rochiereLangWeiss(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (F1 und G1) frei ist
 				((boardZuRochieren[1] | boardZuRochieren[2] | boardZuRochieren[3]) == 0)
-//	ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				//ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				
 				//ueberpruefen, ob das Zielfeld des Turms nicht bedroht wird
 				
@@ -114,7 +99,75 @@ implements Definitions {
 			
 				) {
 			//rochieren Q
+			
 		}
+		
+		/**
+		 * Diese Methode prueft, ob der Koenig im Schach steht, ins Schach rochieren wuerde oder
+		 * ueber ein bedrohtes Feld rochieren muesste
+		 * 
+		 * @param	board			Die Stellung, von der aus die Rochade ueberprueft werden soll
+		 * @param	kurzeRochade	true = kurze Rochade, false = lange Rochade
+		 * @return	weissAmZug		true = weiss am Zug, false = schwarz am Zug
+		 */
+		private boolean istRochadeIllegal(byte[] board, boolean kurzeRochade, boolean weissAmZug) {
+			boolean rochadeIstIllegal = false;
+			if (kurzeRochade) {
+				if (weissAmZug) {
+					//solange die Rochade legal ist
+						//wird eines der weissen Rochadenfelder bedroht?
+						rochadeIstIllegal = wirdBedroht(board, e1, true);	
+						rochadeIstIllegal = wirdBedroht(board, f1, true);
+						rochadeIstIllegal = wirdBedroht(board, g1, true);
+					
+				} else { //Schwarz ist am Zug
+					//wird eines der schwarzen Rochadenfelder bedroht?
+					rochadeIstIllegal = wirdBedroht(board, e8, false);
+					rochadeIstIllegal = wirdBedroht(board, f8, false);
+					rochadeIstIllegal = wirdBedroht(board, g8, false);
+				}
+			} else { //bei langer Rochade
+				if (weissAmZug) {
+					//wird eines der weissen Rochadenfelder bedroht?
+					rochadeIstIllegal = wirdBedroht(board, e1, true);
+					rochadeIstIllegal = wirdBedroht(board, d2, true);
+					rochadeIstIllegal = wirdBedroht(board, c1, true);
+				} else { //Schwarz ist am Zug
+					//wird eines der schwarzen Rochadenfelder bedroht?
+					rochadeIstIllegal = wirdBedroht(board, e8, false);
+					rochadeIstIllegal = wirdBedroht(board, d8, false);
+					rochadeIstIllegal = wirdBedroht(board, c8, false);
+				}
+			}
+			return rochadeIstIllegal;
+		}
+			
+
+
+		/** Diese Methode prueft, ob ein angegebenes Zielfeld angegriffen wird.
+		 * Zur Ueberpruefung von "Schach" und Rochade
+		 *
+		 * @author Marc Pierce (Original C#), Sascha Schuhmacher (Umsetzung nach Java passend zur Projekarbeit)
+		 * @see <a href="http://stackoverflow.com/questions/7197369/chess-programming-no-ai-moves-validation?answertab=votes#tab-top">Original-Code<a>
+		 * @param	board		Die aktuelle Stellung als 0x88-Board
+		 * @param	zielFeld	Die Felder, die ueberprueft werden sollen
+		 * @param	weissAmZug	Wer ist am Zug? true = weiss, false = schwarz
+		 * @return	true = Zielfeld wird bedroht
+		 */ 
+	private boolean wirdBedroht(byte[] board, byte zielFeld, boolean weissAmZug) {
+			boolean wirdBedroht = false;
+			if (weissAmZug) {
+				
+				wirdBedroht = true;
+			} else { //Schwarz ist am Zug
+				
+				wirdBedroht = true;
+			}
+			return wirdBedroht;
+		}
+
+		
+		
 	public LinkedList<String> getZuege() {
 		return moeglicheRochaden;
 	}
