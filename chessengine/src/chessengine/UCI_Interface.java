@@ -1,10 +1,14 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package chessengine;
 
 import java.io.IOException;
 
 /**
  *
- * @author Arax
+ * @author Alexander Kessler
  */
 public interface UCI_Interface {
 
@@ -14,10 +18,29 @@ public interface UCI_Interface {
      */
     void bestmove(String move);
 
+    int getBinc();
+
+    int getBtime();
+
+    /**
+     * Die Methode getFEN liefert den gespeicherten FEN-String zurueck.
+     *
+     * @return String FEN-String
+     */
     String getFEN();
+
+    int getMovetime();
 
     boolean getStop();
 
+    int getWinc();
+
+    int getWtime();
+
+    /**
+     *
+     * @throws IOException
+     */
     void input() throws IOException;
     
 }
