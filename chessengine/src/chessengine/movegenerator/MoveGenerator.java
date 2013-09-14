@@ -78,35 +78,23 @@ implements MoveGeneratorInterface, Definitions {
 					//Uebergib das Board un den aktuellen mit der aktiven Farbe (true = weiss) und
 					//den erlaubten Zuegen der Fiugr an die Zugberechnung
 					switch (board[i]) {
-					case pawn_w :	berechneZugPawn(board, i, true, pawn_moves);
-						break;
-					case rook_w :	berechneZugRook(board, i, true, rook_moves);
-						break;
-					case knight_w : berechneZugKnight(board, i, true, knight_moves);
-						break;
-					case bishop_w :	berechneZugBishop(board, i, true, bishop_moves);
-						break;
-					case king_w :	berechneZugKing(board, i, true, king_moves);
-						break;
-					case queen_w :	berechneZugQueen(board, i, true, queen_moves);
-						break;
+					case pawn_w :	berechneZugPawn(board, i, true, pawn_moves);		break;
+					case rook_w :	berechneZugRook(board, i, true, rook_moves);		break;
+					case knight_w : berechneZugKnight(board, i, true, knight_moves);	break;
+					case bishop_w :	berechneZugBishop(board, i, true, bishop_moves);	break;
+					case king_w :	berechneZugKing(board, i, true, king_moves);		break;
+					case queen_w :	berechneZugQueen(board, i, true, queen_moves);		break;
 					}
 				} else {	//Wenn der Inhalt an diesem Index negativ ist, also Schwarz am Zug ist
 					//Uebergib das board und den aktuellen Index mit der aktiven Farbe (false = schwarz) und
 					//den erlaubten Zuegen der Figur an die Zugberechnung
 					switch (board[i]) {
-					case pawn_b :	berechneZugPawn(board, i, false, pawn_moves);
-						break;
-					case rook_b : 	berechneZugRook(board, i, false, rook_moves);
-						break;
-					case knight_b : berechneZugKnight(board, i, false, knight_moves);
-						break;
-					case bishop_b : berechneZugBishop(board, i, false, bishop_moves);
-						break;
-					case king_b : 	berechneZugKing(board, i, false, king_moves);
-						break;
-					case queen_b : 	berechneZugQueen(board, i, false, queen_moves);
-						break;
+					case pawn_b :	berechneZugPawn(board, i, false, pawn_moves);		break;
+					case rook_b : 	berechneZugRook(board, i, false, rook_moves);		break;
+					case knight_b : berechneZugKnight(board, i, false, knight_moves);	break;
+					case bishop_b : berechneZugBishop(board, i, false, bishop_moves);	break;
+					case king_b : 	berechneZugKing(board, i, false, king_moves);		break;
+					case queen_b : 	berechneZugQueen(board, i, false, queen_moves);		break;
 					}
 				}
 			}

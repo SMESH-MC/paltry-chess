@@ -116,33 +116,24 @@ implements Definitions {
 			/*
 			 * x = Feld des 0x88-"Geisterschachbretts"
 			 */
-			case 'x' :	break; //breche bei einem Feld des 0x88-Geisterschachbretts ab, ohne etwas hineinzuschreiben
-			case '1' : schachbrett[i] = leeresFeld;
-				break;
-			case 'P' : schachbrett[i] = pawn_w;
-				break;
-			case 'p' : schachbrett[i] = pawn_b;
-				break;
-			case 'R' : schachbrett[i] = rook_w;
-				break;
-			case 'r' : schachbrett[i] = rook_b;
-				break;
-			case 'N' : schachbrett[i] = knight_w;
-				break;
-			case 'n' : schachbrett[i] = knight_b;
-				break;
-			case 'B' : schachbrett[i] = bishop_w;
-				break;
-			case 'b' : schachbrett[i] = bishop_b;
-				break;
-			case 'K' : schachbrett[i] = king_w;
-				break;
-			case 'k' : schachbrett[i] = king_b;
-				break;
-			case 'Q' : schachbrett[i] = queen_w;
-				break;
-			case 'q' : schachbrett[i] = queen_b;
-				break;
+			//1. Moeglichkeit: breche bei einem Feld des 0x88-Geisterschachbretts ab, ohne etwas hineinzuschreiben
+			case 'x' :	break;
+			//2. Moeglichkeit: schreibe einen Wert in das Feld. Verhindert Zugriff auf null beim durchlaufen des ganzen Arrays
+			//case 'x' : schachbrett[i] = ungueltigesFeld;
+				//break;
+			case '1' : schachbrett[i] = leeresFeld;	break;
+			case 'P' : schachbrett[i] = pawn_w;		break;
+			case 'p' : schachbrett[i] = pawn_b;		break;
+			case 'R' : schachbrett[i] = rook_w;		break;
+			case 'r' : schachbrett[i] = rook_b;		break;
+			case 'N' : schachbrett[i] = knight_w;	break;
+			case 'n' : schachbrett[i] = knight_b;	break;
+			case 'B' : schachbrett[i] = bishop_w;	break;
+			case 'b' : schachbrett[i] = bishop_b;	break;
+			case 'K' : schachbrett[i] = king_w;		break;
+			case 'k' : schachbrett[i] = king_b;		break;
+			case 'Q' : schachbrett[i] = queen_w;	break;
+			case 'q' : schachbrett[i] = queen_b;	break;
 			}
 		}
 	}

@@ -7,6 +7,8 @@ package chessengine.movegenerator;
  */
 public interface Definitions {
  
+	//Konstante fuer Felder ausserhalb des gueltigen Boards (also Felder des 0x88-"Geisterboards"
+	public static final byte ungueltigesFeld = 9;
     //Konstante fuer leere Felder
     public static final byte leeresFeld = 0;
     //Konstanten fur die weissen Figuren

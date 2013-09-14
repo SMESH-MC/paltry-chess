@@ -114,29 +114,19 @@ implements Definitions {
 			boolean rochadeIstIllegal = false;
 			if (kurzeRochade) {
 				if (weissAmZug) {
-					//solange die Rochade legal ist
-						//wird eines der weissen Rochadenfelder bedroht?
-						rochadeIstIllegal = wirdBedroht(board, e1, true);	
-						rochadeIstIllegal = wirdBedroht(board, f1, true);
-						rochadeIstIllegal = wirdBedroht(board, g1, true);
-					
+					//prueft, ob eines der weissen Rochadenfelder bedroht wird
+					rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, f1, true) || wirdBedroht(board, g1, true));
 				} else { //Schwarz ist am Zug
-					//wird eines der schwarzen Rochadenfelder bedroht?
-					rochadeIstIllegal = wirdBedroht(board, e8, false);
-					rochadeIstIllegal = wirdBedroht(board, f8, false);
-					rochadeIstIllegal = wirdBedroht(board, g8, false);
+					//prueft, ob eines der schwarzen Rochadenfelder bedroht wird
+					rochadeIstIllegal = (wirdBedroht(board, e8, false) || wirdBedroht(board, f8, false) || wirdBedroht(board, g8, false));
 				}
 			} else { //bei langer Rochade
 				if (weissAmZug) {
-					//wird eines der weissen Rochadenfelder bedroht?
-					rochadeIstIllegal = wirdBedroht(board, e1, true);
-					rochadeIstIllegal = wirdBedroht(board, d2, true);
-					rochadeIstIllegal = wirdBedroht(board, c1, true);
+					//prueft, ob eines der weissen Rochadenfelder bedroht wird
+					rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, d2, true) || wirdBedroht(board, c1, true));
 				} else { //Schwarz ist am Zug
-					//wird eines der schwarzen Rochadenfelder bedroht?
-					rochadeIstIllegal = wirdBedroht(board, e8, false);
-					rochadeIstIllegal = wirdBedroht(board, d8, false);
-					rochadeIstIllegal = wirdBedroht(board, c8, false);
+					//prueft, ob eines der schwarzen Rochadenfelder bedroht wird
+					rochadeIstIllegal = (wirdBedroht(board, e8, false) || wirdBedroht(board, d8, false) || wirdBedroht(board, c8, false));
 				}
 			}
 			return rochadeIstIllegal;
@@ -157,10 +147,16 @@ implements Definitions {
 	private boolean wirdBedroht(byte[] board, byte zielFeld, boolean weissAmZug) {
 			boolean wirdBedroht = false;
 			if (weissAmZug) {
-				
+				//fuer alle gueltigen Felder des Boards
+				for (int i=0; i<=119 && ((i & 136) == 0); i++) {
+					if (board[i])
+				}
 				wirdBedroht = true;
 			} else { //Schwarz ist am Zug
-				
+				//fuer alle gueltigen Felder des Boards
+				for (int i=0; i<=119 && ((i & 136) == 0); i++) {
+					
+				}
 				wirdBedroht = true;
 			}
 			return wirdBedroht;
