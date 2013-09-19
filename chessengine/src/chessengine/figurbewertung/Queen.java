@@ -26,4 +26,5 @@ public class Queen extends OberFigur{
 				
 		return 	moeglichkeiten;
 	}
+
 }

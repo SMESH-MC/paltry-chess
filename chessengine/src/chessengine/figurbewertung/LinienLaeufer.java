@@ -34,6 +34,9 @@ public class LinienLaeufer {
  * @return
  */
 	public LinkedList<String> ermittleZuege(SchachPosition position, boolean istWeis, Stack<SchachPosition> bewegungsMuster, int reichWeite) {
+		return ermittleZuege( position,  istWeis,  bewegungsMuster,  reichWeite, null);
+	}
+	public LinkedList<String> ermittleZuege(SchachPosition position, boolean istWeis, Stack<SchachPosition> bewegungsMuster, int reichWeite, String neueRochade) {
 		
 		LinkedList<String> moeglichkeiten = new LinkedList<String>();
 		//zeiger.setXY(position);
@@ -54,14 +57,14 @@ public class LinienLaeufer {
 					
 					if(istWeis != schachBrett[x][y].getIstWeis()){// Wenn feindlich figure
 						
-						moeglichkeiten.push( generiereFen(x, y, position ) );//schlage //, schachBrett[x][y].getTyp()) typ der geschlagen figur
+						moeglichkeiten.push( generiereFen(x, y, position , neueRochade) );//schlage //, schachBrett[x][y].getTyp()) typ der geschlagen figur
 						
 					}
 					x=8; //in beiden fällen beende schleife
 					
 				}else{//else keine figure auf dem Feld
 					
-					moeglichkeiten.push( generiereFen(x, y, position ) );
+					moeglichkeiten.push( generiereFen(x, y, position , neueRochade) );
 					x = x + bewegungsMuster.peek().getX();//bewege nach muster
 					y = y + bewegungsMuster.peek().getY();
 				}//else
@@ -84,14 +87,14 @@ public class LinienLaeufer {
 		this.decoder = decoder;
 	}
 	
-	public String generiereFen(int x, int y, SchachPosition position){
-		Figur figur = schachBrett[ position.getX() ][ position.getY()];
-		neuesBrett = copy(schachBrett);
-		neuesBrett[ position.getX() ][ position.getY() ] = null; // setzt die alte position auf null
-		neuesBrett[ x][ y ] = figur; // setzt die figur auf das neue Feld
+	public String generiereFen(int x, int y, SchachPosition position, String neueRochade){
+
+		neuesBrett = bewegeFigur(x, y ,position);
 		
-		return decoder.codiere(neuesBrett);
+		return decoder.codiererNeuenZug(neuesBrett, neueRochade);
 	}
+
+
 	
 	/**
 	 * variations von genereFend spezialisiertfuer rochade
@@ -102,17 +105,12 @@ public class LinienLaeufer {
 	 * @param zielDesTurms
 	 * @return
 	 */
-	public  String generiereRochadenFen(int x, int y, SchachPosition position, SchachPosition ausgangsPostionTurm, SchachPosition zielDesTurms){
-		Figur figur = schachBrett[ position.getX() ][ position.getY()]; //speichert sich die alte Figur
-		neuesBrett = copy(schachBrett);
-		neuesBrett[ position.getX() ][ position.getY() ] = null; // setzt die alte position auf null
-		neuesBrett[ x][ y ] = figur; // setzt die figur auf das neue Feld
+	public  String generiereRochadenFen(int x, int y, SchachPosition position, SchachPosition ausgangsPostionTurm, SchachPosition zielDesTurms, String neueRochade){
+
+		neuesBrett = bewegeFigur(x,y,position); // bewegt den koenig von position nach x y
+		neuesBrett = bewegeFigur(zielDesTurms.getX(),zielDesTurms.getY(),ausgangsPostionTurm,neuesBrett);
 		
-		figur = schachBrett[ ausgangsPostionTurm.getX() ][ ausgangsPostionTurm.getY()]; 
-		neuesBrett[ ausgangsPostionTurm.getX() ][ ausgangsPostionTurm.getY() ] = null; // setzt die alteTurm position auf null
-		neuesBrett[ zielDesTurms.getX() ][ zielDesTurms.getY() ] = figur; // setzt die figur auf das neue Feld		
-		
-		return decoder.codiere(neuesBrett);
+		return decoder.codiererNeuenZug(neuesBrett, neueRochade);
 	}
 	/**
 	 *  
@@ -123,13 +121,9 @@ public class LinienLaeufer {
 	 * @return
 	 */
 	public  String generiereEnPassantFenSchlage(int x, int y, SchachPosition position, SchachPosition feindlicherBauer){
-		Figur figur = schachBrett[ position.getX() ][ position.getY()]; //speichert sich die alte Figur
-		neuesBrett = copy(schachBrett);
-		neuesBrett[ position.getX() ][ position.getY() ] = null; // setzt die alte position auf null
+		neuesBrett = bewegeFigur(x,y,position);
 		neuesBrett[ feindlicherBauer.getX() ][ feindlicherBauer.getY() ] = null; // entfernt den geschlagen Bauer
-		neuesBrett[ x][ y ] = figur; // setzt die figur auf das neue Feld
-			
-		return decoder.codiere(neuesBrett);
+		return decoder.codiererNeuenZug(neuesBrett);
 	}
 	/**
 	 *  aender den FEN so als waere ein Bauer um 2 nach vorn gerueckt und speichert die SchlagPosition ala EnPassant in den FEN
@@ -145,7 +139,7 @@ public class LinienLaeufer {
 		neuesBrett[ position.getX() ][ position.getY() ] = null; // setzt die alte position auf null
 		neuesBrett[ x][ y ] = figur; // setzt die figur auf das neue Feld
 			
-		return decoder.codiere(neuesBrett, schlagPosition);
+		return decoder.codiererNeuenZugEnpassant(neuesBrett, schlagPosition);
 	}
 	private Figur[][] copy(Figur[][] brett){
 		Figur[][] neuesBrett = new Figur[8][8];
@@ -159,6 +153,24 @@ public class LinienLaeufer {
 				}
 			}	
 		
+		return neuesBrett;
+	}
+	/**
+	 * Erstellt einen neuese Brett und bewegt die ensprechende Figur auf die gewuenschte position 
+	 * @param x Zielposition
+	 * @param y Zielposition
+	 * @param position  Start position
+	 * @return 
+	 */
+	private Figur[][] bewegeFigur(int x, int y, SchachPosition position) {
+		neuesBrett = copy(schachBrett);
+		neuesBrett = bewegeFigur( x,  y,  position, neuesBrett); 
+		return neuesBrett;
+	}
+	private Figur[][] bewegeFigur(int x, int y, SchachPosition position, Figur[][] neuesBrett) {
+		Figur figur = schachBrett[ position.getX() ][ position.getY()];
+		neuesBrett[ position.getX() ][ position.getY() ] = null; // setzt die alte position auf null
+		neuesBrett[ x][ y ] = figur; // setzt die figur auf das neue Feld
 		return neuesBrett;
 	}
 }//class

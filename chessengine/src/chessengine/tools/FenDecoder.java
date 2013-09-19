@@ -4,6 +4,7 @@
 	 * @param fen genormter fen string (Forsyth-Edwards-Notation)
 	 * @return figuren array mit 
 	 * 
+	 * !!!!! Beruecksichtige nicht Gruppe 5 und 6 im Fen string 
 	 * schwarz
 	 * 02
 	 * 01
@@ -83,23 +84,42 @@ public class FenDecoder {
 	
 	
 	
-	public String codiere(Figur[][] brett){
-			return codiere2(brett, "-",null); // "-" setzt fuer jeden zug das EnPassant auf nicht moeglich
+	public String codiererNeuenZug(Figur[][] brett){
+			return codiererNeuenZug(brett, "-",null); // "-" setzt fuer jeden zug das EnPassant auf nicht moeglich
 	}
-	public String codiere(Figur[][] brett, String rochade){
-		return codiere2(brett, null, rochade);
+	public String codiererNeuenZug(Figur[][] brett, String rochade){
+		return codiererNeuenZug(brett, "-", rochade);
 	}
-	public String codiere(Figur[][] brett, SchachPosition enPassant){
+	public String codiererNeuenZugEnpassant(Figur[][] brett, SchachPosition enPassant){
 		String neuesEnPassant; 
 		
 		neuesEnPassant = enPassant.getCharX() +""+ enPassant.getY();
 		
-		return codiere2(brett, neuesEnPassant,null);
+		return codiererNeuenZug(brett, neuesEnPassant,null);
 	}
-	private String codiere2(Figur[][] brett, String neuEnPassant, String neuRochade){
-			StringBuffer rueckgabe = new StringBuffer();
+	/**
+	 *  Verarbeitet  die Parrameter zu einen neuen Zug/Fen
+	 * @param brett
+	 * @param neuEnPassant
+	 * @param neuRochade
+	 * @return
+	 */
+	private String codiererNeuenZug(Figur[][] brett, String neuEnPassant, String neuRochade){
+			
 			String rochade = fenTeile[2];
 			String enPassant = fenTeile[3];
+			int zugnummer  = Integer.parseInt(fenTeile[5]);
+			int halbzuege = Integer.parseInt(fenTeile[4]) + 1;  // zaehlt um 1 hoch
+			String amZug = fenTeile[1];
+			String positionen = arrayFenWandler(brett);
+				
+			if( amZug.equals("b")){ // wenn schwarz am zug
+				amZug = "w"; //wechsel amZug farbe auf weis
+				zugnummer++; // zaehlt die zufnummer hoch 
+			}else{ // sonst ist weis am zug
+				amZug = "b"; //wechsel amZug farbe auf schwarz
+				
+			}
 			
 			if(neuEnPassant != null){// schreibt fall vorhanden 
 				enPassant = neuEnPassant;
@@ -107,41 +127,53 @@ public class FenDecoder {
 			if( neuRochade != null ){// schreibt fall vorhanden 
 				rochade = neuRochade;
 			}
-			char letztesZeichen = '?'; //  ? == dummer inizial wert der in den schleifen rausgefiltert wird  
-			for(int y = 7; y >= 0 ; y--){ //Zeilen
-				
-				for(int x = 0; x < 8 ; x++){ //spalten
-					
-					if(brett[x][y] != null){ // Wenn istFigur	(<-nicht leer)
-						
-							
-							if(letztesZeichen != '?'){ //filterung des dummes Zeichen  das nicht in den String reingeschoben werden soll
-								rueckgabe.append( letztesZeichen ); // schiebt letztes Zeichen  in den String
-							}
-							
-							
-							letztesZeichen =  brett[x][y].toChar();
-					}else{  //sonst leeres Feld
-						if( letztesZeichen >= '0' && letztesZeichen <= '9'){ // Wenn letztes Zeiche eine Zahl
-							letztesZeichen++;
-						}else{
-							if(letztesZeichen != '?'){ //filterung des dummes Zeichen  das nicht in den String reingeschoben werden soll
-								rueckgabe.append( letztesZeichen ); // schiebt letztes Zeichen  in den String
-							}
-							letztesZeichen = '1';
-						}
-						
-					}//sonst zahl
-					
-				}
-				rueckgabe.append( letztesZeichen ); // schiebt letztes Zeichen  in den String
-				letztesZeichen = '/'; 
-			}
-		return rueckgabe.toString() +" "+  fenTeile[1]+" "+ rochade +" "+  enPassant +" "+  fenTeile[4]+" "+  fenTeile[5];
+			
+			
+			
+			
+		return positionen +" "+  amZug +" "+ rochade +" "+  enPassant +" "+  halbzuege+" "+  zugnummer;
 	}//codierung
 	
-	
-	
+	/**
+	 * Wandelt ein 2dim Figure array in die 1 Gruppe vom Fen String um
+	 * @param brett
+	 * @return
+	 */
+	private String arrayFenWandler(Figur[][] brett){
+		StringBuffer rueckgabe = new StringBuffer();
+		char letztesZeichen = '?'; //  ? == dummer inizial wert der in den schleifen rausgefiltert wird  
+		for(int y = 7; y >= 0 ; y--){ //Zeilen
+			
+			for(int x = 0; x < 8 ; x++){ //spalten
+				
+				if(brett[x][y] != null){ // Wenn istFigur	(<-nicht leer)
+					
+						
+						if(letztesZeichen != '?'){ //filterung des dummes Zeichen  das nicht in den String reingeschoben werden soll
+							rueckgabe.append( letztesZeichen ); // schiebt letztes Zeichen  in den String
+						}
+						
+						
+						letztesZeichen =  brett[x][y].toChar();
+				}else{  //sonst leeres Feld
+					if( letztesZeichen >= '0' && letztesZeichen <= '9'){ // Wenn letztes Zeiche eine Zahl
+						letztesZeichen++;
+					}else{
+						if(letztesZeichen != '?'){ //filterung des dummes Zeichen  das nicht in den String reingeschoben werden soll
+							rueckgabe.append( letztesZeichen ); // schiebt letztes Zeichen  in den String
+						}
+						letztesZeichen = '1';
+					}
+					
+				}//sonst zahl
+				
+			}
+			rueckgabe.append( letztesZeichen ); // schiebt letztes Zeichen  in den String
+			letztesZeichen = '/'; 
+		}
+		return rueckgabe.toString();
+		
+	}
 	public String toString(){
 		
 		return fenTeile[0]+" "+fenTeile[1]+" "+ fenTeile[2] +" "+  fenTeile[3] +" "+  fenTeile[4]+" "+  fenTeile[5];

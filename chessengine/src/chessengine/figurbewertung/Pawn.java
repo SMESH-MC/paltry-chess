@@ -44,14 +44,14 @@ public class Pawn extends OberFigur {
 			if (y < 7) { // ist eins vorm Bauer ueberhaupt ein Feld
 				zielY = y+1;
 				if (schachBrett[x][zielY] == null) {// eins vor ist frei
-					moeglichkeiten.push( linienlaeufer.generiereFen(x, zielY , position));
+					moeglichkeiten.push( linienlaeufer.generiereFen(x, zielY , position, null));
 				}
 				if(x < 7){//rechts ein feld
 				
 					zielX = x+1;
 					if(schachBrett[zielX][zielY] !=  null){ // vorne rechts eine Figur
 						if (schachBrett[zielX][zielY].getIstWeis() != istWeis) { // vorne rechts ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position ) );
+							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position, null ) );
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 6 ){ // vorne rechts schlag per enPassant#
@@ -65,7 +65,7 @@ public class Pawn extends OberFigur {
 					zielX = x-1;
 					if(schachBrett[zielX][zielY] !=  null){ // vorne rechts eine Figur
 						if (schachBrett[zielX][zielY].getIstWeis() != istWeis) {// vorne Links ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position ));
+							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position , null));
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 6)   { // vorne rechts schlag per enPassant
@@ -85,13 +85,13 @@ public class Pawn extends OberFigur {
 			if (y > 0) { // ist eins vorm Bauer ueberhaupt ein Feld
 				zielY = y-1;
 				if (schachBrett[x][zielY] == null) {// eins vor ist frei
-					moeglichkeiten.push( linienlaeufer.generiereFen(x, zielY, position));
+					moeglichkeiten.push( linienlaeufer.generiereFen(x, zielY, position, null));
 				}
 				if(x < 7){//rechts ein feld
 					zielX = x+1;
 					if(schachBrett[zielX][zielY] !=  null){ // vorne rechts eine Figur
 						if (schachBrett[zielX][zielY].getIstWeis() != istWeis) { // vorne rechts ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position ));
+							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position , null));
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 2 )   { // vorne rechts schlag per enPassant
@@ -102,7 +102,7 @@ public class Pawn extends OberFigur {
 					zielX = x-1;
 					if(schachBrett[zielX][zielY] !=  null){ // vorne rechts eine Figur
 						if (schachBrett[zielX][zielY].getIstWeis() != istWeis) {// vorne Links ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position ));
+							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position , null));
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 2 )  { // vorne rechts schlag per enPassant
@@ -143,5 +143,7 @@ public class Pawn extends OberFigur {
 		this.schachBrett = schachBrett;
 		this.enPassant = enPassant;
 	}
+
+
 
 }// class

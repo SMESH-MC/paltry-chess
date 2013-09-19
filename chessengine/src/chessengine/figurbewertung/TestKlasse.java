@@ -2,6 +2,7 @@ package chessengine.figurbewertung;
 
 
 import java.util.LinkedList;
+
 import chessengine.tools.Figur;
 import chessengine.tools.SchachPosition;
 import chessengine.tools.FenDecoder;
@@ -19,7 +20,7 @@ public class TestKlasse {
 			//fen =  "rnbk3r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1");
-			fen =  "r2k3r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w KQkq - 0 1";
+			fen =  "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
 			
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
@@ -32,7 +33,7 @@ public class TestKlasse {
 			//arrayAusgabe( schachBrett);
 			
 		System.out.println(fen);	
-		FigurBewertung figuren= new FigurBewertung();
+		FigurBewertungInterface figuren= new FigurBewertung();
 		figuren.inizialisiereBrett( fen ); //WICHTIG
 		SchachPosition position = new SchachPosition(0,0);
 		/*
@@ -57,7 +58,7 @@ public class TestKlasse {
 				}
 			}	
 		}*/
-		System.out.print("Alle Zuege fur farb am Zug---------------------------------------");
+		System.out.println("Alle Zuege fur farbe am Zug---------------------------------------");
 		LinkedList<String> liste2= figuren.ermittleAlleZuege(fen);
 		while(liste2.isEmpty() == false){
 			fenAusgabe(liste2.pop(),decoder );
@@ -92,5 +93,6 @@ public class TestKlasse {
 			System.out.println("-------------------");
 		}
 		System.out.println(decoder.toString());
+		System.out.println();
 	}
 }

@@ -19,6 +19,17 @@ public class Knight extends OberFigur{
 	@Override
 	public LinkedList<String> ermittleZuege(SchachPosition position, boolean istWeis) {
 		
+
+		
+		return linienlaeufer.ermittleZuege( position,  istWeis,   getMuster(),  1); //uebergebe das an ermittlezuege wo draus einen Bus baut
+	}
+
+	public void inizialisiere(Figur[][] schachBrett) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Stack<SchachPosition> getMuster() {
 		Stack<SchachPosition> bewegungsMuster = new Stack<SchachPosition>(); // erstelle eine Reihe an bewegungsmuster
 		bewegungsMuster.push(  new SchachPosition(2 , 1) ); //2 rechts oben
 		bewegungsMuster.push(  new SchachPosition(2 , -1) ); //   unten
@@ -28,13 +39,7 @@ public class Knight extends OberFigur{
 		bewegungsMuster.push(  new SchachPosition(-1 , 2) ); // links
 		bewegungsMuster.push(  new SchachPosition(1 , -2) ); //2 unten recht
 		bewegungsMuster.push(  new SchachPosition(-1 , -2) ); //links
-		
-		return linienlaeufer.ermittleZuege( position,  istWeis,   bewegungsMuster,  1); //uebergebe das an ermittlezuege wo draus einen Bus baut
-	}
-
-	public void inizialisiere(Figur[][] schachBrett) {
-		// TODO Auto-generated method stub
-		
+		return bewegungsMuster;
 	}
 
 

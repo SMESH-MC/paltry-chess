@@ -95,8 +95,16 @@ public class SchachPosition {
 	}	
 	
 	
-	
-	
+	//
+	public boolean equals(SchachPosition position){
+		boolean istGleich = false;
+		if(position.getX() == x){
+			if(position.getY() == y){
+				istGleich = true;
+			}
+		}
+		return istGleich;
+	}
 	
 	public String toString(){
 		

@@ -1,9 +1,11 @@
 package chessengine.figurbewertung;
 
 import chessengine.tools.*;
-import java.util.LinkedList;
 
-public class FigurBewertung {
+import java.util.LinkedList;
+import java.util.Stack;
+
+public class FigurBewertung implements FigurBewertungInterface {
 	
 	private final static int KING_DEFAULT 	=110000;// ITS OVER 9000!!!
 	private final static int QUEEN_DEFAULT 	=900;
@@ -43,8 +45,8 @@ public class FigurBewertung {
 		 queen = new Queen( QUEEN_DEFAULT,  bishop, rook);
 	}
 
-	/**
-	 *Methoder die Alle Figuren mit einem Spielfeld versorgt auf grunde dessen es das Zuege berechnet
+	/* (non-Javadoc)
+	 * @see figurbewertung.FigurBewewertung#inizialisiereBrett(java.lang.String)
 	 */
 	public void inizialisiereBrett(String fen){
 		
@@ -56,18 +58,13 @@ public class FigurBewertung {
 		//queen.inizialisiere(schachBrett); wird nicht benoetig das diese nur rook und bishop aufruft
 		//bishop.inizialisiere(schachBrett); // wird nicht benoetig da diese nur linienlaeufer/musterlaeufer aufrufen
 		//knight.inizialisiere(schachBrett);
-		//rook.inizialisiere(schachBrett);
+		rook.inizialisiere( decoder.getRochaden());
 
 		pawn.inizialisiere(schachBrett, decoder.getEnPassant());	
 		
 	}
-	/**
-	 * 
-	 * @param position die Position von der Figure desen Zuegen ermittlet werden soll (x=0 unten | y = 0  links| Weis ist unten
-	 * @param schachbrett ein Schachbrett das mit dem FenDecoder genereriert worden ist
-	 * @param rochade Welche Rochaden möglich sind
-	 * @param enPassant ob ein querschlagen des Bauers moeglich ist
-	 * @return liefert Zuege CHO CHO CHO CHO CHO CHO CHO CHO als Stack 
+	/* (non-Javadoc)
+	 * @see figurbewertung.FigurBewewertung#ermittleZuege(tools.SchachPosition)
 	 */
 	public  LinkedList<String> ermittleZuege(SchachPosition position) {
 		LinkedList<String> rueckgabe = new LinkedList<String>();
@@ -99,10 +96,8 @@ public class FigurBewertung {
 		}//switch
 		return rueckgabe;	
 	} //ermittle
-	/**
-	 *  Ermittle alle zuege fuer die farbe die gerade am Zug ist
-	 * @param fen der aktuellen ausgangstellung
-	 * @return list Alle Zuege die von diese Stellung ausgefuehrt werden koennen
+	/* (non-Javadoc)
+	 * @see figurbewertung.FigurBewewertung#ermittleAlleZuege(java.lang.String)
 	 */
 		public  LinkedList<String> ermittleAlleZuege(String fen) {
 			LinkedList<String> rueckgabe = new LinkedList<String>();
@@ -119,14 +114,19 @@ public class FigurBewertung {
 						if( istWeisAmZug == schachBrett[x][y].getIstWeis() ){ // Wenn Figur auf Feld die gleiche Farbe hat wie der der am Zug ist
 							rueckgabe.addAll( ermittleZuege(position) );
 						}
+						
 					}
 				}//for spalten
 			}//for zeilen
+			
+			
+			
+			
 		return rueckgabe;
 	} //ermittle Alle
 	
-	/**
-	 * q b n r p 
+	/* (non-Javadoc)
+	 * @see figurbewertung.FigurBewewertung#setBewertung(int, int, int, int, int)
 	 */
 	public void setBewertung(int q, int b, int n, int r, int p){
 		queen.setBewertung(q);
@@ -135,6 +135,9 @@ public class FigurBewertung {
 		rook.setBewertung(r);
 		pawn.setBewertung(p);
 	}
+	/* (non-Javadoc)
+	 * @see figurbewertung.FigurBewewertung#getBewertung(char)
+	 */
 	public int getBewertung (char typ){
 		int bewertung = 0;
 		switch ( typ )
@@ -160,6 +163,41 @@ public class FigurBewertung {
 			  default: 
 		}//switch
 		return bewertung;
+		
 	} // getBewertung
-	
+	/**
+	 * liefert die Bewegungsmuster  fuer einfache Bewegungen
+	 * KEINE SPEZIAL FAELLER
+	 * KEIE BAUER
+	 * KEINE DAME (da dame = Turm + laeufer)
+	 * @param typ figur : qbrnpk
+	 * @return Stack mit Bewegungsmuster
+	 */
+	public Stack<SchachPosition> getMuster (char typ){
+		Stack<SchachPosition> muster = null;
+		switch ( typ )
+	    {
+	      	  case PAWN:
+	      		  muster = null;
+		        break;
+		      case ROOK:
+		    	  muster = rook.getMuster();
+		        break;
+		      case KNIGHT:
+		    	  muster = knight.getMuster();
+		        break;
+		      case BISHOP:
+		    	  muster = bishop.getMuster();
+		    	break;
+			  case QUEEN:
+				  muster = null ;
+			    break;
+			  case KING:
+				  muster = king.getMuster();
+			    break;					  
+			  default: 
+		}//switch
+		return muster;
+		
+	} // getBewertung
 }
