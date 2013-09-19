@@ -23,4 +23,12 @@ public class Manager {
             System.out.println(e);
         }
     }
+    
+    /**
+     * Setter fuer den Stop-Befehl.
+     * @Param boolean neuer Wert fuer stop-variable
+     */
+    public void setStop(boolean stop){
+        this.stop = stop;
+    }
 }
