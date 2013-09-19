@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
  * @author Alexander Kessler
  *
  */
-public class UCI implements UCI_Interface   {
+public class UCI implements UCI_Interface, Runnable  {
 
     /**
      * GUI to engine :(ueber Reader.readln) uci, debug [on | off], isready,
@@ -213,5 +213,19 @@ public class UCI implements UCI_Interface   {
     @Override
     public int getMovetime() {
         return movetime;
+    }
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
+    class UCIListener implements Runnable{
+
+        @Override
+        public void run() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        
     }
 }
