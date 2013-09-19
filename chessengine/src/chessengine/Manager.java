@@ -13,6 +13,9 @@ public class Manager {
         stop = false;
     }
 
+    /**
+     * Initialisiert den Manager fuer den ersten gebrauch.
+     */
     public void initialize (){
         try {
             newUCI = new UCI();
@@ -25,10 +28,18 @@ public class Manager {
     }
     
     /**
-     * Setter fuer den Stop-Befehl.
-     * @Param boolean neuer Wert fuer stop-variable
+     * Setter fuer die stop-Variable.
+     * @param stop neuer Wert fuer stop
      */
     public void setStop(boolean stop){
         this.stop = stop;
+    }
+    
+    /**
+     * Getter fuer die stop-Variable.
+     * @return 
+     */
+    public boolean getStop(){
+        return stop;
     }
 }
