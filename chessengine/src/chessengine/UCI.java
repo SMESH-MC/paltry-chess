@@ -7,12 +7,13 @@ package chessengine;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import javax.sound.midi.Soundbank;
 
 /**
  * @author Alexander Kessler
  *
  */
-public class UCI implements UCI_Interface, Runnable  {
+public class UCI implements UCI_Interface, Runnable {
 
     /**
      * GUI to engine :(ueber Reader.readln) uci, debug [on | off], isready,
@@ -51,6 +52,7 @@ public class UCI implements UCI_Interface, Runnable  {
     private int movetime;
     private int winc;
     private int binc;
+    private boolean go;
 
     public UCI() {
         //FEN initialisiert mit Standard Startposition
@@ -63,7 +65,7 @@ public class UCI implements UCI_Interface, Runnable  {
         winc = 0;
         binc = 0;
         movetime = 0;
-
+        go = false;
     }
 
     /**
@@ -76,7 +78,7 @@ public class UCI implements UCI_Interface, Runnable  {
         String[] cmdArray = null;
         String cmd = null;
 
-        while (!cmdIN.equals(QUIT)) {
+        do {
             cmdIN = reader.readLine();
             //konvertiert den Befehl in Kleinbuchstaben
             cmdIN = cmdIN.toLowerCase();
@@ -98,23 +100,19 @@ public class UCI implements UCI_Interface, Runnable  {
                     stop = true;
                     break;
                 case GO:
+                    go = true;
                     go(cmdArray);
                     break;
-                default:
-                    // TODO falsche kommandos sollen ignoriert werden.
-                    //Keine fehlermeldung?
-                    System.err.println(UNKNOWN_CMD);
-                    break;
             }
-            System.exit(0);
-        }
+        } while (!cmdIN.equals(QUIT));
+        System.exit(0);
     }
 
     /**
      * Gibt die ID der Engine auf stdout aus.
      */
     private void id() {
-        System.out.print("id name " + NAME + "\nid author " + AUTHOR);
+        System.out.println("id name " + NAME + "\nid author " + AUTHOR);
     }
 
     private void position(String cmdIN, String[] cmdArray) {
@@ -172,6 +170,7 @@ public class UCI implements UCI_Interface, Runnable  {
     public void bestmove(String move) {
         //Stop wird auf false gesetzt, fuer den naechsten Zug
         stop = false;
+        go = false;
         System.out.println("bestmove " + move);
     }
 
@@ -217,15 +216,11 @@ public class UCI implements UCI_Interface, Runnable  {
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    class UCIListener implements Runnable{
-
-        @Override
-        public void run() {
-            throw new UnsupportedOperationException("Not supported yet.");
+        //throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            input();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        
     }
 }
