@@ -15,7 +15,7 @@ public class EvaluationTreeNode implements EvaluationTreeNodeInterface {
 		int spieler;
 		int bewertung;
 	    Object listFollowingBoards;
-	    Object wurzel;
+	    String wurzel;
 		
 	}
 	
