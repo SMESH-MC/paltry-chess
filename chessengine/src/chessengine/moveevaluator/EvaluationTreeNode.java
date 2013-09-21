@@ -9,5 +9,17 @@ public class EvaluationTreeNode implements EvaluationTreeNodeInterface {
 	private EvaluationTreeNodeInterface wurzel; // enthaelt die Wurzel (Ausgangsstellung)
 	
 	
+	
+	public EvaluationTreeNode() {
+		String fen;
+		int spieler;
+		int bewertung;
+	    Object listFollowingBoards;
+	    Object wurzel;
+		
+	}
+	
+	
+	
 
 }
