@@ -10,25 +10,33 @@ import java.util.LinkedList;
 public class MoveEvaluatorTreeNode {
 	private Board Board;
 	private int BoardValue;
-	private LinkedList<Board> ChildBoards;
+	private LinkedList<MoveEvaluatorTreeNode> ChildBoards;
+	private int hasChild; 
 
 	
 	public MoveEvaluatorTreeNode(Board board){
 		this.Board = board;
 		this.BoardValue = board.getBordValue();
+		this.hasChild = 0;
 	}
 	
 	public MoveEvaluatorTreeNode(Board board, LinkedList<String> BoardFens){
 		this.Board = board;
 		this.BoardValue = board.getBordValue();
-		setChildBoards(this , BoardFens);
+		setChildBoards(BoardFens);
+		this.hasChild = BoardFens.size();
 		}
 	
-	public MoveEvaluatorTreeNode setChildBoards(MoveEvaluatorTreeNode Node, LinkedList<String> BoardFens) {
+	public void setChildBoards(LinkedList<String> BoardFens) {
 		for (int i = 0; i < BoardFens.size(); i++){
-			this.ChildBoards.add(new Board(BoardFens.get(i)));
+			this.ChildBoards.addLast(new MoveEvaluatorTreeNode(new Board (BoardFens.get(i))));
 		} 
-		return Node;
-		
+	}
+	
+	public MoveEvaluatorTreeNode getChildAtPos(int pos) {
+		if (pos < hasChild) {
+			return this.ChildBoards.get(pos);
+		}
+		return null;
 	}
 }
