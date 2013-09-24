@@ -15,5 +15,7 @@ public interface BoardInterface {
 	public abstract String FenEncode();
 
 	public abstract Character IntToFen(int toConvert);
+	
+	public abstract int getBoardValue();
 
 }

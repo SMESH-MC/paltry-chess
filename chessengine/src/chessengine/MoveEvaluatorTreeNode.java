@@ -39,4 +39,8 @@ public class MoveEvaluatorTreeNode {
 		}
 		return null;
 	}
+	
+	public int hasChild() {
+		return hasChild;
+	}
 }

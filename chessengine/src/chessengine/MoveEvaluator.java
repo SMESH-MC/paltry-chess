@@ -1,5 +1,7 @@
 package chessengine;
 
+import chessengine.movegenerator.MoveGenerator;
+
 public class MoveEvaluator {
 	//Variablendefinitionen
 	private Board currentBoard;
@@ -10,8 +12,11 @@ public class MoveEvaluator {
 	private int userCancel;
 	ZugThread zthread;
 	
+	private MoveEvaluatorTreeNode root;
+	
 	public String IncomingFEN;
 	public String OutgoingFEN;
 	
+
 	
 }

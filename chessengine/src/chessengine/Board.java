@@ -1,6 +1,8 @@
 
 package chessengine;
 
+import chessengine.figurbewertung.FigurBewertung;
+
 /**
  * @author Christian Koenig & Dominik Erb
  *
@@ -34,11 +36,25 @@ public class Board implements BoardInterface  {
 			
 	}
 	
+	public Board(String fen) {
+		boardArray = new int[128];	//Boardarray
+		color = true;				//Farbe am Zug, true = weiss; false = schwarz
+		enPassent = false;			//En Passents Verfuegbarkeit, true = ja; false= nein
+		rochade_gross = 0;			//0 keiner,	1 weiss, 2 schwarz, 3 beide
+		rochade_klein = 0;			//0 keiner,	1 weiss, 2 schwarz, 3 beide
+		zugnummer = 0;				
+		halbzuege = 0;		
+		InitBoard(fen);
+			
+	}
+	
 	public void InitBoard() {
 		IncomingFen = boardStart;
 		FenDecode(IncomingFen);
-		
-		
+	}
+	
+	public void InitBoard(String fen) {
+		FenDecode(fen);
 	}
 	
 	public boolean ResetBoard() {
@@ -244,5 +260,53 @@ public class Board implements BoardInterface  {
 			return '1';
 		}
 	}
-	 
+	
+	/**
+	 * 
+	 * @return int wert die die Stellung des Bords hat
+	 * nach schachbewertung 
+	 * negativer wert ist ein vorteil fuer Schwarz
+	 * positiver wert ist ein vorteil fuer Weiss
+	 */
+	public int getBordValue() {
+		int figur;
+		int value = 0;
+		for(int i = 0; i < 128; i++ ){
+			figur = boardArray[i];
+			switch (figur) {
+			case 1:
+				value -= FigurBewertung.getPawnValue();
+				break;
+			case 11:
+				value += FigurBewertung.getPawnValue();
+				break;
+			case 2:
+				value -= FigurBewertung.getRookValue();
+				break;
+			case 12:
+				value += FigurBewertung.getRookValue();
+				break;
+			case 3:
+				value -= FigurBewertung.getKnightValue();
+				break;
+			case 13:
+				value += FigurBewertung.getKnightValue();
+				break;
+			case 4:
+				value -= FigurBewertung.getBishopValue();
+				break;
+			case 14:
+				value += FigurBewertung.getBishopValue();
+				break;
+			case 5:
+				value -= FigurBewertung.getQueenValue();
+				break;
+			case 15:
+				value += FigurBewertung.getQueenValue();
+				break;
+			default:
+				break;
+		}
+		return value;
+	}
 }
