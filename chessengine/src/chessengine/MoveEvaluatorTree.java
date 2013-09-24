@@ -18,7 +18,7 @@ public class MoveEvaluatorTree {
 	private LinkedList<MoveEvaluatorTreeNode> childList; 
 	
 	
-	public MoveEvaluatorTreeNode MoveEvaluatorTee(Board board, int tiefe) {
+	public MoveEvaluatorTreeNode MoveEvaluatorTee(Board board) {
 		this.root = new MoveEvaluatorTreeNode(board);
 		generateTree();
 		return root;

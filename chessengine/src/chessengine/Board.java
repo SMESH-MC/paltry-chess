@@ -306,7 +306,11 @@ public class Board implements BoardInterface  {
 				break;
 			default:
 				break;
+			}
+
 		}
 		return value;
 	}
+	
+	
 }

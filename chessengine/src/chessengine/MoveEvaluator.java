@@ -12,10 +12,23 @@ public class MoveEvaluator {
 	private int userCancel;
 	ZugThread zthread;
 	
+	private MoveEvaluatorTree moveTree;
+	
 	private MoveEvaluatorTreeNode root;
 	
 	public String IncomingFEN;
 	public String OutgoingFEN;
+	
+	public void getMove() {
+		moveTree = new MoveEvaluatorTree(currentBoard);
+		zugBewerten();
+	}
+	
+	private void zugBewerten() {
+		int max;
+		int min;
+		
+	}
 	
 
 	
