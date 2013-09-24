@@ -34,7 +34,7 @@ public class Manager {
      */
     public void initialize() {
         try {
-            newUCI = new UCI();
+            newUCI = new UCI(this);
             //muss noch in einen extra Thread
             newUCI.input();
             stop = newUCI.getStop();

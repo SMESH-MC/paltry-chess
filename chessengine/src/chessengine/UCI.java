@@ -53,8 +53,9 @@ public class UCI implements UCI_Interface, Runnable {
     private int winc;
     private int binc;
     private boolean go;
+    private Manager manager;
 
-    public UCI() {
+    public UCI(Manager manager) {
         //FEN initialisiert mit Standard Startposition
         fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR "
                 + "w KQkq - 0 1";
@@ -66,6 +67,7 @@ public class UCI implements UCI_Interface, Runnable {
         binc = 0;
         movetime = 0;
         go = false;
+        this.manager = manager;
     }
 
     /**
