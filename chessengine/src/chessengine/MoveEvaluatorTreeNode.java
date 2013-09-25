@@ -24,13 +24,13 @@ public class MoveEvaluatorTreeNode {
 		this.Board = board;
 		this.BoardValue = board.getBordValue();
 		setChildBoards(BoardFens);
-		this.hasChild = BoardFens.size();
 		}
 	
 	public void setChildBoards(LinkedList<String> BoardFens) {
 		for (int i = 0; i < BoardFens.size(); i++){
 			this.ChildBoards.addLast(new MoveEvaluatorTreeNode(new Board (BoardFens.get(i))));
 		} 
+		this.hasChild = BoardFens.size();
 	}
 	
 	public MoveEvaluatorTreeNode getChildAtPos(int pos) {

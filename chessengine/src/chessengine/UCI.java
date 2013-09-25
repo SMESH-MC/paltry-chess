@@ -7,7 +7,6 @@ package chessengine;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import javax.sound.midi.Soundbank;
 
 /**
  * @author Alexander Kessler
