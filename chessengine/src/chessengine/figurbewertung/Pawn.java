@@ -1,19 +1,16 @@
-package chessengine.figurbewertung;
+package figurbewertung;
 
 /**
- * author Philip
- * stand 06.08.2013
+ * 
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
+ * unschoener coder
  */
 import java.util.LinkedList;
 
-import chessengine.tools.Figur;
-import chessengine.tools.SchachPosition;
-/**
- * 
- * @author Philip
- * !!Achtung haesslicher Bauer aeh code
- * 
- */
+import tools.Figur;
+import tools.SchachPosition;
+
 public class Pawn extends OberFigur {
 
 	private Figur[][] schachBrett;

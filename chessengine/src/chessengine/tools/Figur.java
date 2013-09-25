@@ -1,7 +1,8 @@
-package chessengine.tools;
-/*
- * Author Philip
- * Stand 05.08.2013
+package tools;
+/**
+ * 
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
  */
 public class Figur {
 	

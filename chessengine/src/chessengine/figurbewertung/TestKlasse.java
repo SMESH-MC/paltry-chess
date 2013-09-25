@@ -1,11 +1,16 @@
-package chessengine.figurbewertung;
+/**
+ *  Testklasse zum Testen der FigurBewertung und des beinhalteted Zuggenerators
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
+ */
+package figurbewertung;
 
 
 import java.util.LinkedList;
 
-import chessengine.tools.Figur;
-import chessengine.tools.SchachPosition;
-import chessengine.tools.FenDecoder;
+import tools.Figur;
+import tools.SchachPosition;
+import tools.FenDecoder;
 public class TestKlasse {
 
 
@@ -20,8 +25,8 @@ public class TestKlasse {
 			//fen =  "rnbk3r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1");
-			fen =  "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
-			
+			//fen =  "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
+			fen =  "r3k2r/ppppRppp/7N/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/8/p7/PPPP4/3pp3/4pppp/8/RNBQKBNR w KQkq - 0 1";

@@ -1,18 +1,17 @@
-package chessengine.figurbewertung;
+package figurbewertung;
 
 import java.util.LinkedList;
 import java.util.Stack;
 
-import chessengine.tools.FenDecoder;
-import chessengine.tools.Figur;
-import chessengine.tools.SchachPosition;
+import tools.FenDecoder;
+import tools.Figur;
+import tools.SchachPosition;
+
 
 /**
- * stand 05.08.2013  
- * erzeugt zugmöglichkeiten für klassische linieneinheiten wie Läufer und Turm und König
- * 
- * @author Huns
- *
+ *  erzeugt zugmöglichkeiten für klassische linieneinheiten wie Läufer und Turm und König
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
  */
 public class LinienLaeufer {
 
@@ -172,5 +171,50 @@ public class LinienLaeufer {
 		neuesBrett[ position.getX() ][ position.getY() ] = null; // setzt die alte position auf null
 		neuesBrett[ x][ y ] = figur; // setzt die figur auf das neue Feld
 		return neuesBrett;
+	}
+	
+	
+	//speziall fuer Koenig
+	/** modizfiziert Kopie von ermittlerZuege
+	 * laeuft die Muster ab und  liefert  angetroffen "schlagbaren" einheiten zurueckt
+	 * @return Figure der anderen Farbe auf den "Linien/Mustern"
+	 */
+	public Stack<Figur> ermittleSchlaege(SchachPosition position, boolean istWeis, SchachPosition[] bewegungsMuster, int reichWeite) {
+		int zeiger = 0;
+
+		Stack<Figur> treffer = new Stack<Figur>();
+		//zeiger.setXY(position);
+		int x = position.getX();
+		int y = position.getY();
+		int weite;
+		
+		while( zeiger < bewegungsMuster.length  ){//läuft alle Muster ab
+			x =  position.getX(); //setze auf Ausgangsposition
+			y =  position.getY();
+			weite = 0;
+			x = x + bewegungsMuster[zeiger].getX();
+			y = y + bewegungsMuster[zeiger].getY();
+			while(x < 8  && x >=0 && y >=0 && y < 8 && weite < reichWeite){ //Solange Rand nicht rand ereicht und reichweiter nich tueberschritten
+
+				if( schachBrett[x][y] != null ){//Wenn eine Figur auf dem Feld
+					
+					if(istWeis != schachBrett[x][y].getIstWeis()){// Wenn feindlich figure
+						treffer.add(schachBrett[x][y]);
+					}
+					x=8; //in beiden fällen beende schleife
+					
+				}else{//else keine figure auf dem Feld
+					
+					x = x + bewegungsMuster[zeiger].getX();//bewege nach muster
+					y = y + bewegungsMuster[zeiger].getY();
+				}//else
+				weite++ ; //weite +1 das nächstes Feld  geprüft wird. Diesen komentar ignorieren
+				
+			}//linie /Muster
+			zeiger++;// naechste muster bearbeiten
+		}//richtungen
+		
+
+		return treffer;
 	}
 }//class

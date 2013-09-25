@@ -1,8 +1,8 @@
-package chessengine.tools;
+package tools;
 /**
  * 
- * @author Philip
- * Stand : 05.08.2013
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
  * speichert die schachposition von 0 - 7
  */
 public class SchachPosition {
@@ -21,13 +21,20 @@ public class SchachPosition {
 		this.y = y;
 	}
 	
-	public  void bewege(int x, int y){
-		this.x = this.x + x;
-		this.y = this.y + y;
+	public  boolean bewege(int x, int y){
+		int endX = this.x + x;
+		int endY = this.y + y;
+		if(endX<8 && endX >= 0  && endY<8 && endY >= 0){
+			this.x = endX;
+			this.y = endY;
+			return true;
+		}else{
+			return false;
+		}
+
 	}
-	public  void bewege(SchachPosition pos){
-		this.x = this.x + pos.getX();
-		this.y = this.y + pos.getY();
+	public  boolean bewege(SchachPosition pos){
+		return bewege(pos.getX(), pos.getY());
 	}
 	
 	

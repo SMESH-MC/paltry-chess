@@ -1,10 +1,13 @@
-package chessengine.figurbewertung;
-
+package figurbewertung;
+/**  
+* @author Philip Hunsicker
+* Stand : 25.09.2013
+*/
 import java.util.LinkedList;
 import java.util.Stack;
 
-import chessengine.tools.Figur;
-import chessengine.tools.SchachPosition;
+import tools.Figur;
+import tools.SchachPosition;
 
 public class Knight extends OberFigur{
 

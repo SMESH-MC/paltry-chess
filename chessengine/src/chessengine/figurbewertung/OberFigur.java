@@ -1,11 +1,11 @@
-package chessengine.figurbewertung;
-/*
- * Stand 04.08.2013
- * Author Philip
+package figurbewertung;
+/**
  * 
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
  */
 import java.util.LinkedList;
-import chessengine.tools.*;
+import tools.*;
 
 public abstract class OberFigur{
 

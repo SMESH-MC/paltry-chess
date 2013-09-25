@@ -1,8 +1,13 @@
-package chessengine.figurbewertung;
+/**
+ * 
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
+ */
+package figurbewertung;
 
 import java.util.LinkedList;
 
-import chessengine.tools.SchachPosition;
+import tools.SchachPosition;
 
 public class Queen extends OberFigur{
 

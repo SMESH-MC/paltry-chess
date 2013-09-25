@@ -1,17 +1,20 @@
-		/**
+	/**
+ 	* 
+ 	* @author Philip Hunsicker
+ 	* Stand : 25.09.2013
+
 	 * Decodiert den FEN String in eine Array mit 0 0 ist unten links, und weis  ist unten
 	 *
 	 * @param fen genormter fen string (Forsyth-Edwards-Notation)
 	 * @return figuren array mit 
-	 * 
-	 * !!!!! Beruecksichtige nicht Gruppe 5 und 6 im Fen string 
+
 	 * schwarz
 	 * 02
 	 * 01
 	 * 00 10 20
 	 * weis
 	 */
-package chessengine.tools;
+package tools;
 
 public class FenDecoder {
 	private final static String trennzeichen = "/";

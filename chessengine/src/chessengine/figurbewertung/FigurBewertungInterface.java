@@ -1,9 +1,12 @@
-package chessengine.figurbewertung;
-
+package figurbewertung;
+/**  
+* @author Philip Hunsicker
+* Stand : 25.09.2013
+*/
 import java.util.LinkedList;
 import java.util.Stack;
 
-import chessengine.tools.SchachPosition;
+import tools.SchachPosition;
 
 public interface FigurBewertungInterface {
 
@@ -13,12 +16,8 @@ public interface FigurBewertungInterface {
 	public abstract void inizialisiereBrett(String fen);
 
 	/**
-	 * 
 	 * @param position die Position von der Figure desen Zuegen ermittlet werden soll (x=0 unten | y = 0  links| Weis ist unten
-	 * @param schachbrett ein Schachbrett das mit dem FenDecoder genereriert worden ist
-	 * @param rochade Welche Rochaden möglich sind
-	 * @param enPassant ob ein querschlagen des Bauers moeglich ist
-	 * @return liefert Zuege CHO CHO CHO CHO CHO CHO CHO CHO als Stack 
+	 * @return liefert Zuege CHO CHO CHO CHO CHO CHO CHO CHO als Linked List
 	 */
 	public abstract LinkedList<String> ermittleZuege(SchachPosition position); //ermittle
 
@@ -34,8 +33,31 @@ public interface FigurBewertungInterface {
 	 */
 	public abstract void setBewertung(int q, int b, int n, int r, int p);
 
+	/* (non-Javadoc)
+	 * @see figurbewertung.FigurBewewertung#getBewertung(char)
+	 */
 	public abstract int getBewertung(char typ); // getBewertung
 
-	public abstract Stack<SchachPosition> getMuster (char typ);
-	
+	/**
+	 * liefert die Bewegungsmuster  fuer einfache Bewegungen
+	 * KEINE SPEZIAL FAELLER
+	 * KEIE BAUER
+	 * KEINE DAME (da dame = Turm + laeufer)
+	 * @param typ figur : qbrnpk
+	 * @return Stack mit Bewegungsmuster
+	 */
+	public abstract Stack<SchachPosition> getMuster(char typ); // getBewertung
+
+	public abstract int getKingBewertung();
+
+	public abstract int getQuennBewertung();
+
+	public abstract int getBishopBewertung();
+
+	public abstract int getKinghtBewertung();
+
+	public abstract int getRookBewertung();
+
+	public abstract int getPawnBewertung();
+
 }

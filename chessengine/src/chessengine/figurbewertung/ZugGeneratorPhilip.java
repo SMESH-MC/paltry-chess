@@ -1,10 +1,15 @@
-package chessengine.figurbewertung;
+/**
+ * 
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
+ */
+package figurbewertung;
 
 import java.util.LinkedList;
 
 
 public class ZugGeneratorPhilip implements ZugGeneratorPhilipInterface {
-	FigurBewertung bewertung ;
+	FigurBewertungInterface bewertung ;
 	
 	public ZugGeneratorPhilip(){
 		bewertung = new  FigurBewertung();

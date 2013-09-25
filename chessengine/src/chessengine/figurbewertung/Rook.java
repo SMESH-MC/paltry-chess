@@ -1,10 +1,15 @@
-package chessengine.figurbewertung;
+/**
+ * 
+ * @author Philip Hunsicker
+ * Stand : 25.09.2013
+ */
+package figurbewertung;
 
 import java.util.LinkedList;
 import java.util.Stack;
 
 
-import chessengine.tools.SchachPosition;
+import tools.SchachPosition;
 
 public class Rook extends OberFigur{
 

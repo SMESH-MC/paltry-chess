@@ -1,11 +1,14 @@
-package chessengine.figurbewertung;
-
-import chessengine.tools.*;
+package figurbewertung;
+/**  
+* @author Philip Hunsicker
+* Stand : 25.09.2013
+*/
+import tools.*;
 
 import java.util.LinkedList;
 import java.util.Stack;
 
-public class FigurBewertung implements FigurBewertungInterface {
+public class FigurBewertung implements FigurBewertungInterface  {
 	
 	private final static int KING_DEFAULT 	=110000;// ITS OVER 9000!!!
 	private final static int QUEEN_DEFAULT 	=900;
@@ -37,16 +40,17 @@ public class FigurBewertung implements FigurBewertungInterface {
 		 decoder = new FenDecoder();
 		 linienLaeufer = new LinienLaeufer(); // Eine Klasse die Zugeneration von mehrenKlassen uebernimmt
 		 
-		 king = new King( KING_DEFAULT, linienLaeufer );
+		 
 		 bishop = new Bishop( BISHOP_DEFAULT, linienLaeufer );
 		 knight = new Knight( KNIGHT_DEFAULT, linienLaeufer );
 		 rook = new Rook( ROOK_DEFAULT , linienLaeufer);
 		 pawn = new Pawn( PAWN_DEFAULT , linienLaeufer);
 		 queen = new Queen( QUEEN_DEFAULT,  bishop, rook);
+		 king = new King( KING_DEFAULT, linienLaeufer, knight.getMuster(), rook.getMuster(), bishop.getMuster() );
 	}
 
-	/* (non-Javadoc)
-	 * @see figurbewertung.FigurBewewertung#inizialisiereBrett(java.lang.String)
+	/**
+	 *Methoder die Alle Figuren mit einem Spielfeld versorgt auf grunde dessen es das Zuege berechnet
 	 */
 	public void inizialisiereBrett(String fen){
 		
@@ -63,8 +67,9 @@ public class FigurBewertung implements FigurBewertungInterface {
 		pawn.inizialisiere(schachBrett, decoder.getEnPassant());	
 		
 	}
-	/* (non-Javadoc)
-	 * @see figurbewertung.FigurBewewertung#ermittleZuege(tools.SchachPosition)
+	/**
+	 * @param position die Position von der Figure desen Zuegen ermittlet werden soll (x=0 unten | y = 0  links| Weis ist unten
+	 * @return liefert Zuege CHO CHO CHO CHO CHO CHO CHO CHO als Linked List
 	 */
 	public  LinkedList<String> ermittleZuege(SchachPosition position) {
 		LinkedList<String> rueckgabe = new LinkedList<String>();
@@ -96,15 +101,18 @@ public class FigurBewertung implements FigurBewertungInterface {
 		}//switch
 		return rueckgabe;	
 	} //ermittle
-	/* (non-Javadoc)
-	 * @see figurbewertung.FigurBewewertung#ermittleAlleZuege(java.lang.String)
+	/**
+	 *  Ermittle alle zuege fuer die farbe die gerade am Zug ist
+	 * @param fen der aktuellen ausgangstellung
+	 * @return list Alle Zuege die von diese Stellung ausgefuehrt werden koennen
 	 */
 		public  LinkedList<String> ermittleAlleZuege(String fen) {
 			LinkedList<String> rueckgabe = new LinkedList<String>();
 			SchachPosition position = new SchachPosition();
 			boolean istWeisAmZug = decoder.getIstWeisAmZug() ;
-			
 			inizialisiereBrett(fen);
+			
+
 			
 			for(int y =0 ;y <8;y++)
 			{
@@ -119,14 +127,60 @@ public class FigurBewertung implements FigurBewertungInterface {
 				}//for spalten
 			}//for zeilen
 			
+			if(king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ //sucht den koenig und prueft ob er bedroht ist
+
+				rueckgabe = loescheBedrohteZuege(rueckgabe, istWeisAmZug); //Filtert zuege Raus die die Bedrohung nicht aufheben
+			}
+			return rueckgabe;
+				
 			
-			
-			
-		return rueckgabe;
 	} //ermittle Alle
-	
-	/* (non-Javadoc)
-	 * @see figurbewertung.FigurBewewertung#setBewertung(int, int, int, int, int)
+		/** Loescht alle Zuege aus der Linked List in der der Koenig immernoch Bedroht ist
+		 * 
+		 * @param liste
+		 * @param istWeisAmZug
+		 * @return list ohne bedrote zuege
+		 */
+	private LinkedList<String> loescheBedrohteZuege(LinkedList<String> liste, boolean istWeisAmZug) {
+		LinkedList<String> modifierteListe = new LinkedList<String>();
+		String lokalerFen;
+		while(!liste.isEmpty()){
+			lokalerFen = liste.pop();
+			//System.out.print("pop");
+			inizialisiereBrett(lokalerFen); 
+			if(!king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ // Wenn koenig nach Zug nicht bedroht
+				modifierteListe.add(lokalerFen);
+			}
+		}
+		return modifierteListe;
+	}
+
+	/**
+	 *  Sucht die Position des Koenigs
+	 * @return
+	 */
+	private SchachPosition sucheKoenig(boolean istWeisAmZug) {
+		SchachPosition koenig = new SchachPosition();
+
+		for(int y =0 ;y <8;y++)
+		{
+			for (int x =0; x < 8 ; x++ ){
+				
+				if(schachBrett[x][y] != null){//ein figur auf dem feld
+					if( istWeisAmZug == schachBrett[x][y].getIstWeis()  ){ // Wenn Figur auf Feld die gleiche Farbe hat wie der der am Zug ist
+						if(schachBrett[x][y].getTyp() == KING){
+							koenig.setXY(x, y);
+						}
+					}
+					
+				}
+			}//for spalten
+		}//for zeilen
+		return koenig;
+	}
+
+	/**
+	 * q b n r p 
 	 */
 	public void setBewertung(int q, int b, int n, int r, int p){
 		queen.setBewertung(q);
@@ -200,4 +254,51 @@ public class FigurBewertung implements FigurBewertungInterface {
 		return muster;
 		
 	} // getBewertung
+
+	public static int getKING_DEFAULT() {
+		return KING_DEFAULT;
+	}
+
+	public static int getQUEEN_DEFAULT() {
+		return QUEEN_DEFAULT;
+	}
+
+	public static int getBISHOP_DEFAULT() {
+		return BISHOP_DEFAULT;
+	}
+
+	public static int getKNIGHT_DEFAULT() {
+		return KNIGHT_DEFAULT;
+	}
+
+	public static int getROOK_DEFAULT() {
+		return ROOK_DEFAULT;
+	}
+
+	public static int getPAWN_DEFAULT() {
+		return PAWN_DEFAULT;
+	}
+	public  int getKingBewertung() {
+		return king.getBewertung();
+	}
+
+	public  int getQuennBewertung() {
+		return queen.getBewertung();
+	}
+
+	public  int getBishopBewertung() {
+		return bishop.getBewertung();
+	}
+
+	public  int getKinghtBewertung() {
+		return knight.getBewertung();
+	}
+
+	public  int getRookBewertung() {
+		return rook.getBewertung();
+	}
+
+	public  int getPawnBewertung() {
+		return pawn.getBewertung();
+	}
 }
