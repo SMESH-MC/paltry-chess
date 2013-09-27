@@ -55,9 +55,9 @@ implements Definitions {
 				//ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
 			
 				//legaler Rochaden-Zug (die letzten 3 Punkte zusammengefasst):
-				istRochadeIllegal(boardZuRochieren, true, true)
+				!istRochadeIllegal(boardZuRochieren, true, true) //board, kurze Rochade, weiss am Zug
 				) {
-			byte[] boardNachRochade
+			byte[] boardNachRochade 
 			
 			
 			/* alte FEN_Rochade
@@ -145,17 +145,71 @@ implements Definitions {
 		 * @return	true = Zielfeld wird bedroht
 		 */ 
 	private boolean wirdBedroht(byte[] board, byte zielFeld, boolean weissAmZug) {
-			boolean wirdBedroht = false;
 			if (weissAmZug) {
 				//fuer alle gueltigen Felder des Boards
 				for (int i=0; i<=119 && ((i & 136) == 0); i++) {
-					if (board[i])
-				}
-				wirdBedroht = true;
+						switch (board[i]) {
+						/*
+						 * Hinweis: fuer i-b kann der Wert negativ werden. Da jedoch mit dem stets positiven 
+						 * zielFeld verglichen wird, ist dies unerheblich, da das Vergleichsergebnis auch im 
+						 * negativen Fall dann ungleich zielFeld ist.
+						 */
+						//addiere das Feld, auf dem der Bauer steht, mit seinen moegliche Schlagzuegen und
+						//gib true aus, wenn er auf das Zielfeld schlagen kann
+						case pawn_b  :	for (byte b : pawn_attack_moves) {if (i - b == zielFeld){return true;} }
+							break;
+						//addiere das Feld, auf dem der Springer steht, mit seinen moegliche Schlagzuegen und
+						//gib true aus, wenn er auf das Zielfeld schlagen kann
+						case knight_b: 	for (byte b : knight_moves) {if (i - b == zielFeld){return true;} }
+							break;
+						case queen_b : 	for (byte b : queen_moves) {
+											//Setze Schrittweite 1 in in neue Variable
+											int neuesStartfeld_q = i;
+											do {
+												if (startfeld_q - b == zielFeld){return true;}
+												//Setze neues Startfeld auf die Schrittweite 1
+												startfeld_q -= b;
+											} while (board[startfeld_q] == 0 && 0 <= startfeld_q && startfeld_q <= 119);
+										}
+							break;
+						case bishop_b: 	for (byte b : bishop_moves) {
+												if (i - b == zielFeld){return true;}
+										}
+							break;
+						case rook_b : 	for (byte b : rook_moves) {
+												if (i - b == zielFeld){return true;}
+										}
+							break;
+						//addiere das Feld, auf dem der Koenig steht, mit seinen moegliche Schlagzuegen und
+						//gib true aus, wenn er auf das Zielfeld schlagen kann
+						case king_b : 	for (byte b : king_moves) {if (i - b == zielFeld){return true;} }
+							break;
+						}//endswitch
+				}//endfor
+				//wenn keine Bedrohung gefunden wurde, gibt false zurueck
+				return false;
 			} else { //Schwarz ist am Zug
 				//fuer alle gueltigen Felder des Boards
 				for (int i=0; i<=119 && ((i & 136) == 0); i++) {
-					
+					/*
+					 * Hinweis: fuer i+b kann der Wert über Byte.MAX steigen und wird daher negativ.
+					 * Da jedoch mit dem stets positiven zielFeld verglichen wird, ist dies unerheblich,
+					 * da das Vergleichsergebnis auch im negativen Fall dann ungleich zielFeld ist.
+					 */
+					switch (board[i]) {
+					case pawn_w 	: 
+						break;
+					case knight_w 	: 
+						break;
+					case queen_w 	: 
+						break;
+					case bishop_w 	: 
+						break;
+					case rook_w 	: 
+						break;
+					case king_w 	: 
+						break;
+					}
 				}
 				wirdBedroht = true;
 			}

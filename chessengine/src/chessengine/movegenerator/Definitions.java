@@ -27,6 +27,7 @@ public interface Definitions {
     public static final byte king_b		= -7;
     //Konstanten fuer die Zuege
     public static final byte[] pawn_moves	= {16, 32, 15, 17};
+    public static final byte[] pawn_attack_moves	= {15, 17};
     public static final byte[] bishop_moves	= {-17, -15, 15, 17};
     public static final byte[] rook_moves	= {-16, -1, 1, 16};
     public static final byte[] queen_moves	= {-17, -16, -15, -1, 1, 15, 16, 17} ;
