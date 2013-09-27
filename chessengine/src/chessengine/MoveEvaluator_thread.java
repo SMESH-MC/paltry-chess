@@ -1,6 +1,6 @@
 package chessengine;
 
-public class MoveEvaluator {
+public class MoveEvaluator_thread {
 	//Variablendefinitionen
 	private Board currentBoard;
 	private Board predictionBoard;

@@ -6,7 +6,7 @@ package chessengine;
 
 /**
  *
- * @author Thorsten
+ * @author Thorsten Jakobs, Alexander Kessler
  */
 public class StartEngine {
     public static void main(String[] args) {

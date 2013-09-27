@@ -5,11 +5,10 @@
 package chessengine;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * @author Alexander Kessler
+ * @author Alexander Kessler, Thorsten Jakobs
  *
  */
 public class UCI implements UCI_Interface, Runnable {
@@ -60,11 +59,11 @@ public class UCI implements UCI_Interface, Runnable {
                 + "w KQkq - 0 1";
         reader = new BufferedReader(new InputStreamReader(System.in));
         stop = false;
-        wtime = 0;
-        btime = 0;
+        wtime = 999999999;
+        btime = 999999999;
         winc = 0;
         binc = 0;
-        movetime = 0;
+        movetime = 60000;
         go = false;
         this.manager = manager;
     }
@@ -74,7 +73,7 @@ public class UCI implements UCI_Interface, Runnable {
      * @throws IOException
      */
     @Override
-    public void input() throws IOException {
+    public void input() throws Exception {
         String cmdIN = null;
         String[] cmdArray = null;
         String cmd = null;
@@ -98,12 +97,15 @@ public class UCI implements UCI_Interface, Runnable {
                     position(cmdIN, cmdArray);
                     break;
                 case STOP:
-                    stop = true;
+                    manager.setStop(true);
                     break;
                 case GO:
                     go = true;
                     go(cmdArray);
                     break;
+                case "setoption":
+                    throw new UnsupportedOperationException("not yet "
+                            + "implemented");
             }
         } while (!cmdIN.equals(QUIT));
         System.exit(0);
@@ -161,6 +163,8 @@ public class UCI implements UCI_Interface, Runnable {
                 System.out.println("e");
             }
         }
+
+        manager.run();
     }
 
     /**
@@ -170,7 +174,7 @@ public class UCI implements UCI_Interface, Runnable {
     @Override
     public void bestmove(String move) {
         //Stop wird auf false gesetzt, fuer den naechsten Zug
-        stop = false;
+        manager.setStop(false);
         go = false;
         System.out.println("bestmove " + move);
     }
@@ -183,11 +187,6 @@ public class UCI implements UCI_Interface, Runnable {
     @Override
     public String getFEN() {
         return fen;
-    }
-
-    @Override
-    public boolean getStop() {
-        return stop;
     }
 
     @Override
@@ -217,7 +216,6 @@ public class UCI implements UCI_Interface, Runnable {
 
     @Override
     public void run() {
-        //throw new UnsupportedOperationException("Not supported yet.");
         try {
             input();
         } catch (Exception e) {

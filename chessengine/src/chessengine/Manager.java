@@ -1,11 +1,10 @@
 package chessengine;
 
-
 /**
  *
- * @author Alexander Kessler
+ * @author Alexander Kessler, Thorsten Jakobs
  */
-public class Manager {
+public class Manager implements Runnable {
 
     private UCI_Interface newUCI;
     private BoardInterface Board;
@@ -17,6 +16,7 @@ public class Manager {
     private int movetime;
     private int winc;
     private int binc;
+    private String bestZug;
 
     public Manager() {
         stop = false;
@@ -27,6 +27,7 @@ public class Manager {
         movetime = 0;
         winc = 0;
         binc = 0;
+        bestZug = null;
     }
 
     /**
@@ -35,24 +36,22 @@ public class Manager {
     public void initialize() {
         try {
             newUCI = new UCI(this);
-            //muss noch in einen extra Thread
-            newUCI.input();
-            stop = newUCI.getStop();
+            newUCI.run();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
+
     /**
-     * Uebernimmt alle relevanten Variablenwerte 
+     * Uebernimmt alle relevanten Variablenwerte
      */
-    private void getAll(){
+    private void getAll() {
         fen = newUCI.getFEN();
         wtime = newUCI.getWtime();
         btime = newUCI.getBtime();
         winc = newUCI.getWinc();
         binc = newUCI.getBinc();
         movetime = newUCI.getMovetime();
-        stop = newUCI.getStop();
     }
 
     /**
@@ -71,5 +70,14 @@ public class Manager {
      */
     public boolean getStop() {
         return stop;
+    }
+
+    @Override
+    public void run() {
+        getAll();
+        //An dieser Stelle muesste das berechnende Objekt(MoveEvaluator?) 
+        //erzeugt werden
+        //bestZug = moveEvaluator.best_zug();
+        newUCI.bestmove(bestZug);
     }
 }

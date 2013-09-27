@@ -8,7 +8,7 @@ import java.io.IOException;
 
 /**
  *
- * @author Alexander Kessler
+ * @author Alexander Kessler, Thorsten Jakobs
  */
 public interface UCI_Interface {
 
@@ -31,8 +31,6 @@ public interface UCI_Interface {
 
     int getMovetime();
 
-    boolean getStop();
-
     int getWinc();
 
     int getWtime();
@@ -41,6 +39,7 @@ public interface UCI_Interface {
      *
      * @throws IOException
      */
-    void input() throws IOException;
-    
+    void input() throws Exception;
+
+    void run();
 }
