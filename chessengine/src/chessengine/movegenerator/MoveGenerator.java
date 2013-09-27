@@ -42,24 +42,12 @@ implements MoveGeneratorInterface, Definitions {
 		//nimmt sich die von FenDecode in ein Array umgewandelte aktuelle Stellung
 		schachbrett  = f1.getSchachbrett();
 
-/* alte Version der Rochade
-		///wenn der Inhalt NICHT "-" ist, stosse Rochadenueberpruefung an, die dann eventuell moegliche Rochadenzuege in die Liste
-        // der moeglichen Zuege schreibt
-    	if (!splittedFEN[9].equals("-")) {
-        	if (splittedFEN[8].equals("w")) {
-        		Rochade r1 = new Rochade(splittedFEN, true);
-        	} else {
-        		Rochade r1 = new Rochade(splittedFEN, false);
-        	}
-        	r1.get
-        }
-*/
-    	
-		/* neue Version der Rochade */
+		/* neue Version der Rochade 
 		Rochade0x88 r1 = new Rochade0x88();
 		r1.setSchachbrett(schachbrett);
 		r1.getZuege();
-		
+													funzt noch nicht
+		*/
 		zuegeBerechnen(schachbrett);
     }
     
@@ -76,7 +64,7 @@ implements MoveGeneratorInterface, Definitions {
 				//Wenn der Wert an diesem Index positiv ist, also Weiss am Zug ist
 				if (board[i] > 0) {
 					//Uebergib das Board und den aktuellen Index mit der aktiven Farbe (true = weiss) und
-					//den erlaubten Zuegen der Fiugr an die Zugberechnung
+					//den erlaubten Zuegen der Figur an die Zugberechnung
 					switch (board[i]) {
 					case pawn_w :	berechneZug(		board, i, true, pawn_moves);		break;
 					case rook_w :	berechneSlidingZug(	board, i, true, rook_moves);		break;
@@ -102,7 +90,18 @@ implements MoveGeneratorInterface, Definitions {
 	}
 	
     
-    /**
+	
+    private void berechneSlidingZug(byte[] board, int startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void berechneZug(byte[] board, int startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
 	 * getter der Klasse, der die moeglichen Zuege ausgibt
 	 * 
 	 * @return	Liste aller moeglichen Zuege

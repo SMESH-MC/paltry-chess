@@ -102,48 +102,48 @@ implements Definitions {
 			
 		}
 		
-		/**
-		 * Diese Methode prueft, ob der Koenig im Schach steht, ins Schach rochieren wuerde oder
-		 * ueber ein bedrohtes Feld rochieren muesste
-		 * 
-		 * @param	board			Die Stellung, von der aus die Rochade ueberprueft werden soll
-		 * @param	kurzeRochade	true = kurze Rochade, false = lange Rochade
-		 * @return	weissAmZug		true = weiss am Zug, false = schwarz am Zug
-		 */
-		private boolean istRochadeIllegal(byte[] board, boolean kurzeRochade, boolean weissAmZug) {
-			boolean rochadeIstIllegal = false;
-			if (kurzeRochade) {
-				if (weissAmZug) {
-					//prueft, ob eines der weissen Rochadenfelder bedroht wird
-					rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, f1, true) || wirdBedroht(board, g1, true));
-				} else { //Schwarz ist am Zug
-					//prueft, ob eines der schwarzen Rochadenfelder bedroht wird
-					rochadeIstIllegal = (wirdBedroht(board, e8, false) || wirdBedroht(board, f8, false) || wirdBedroht(board, g8, false));
-				}
-			} else { //bei langer Rochade
-				if (weissAmZug) {
-					//prueft, ob eines der weissen Rochadenfelder bedroht wird
-					rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, d2, true) || wirdBedroht(board, c1, true));
-				} else { //Schwarz ist am Zug
-					//prueft, ob eines der schwarzen Rochadenfelder bedroht wird
-					rochadeIstIllegal = (wirdBedroht(board, e8, false) || wirdBedroht(board, d8, false) || wirdBedroht(board, c8, false));
-				}
+	/**
+	 * Diese Methode prueft, ob der Koenig im Schach steht, ins Schach rochieren wuerde oder
+	 * ueber ein bedrohtes Feld rochieren muesste
+	 * 
+	 * @param	board			Die Stellung, von der aus die Rochade ueberprueft werden soll
+	 * @param	kurzeRochade	true = kurze Rochade, false = lange Rochade
+	 * @return	weissAmZug		true = weiss am Zug, false = schwarz am Zug
+	 */
+	private boolean istRochadeIllegal(byte[] board, boolean kurzeRochade, boolean weissAmZug) {
+		boolean rochadeIstIllegal = false;
+		if (kurzeRochade) {
+			if (weissAmZug) {
+				//prueft, ob eines der weissen Rochadenfelder bedroht wird
+				rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, f1, true) || wirdBedroht(board, g1, true));
+			} else { //Schwarz ist am Zug
+				//prueft, ob eines der schwarzen Rochadenfelder bedroht wird
+				rochadeIstIllegal = (wirdBedroht(board, e8, false) || wirdBedroht(board, f8, false) || wirdBedroht(board, g8, false));
 			}
-			return rochadeIstIllegal;
+		} else { //bei langer Rochade
+			if (weissAmZug) {
+				//prueft, ob eines der weissen Rochadenfelder bedroht wird
+				rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, d2, true) || wirdBedroht(board, c1, true));
+			} else { //Schwarz ist am Zug
+				//prueft, ob eines der schwarzen Rochadenfelder bedroht wird
+				rochadeIstIllegal = (wirdBedroht(board, e8, false) || wirdBedroht(board, d8, false) || wirdBedroht(board, c8, false));
+			}
 		}
+		return rochadeIstIllegal;
+	}
 			
 
 
-		/** Diese Methode prueft, ob ein angegebenes Zielfeld angegriffen wird.
-		 * Zur Ueberpruefung von "Schach" und Rochade
-		 *
-		 * @author Marc Pierce (Original C#), Sascha Schuhmacher (Umsetzung nach Java passend zur Projekarbeit)
-		 * @see <a href="http://stackoverflow.com/questions/7197369/chess-programming-no-ai-moves-validation?answertab=votes#tab-top">Original-Code<a>
-		 * @param	board		Die aktuelle Stellung als 0x88-Board
-		 * @param	zielFeld	Die Felder, die ueberprueft werden sollen
-		 * @param	weissAmZug	Wer ist am Zug? true = weiss, false = schwarz
-		 * @return	true = Zielfeld wird bedroht
-		 */ 
+	/** Diese Methode prueft, ob ein angegebenes Zielfeld angegriffen wird.
+	 * Zur Ueberpruefung von "Schach" und Rochade
+	 *
+	 * @author Marc Pierce (Original C#), Sascha Schuhmacher (Umsetzung nach Java passend zur Projekarbeit)
+	 * @see <a href="http://stackoverflow.com/questions/7197369/chess-programming-no-ai-moves-validation?answertab=votes#tab-top">Original-Code<a>
+	 * @param	board		Die aktuelle Stellung als 0x88-Board
+	 * @param	zielFeld	Die Felder, die ueberprueft werden sollen
+	 * @param	weissAmZug	Wer ist am Zug? true = weiss, false = schwarz
+	 * @return	true = Zielfeld wird bedroht
+	 */ 
 	private boolean wirdBedroht(byte[] board, byte zielFeld, boolean weissAmZug) {
 			if (weissAmZug) {
 				//fuer alle gueltigen Felder des Boards
@@ -162,23 +162,11 @@ implements Definitions {
 						//gib true aus, wenn er auf das Zielfeld schlagen kann
 						case knight_b: 	for (byte b : knight_moves) {if (i - b == zielFeld){return true;} }
 							break;
-						case queen_b : 	for (byte b : queen_moves) {
-											//Setze Schrittweite 1 in in neue Variable
-											int neuesStartfeld_q = i;
-											do {
-												if (startfeld_q - b == zielFeld){return true;}
-												//Setze neues Startfeld auf die Schrittweite 1
-												startfeld_q -= b;
-											} while (board[startfeld_q] == 0 && 0 <= startfeld_q && startfeld_q <= 119);
-										}
+						case queen_b : 	slidingZug(queen_moves, (byte)i, board, zielFeld, true);
 							break;
-						case bishop_b: 	for (byte b : bishop_moves) {
-												if (i - b == zielFeld){return true;}
-										}
+						case bishop_b: 	slidingZug(bishop_moves, (byte)i, board, zielFeld, true);
 							break;
-						case rook_b : 	for (byte b : rook_moves) {
-												if (i - b == zielFeld){return true;}
-										}
+						case rook_b : 	slidingZug(rook_moves, (byte)i, board, zielFeld, true);
 							break;
 						//addiere das Feld, auf dem der Koenig steht, mit seinen moegliche Schlagzuegen und
 						//gib true aus, wenn er auf das Zielfeld schlagen kann
@@ -217,6 +205,29 @@ implements Definitions {
 		}
 
 		
+	/**
+	 * Hilfsmethode zur Schleifenberechnung von Figuren, die beliebig viele Felder ziehen duerfen
+	 * 
+	 * @return
+	 */
+	private boolean slidingZug(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld, boolean weissAmZug) {
+		if (weissAmZug) {
+			for (byte b : erlaubteZuege) {
+				//gehe eine 1 Feld in die Schrittrichtung
+				int feldNachSchritt = startfeld + b;
+				do {//gebe true aus, wenn das erreichte Feld das zu ueberpruefende Zielfeld ist
+					if (feldNachSchritt == zielfeld) {return true;}
+					//gehe ansonsten 1 Feld in Schrittrichtung weiter
+					feldNachSchritt -= b;
+				} while (board[feldNachSchritt] == 0);	//solang das erreichte Schrittfeld leer ist,
+													//d.h. die Figur weiterziehen kann
+			}
+		} else { //schwarz am Zug 
+			
+		
+		}
+		return false;
+	}
 		
 	public LinkedList<String> getZuege() {
 		return moeglicheRochaden;
