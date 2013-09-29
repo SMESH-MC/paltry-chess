@@ -14,7 +14,7 @@
 	 * 00 10 20
 	 * weis
 	 */
-package tools;
+package chessengine.tools;
 
 public class FenDecoder {
 	private final static String trennzeichen = "/";

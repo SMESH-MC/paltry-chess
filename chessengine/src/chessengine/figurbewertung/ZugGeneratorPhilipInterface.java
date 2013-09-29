@@ -1,4 +1,4 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 import java.util.LinkedList;
 

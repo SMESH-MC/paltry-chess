@@ -1,9 +1,9 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 /**  
 * @author Philip Hunsicker
 * Stand : 25.09.2013
 */
-import tools.*;
+import chessengine.tools.*;
 
 import java.util.LinkedList;
 import java.util.Stack;

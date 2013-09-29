@@ -1,4 +1,4 @@
-package figurbewertung;
+package chessengine.figurbewertung;
 
 /**
  * 
@@ -8,8 +8,8 @@ package figurbewertung;
  */
 import java.util.LinkedList;
 
-import tools.Figur;
-import tools.SchachPosition;
+import chessengine.tools.Figur;
+import chessengine.tools.SchachPosition;
 
 public class Pawn extends OberFigur {
 

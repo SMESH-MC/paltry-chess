@@ -1,4 +1,4 @@
-package tools;
+package chessengine.tools;
 /**
  * 
  * @author Philip Hunsicker

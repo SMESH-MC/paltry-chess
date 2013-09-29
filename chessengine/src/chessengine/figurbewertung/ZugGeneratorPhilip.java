@@ -3,7 +3,7 @@
  * @author Philip Hunsicker
  * Stand : 25.09.2013
  */
-package figurbewertung;
+package chessengine.figurbewertung;
 
 import java.util.LinkedList;
 
