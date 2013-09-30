@@ -57,7 +57,7 @@ implements Definitions {
 				//legaler Rochaden-Zug (die letzten 3 Punkte zusammengefasst):
 				!istRochadeIllegal(boardZuRochieren, true, true) //board, kurze Rochade, weiss am Zug
 				) {
-			byte[] boardNachRochade;
+			byte[] boardNachRochade 
 			
 			
 			/* alte FEN_Rochade
@@ -99,7 +99,7 @@ implements Definitions {
 			
 				) {
 			//rochieren Q
-		}
+			
 		}
 		
 	/**
@@ -147,7 +147,8 @@ implements Definitions {
 	private boolean wirdBedroht(byte[] board, byte zielFeld, boolean weissAmZug) {
 			if (weissAmZug) {
 				//fuer alle gueltigen Felder des Boards
-				for (int i=0; i<=119 && ((i & 136) == 0); i++) {
+				for (int i=0; i<=119 ; i++) {
+					if ((i & 136) == 0) {
 						switch (board[i]) {
 						/*
 						 * Hinweis: fuer i-b kann der Wert negativ werden. Da jedoch mit dem stets positiven 
@@ -173,30 +174,33 @@ implements Definitions {
 						case king_b : 	for (byte b : king_moves) {if (i - b == zielFeld){return true;} }
 							break;
 						}//endswitch
+					}//endif
 				}//endfor
 				//wenn keine Bedrohung gefunden wurde, gibt false zurueck
 				return false;
 			} else { //Schwarz ist am Zug
 				//fuer alle gueltigen Felder des Boards
-				for (int i=0; i<=119 && ((i & 136) == 0); i++) {
+				for (int i=0; i<=119; i++) {
 					/*
 					 * Hinweis: fuer i+b kann der Wert über Byte.MAX steigen und wird daher negativ.
 					 * Da jedoch mit dem stets positiven zielFeld verglichen wird, ist dies unerheblich,
 					 * da das Vergleichsergebnis auch im negativen Fall dann ungleich zielFeld ist.
 					 */
-					switch (board[i]) {
-					case pawn_w 	: 
-						break;
-					case knight_w 	: 
-						break;
-					case queen_w 	: 
-						break;
-					case bishop_w 	: 
-						break;
-					case rook_w 	: 
-						break;
-					case king_w 	: 
-						break;
+					if  ((i & 136) == 0) {
+						switch (board[i]) {
+						case pawn_w 	: 
+							break;
+						case knight_w 	: 
+							break;
+						case queen_w 	: 
+							break;
+						case bishop_w 	: 
+							break;
+						case rook_w 	: 
+							break;
+						case king_w 	: 
+							break;
+						}
 					}
 				}
 				wirdBedroht = true;
