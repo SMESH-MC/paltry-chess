@@ -205,6 +205,7 @@ public class FigurBewertung implements FigurBewertungInterface {
 	/**
 	 * addings @Dominik Erb
 	 * @return Werte der Figuren
+	 * 
 	 */
 	public static int getPawnValue() {
 		return PAWN_DEFAULT;

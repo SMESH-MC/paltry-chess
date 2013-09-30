@@ -5,7 +5,6 @@ import chessengine.figurbewertung.FigurBewertung;
 
 /**
  * @author Christian Koenig & Dominik Erb
- *
  */
 public class Board implements BoardInterface  {
 	
@@ -268,7 +267,7 @@ public class Board implements BoardInterface  {
 	 * negativer wert ist ein vorteil fuer Schwarz
 	 * positiver wert ist ein vorteil fuer Weiss
 	 */
-	public int getBordValue() {
+	public int getBoardValue() {
 		int figur;
 		int value = 0;
 		for(int i = 0; i < 128; i++ ){
