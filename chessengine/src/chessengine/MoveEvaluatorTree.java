@@ -26,7 +26,6 @@ public class MoveEvaluatorTree {
 	
 	/**
 	 * erzeugt den Baum bis Tiefe 3
-	 * @param tiefe = maxTiefe des Baumes
 	 */
 	private void generateTree() {
 		MoveEvaluatorTreeNode currentNode;
@@ -49,6 +48,10 @@ public class MoveEvaluatorTree {
 				currentNode.setChildBoards( MoveGenerator.getZuege() );
 			}
 		}
+	}
+
+	public LinkedList<MoveEvaluatorTreeNode> getChildList() {
+		return childList;
 	}
 	
 	
