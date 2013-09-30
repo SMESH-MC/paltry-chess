@@ -46,8 +46,8 @@ public class TestKlasse {
 				if(schachBrett[x][y] != null){//ein figur auf dem feld
 					Figur figur 	= schachBrett[ position.getX() ][ position.getY() ];
 					String typ 		= figur.toString();
-					System.out.print("Zuege für "+typ+" auf"+ position + "--------------------");
-					System.out.println("Zuege für "+typ+" auf"+ position + "-----------------------------------------");
+					System.out.print("Zuege fuer "+typ+" auf"+ position + "--------------------");
+					System.out.println("Zuege fuer "+typ+" auf"+ position + "-----------------------------------------");
 					//System.out.println( figuren.ermittleZuege(position)  );
 					
 					LinkedList<String> liste= figuren.ermittleZuege(position);

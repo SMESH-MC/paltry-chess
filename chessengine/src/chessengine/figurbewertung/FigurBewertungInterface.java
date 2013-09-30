@@ -16,7 +16,7 @@ public interface FigurBewertungInterface {
 	 * 
 	 * @param position die Position von der Figure desen Zuegen ermittlet werden soll (x=0 unten | y = 0  links| Weis ist unten
 	 * @param schachbrett ein Schachbrett das mit dem FenDecoder genereriert worden ist
-	 * @param rochade Welche Rochaden möglich sind
+	 * @param rochade Welche Rochaden moeglich sind
 	 * @param enPassant ob ein querschlagen des Bauers moeglich ist
 	 * @return liefert Zuege CHO CHO CHO CHO CHO CHO CHO CHO als Stack 
 	 */

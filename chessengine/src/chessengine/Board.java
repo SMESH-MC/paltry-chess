@@ -92,9 +92,9 @@ public class Board implements BoardInterface  {
 			 * durch addition ergeben sich ab dann die Rochedemoeglichkeiten
 			 * K ist kleine Rochade fuer weiss und hat den Wert 1
 			 * k ist kleine Rochade fuer schwarz und hat den Wert 2 
-			 * Q,q simultan für grosse rochade
+			 * Q,q simultan fuer grosse rochade
 			 * ist eine Rochade nicht moeglich so setzt sie keinen Wert
-			 * so ergibt sich 1 für weiss 2 für schwarz und 3 sollten beide die 
+			 * so ergibt sich 1 fuer weiss 2 fuer schwarz und 3 sollten beide die 
 			 * moeglichkeit haben. 0 sollte keiner rochieren koennen
 			 * Aendert sich dies nach einem Zug wird beim naechsten fen-decode 
 			 * dementsprechen der wert angepasst da startwert erneut 0 

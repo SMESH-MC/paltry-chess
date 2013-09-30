@@ -73,11 +73,11 @@ public class Manager implements Runnable {
     public boolean getStop() {
         return stop;
     }
-    
+
     public void setWhite() {
         engineIsWhite = true;
     }
-    
+
     public boolean isWhite() {
         return engineIsWhite;
     }
