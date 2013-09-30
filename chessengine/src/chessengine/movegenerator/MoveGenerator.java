@@ -99,6 +99,7 @@ implements MoveGeneratorInterface, Definitions {
 	}
 	
 
+
 	/**
 	 * Bauernzug mit Schrittlaenge 1
 	 * 
@@ -250,7 +251,30 @@ implements MoveGeneratorInterface, Definitions {
 			}//endif "gueltiges Feld?" (wenn Feld nicht gueltig, mache nichts)
 		}//endfor b:erlaubteZuege
 	}
-   
+ 
+	/**
+	 * Diese Methode berechnet den Zug eines Koenigs
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege
+	 */
+	private void berechneZugKing(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//setze Rochaden-Marker, dass der Koenig zieht (d.h. keine Rochade mehr fuer die Farbe am Zug moeglich ist)
+		if (weissAmZug) {
+			board[121] = 0;
+			board[122] = 0;
+		} else {
+			board[123] = 0;
+			board[124] = 0;
+		}
+		//uebergebe an die normale Zug-Methode
+		berechneZug(board, startfeld, weissAmZug, erlaubteZuege);
+		
+	}
+
+	
 	/**
 	 * getter der Klasse, der die moeglichen Zuege ausgibt
 	 * 
