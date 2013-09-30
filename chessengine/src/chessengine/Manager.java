@@ -17,6 +17,7 @@ public class Manager implements Runnable {
     private int winc;
     private int binc;
     private String bestZug;
+    private boolean engineIsWhite;
 
     public Manager() {
         stop = false;
@@ -28,6 +29,7 @@ public class Manager implements Runnable {
         winc = 0;
         binc = 0;
         bestZug = null;
+        engineIsWhite = false;
     }
 
     /**
@@ -70,6 +72,14 @@ public class Manager implements Runnable {
      */
     public boolean getStop() {
         return stop;
+    }
+    
+    public void setWhite() {
+        engineIsWhite = true;
+    }
+    
+    public boolean isWhite() {
+        return engineIsWhite;
     }
 
     @Override

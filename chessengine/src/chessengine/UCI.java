@@ -125,6 +125,7 @@ public class UCI implements UCI_Interface, Runnable {
             if (movesIndex == -1) {
                 for (int i = 2; i < cmdArray.length; i++) {
                     newFen += cmdArray[i] + " ";
+                    manager.setWhite();
                 }
             } else {
                 for (int i = 2; i < movesIndex; i++) {
