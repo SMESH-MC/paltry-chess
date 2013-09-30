@@ -16,10 +16,12 @@ public class MoveEvaluatorTree {
 
 	private MoveEvaluatorTreeNode root;
 	private LinkedList<MoveEvaluatorTreeNode> childList; 
+	private MoveGenerator movegen;
 	
 	
 	public MoveEvaluatorTree(Board board) {
 		this.root = new MoveEvaluatorTreeNode(board);
+		this.movegen = new MoveGenerator();
 		generateTree();
 	}
 	
@@ -36,19 +38,19 @@ public class MoveEvaluatorTree {
 		int countOfRootLeaf = 0;
 		
 		//Tiefe 1
-		root.setChildBoards( MoveGenerator.getZuege() );
+		root.setChildBoards( movegen.getZuege() );
 		//Tiefe 2
 		countOfRootLeaf = root.hasChild();
 		for (int i = 0 ; i < countOfRootLeaf ; i++) {
 			currentNode = root.getChildAtPos(i);
-			currentNode.setChildBoards( MoveGenerator.getZuege() );
+			currentNode.setChildBoards( movegen.getZuege() );
 		}
 		//Tiefe 3
 		for (int j = 0 ; j < countOfRootLeaf ; j++ ) {
 			parentNode = root.getChildAtPos(j);
 			for (int k = 0 ; j < parentNode.hasChild() ; k++) {
 				currentNode = parentNode.getChildAtPos(k);
-				currentNode.setChildBoards( MoveGenerator.getZuege() );
+				currentNode.setChildBoards( movegen.getZuege() );
 			}
 		}
 	}
