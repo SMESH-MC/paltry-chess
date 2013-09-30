@@ -39,6 +39,7 @@ public class MoveEvaluatorTree {
 		
 		//Tiefe 1
 		root.setChildBoards( movegen.getZuege() );
+		countOfRootLeaf = root.hasChild();
 		//Tiefe 2
 		countOfRootLeaf = root.hasChild();
 		for (int i = 0 ; i < countOfRootLeaf ; i++) {
