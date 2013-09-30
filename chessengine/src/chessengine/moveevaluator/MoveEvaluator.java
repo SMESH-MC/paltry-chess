@@ -1,6 +1,7 @@
-package chessengine;
+package chessengine.moveevaluator;
 
 import chessengine.movegenerator.MoveGenerator;
+import chessengine.Board;
 
 public class MoveEvaluator {
 	//Variablendefinitionen
@@ -10,7 +11,6 @@ public class MoveEvaluator {
 	private int time;
 	private int timeRemaining;
 	private int userCancel;
-	ZugThread zthread;
 	
 	private MoveEvaluatorTree moveTree;
 	

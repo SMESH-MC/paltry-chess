@@ -1,6 +1,7 @@
-package chessengine;
+package chessengine.moveevaluator;
 
 import java.util.LinkedList;
+import chessengine.Board;
 
 /**
  * 

@@ -1,4 +1,6 @@
-package chessengine;
+package chessengine.moveevaluator;
+
+import chessengine.Board;
 
 public class MoveEvaluator_thread {
 	//Variablendefinitionen
