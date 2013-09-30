@@ -59,42 +59,42 @@ implements MoveGeneratorInterface, Definitions {
 	private void zuegeBerechnen(byte[] board) {
 		if (board[120] == 1) { //weiss am Zug
 			//Gehe die Felder des Board-Arrays durch, bis nur noch Felder des "Geisterboards" kommen
-			for (int i = 0;	i <= 119;	i++) {
+			for (byte startfeld = 0;	startfeld <= 119;	startfeld++) {
 				//wenn das Feld ein gueltiges ist und eine weisse Figur darauf steht
-				if ((i & 136) == 0 &&	board[i] > 0) {
+				if ((startfeld & 136) == 0 &&	board[startfeld] > 0) {
 						//Uebergib das Board und den aktuellen Index mit der aktiven Farbe (true = weiss) und
 						//den erlaubten Zuegen der Figur an die Zugberechnung
-						switch (board[i]) {
-						case pawn_w :	berechneZugBauer(	board, i, true, pawn_moves);	break;
-						case rook_w :	berechneSlidingZug(	board, i, true, rook_moves);	break;
-						case knight_w : berechneZug(		board, i, true, knight_moves);	break;
-						case bishop_w :	berechneSlidingZug(	board, i, true, bishop_moves);	break;
-						case king_w :	berechneZugKing	(	board, i, true, king_moves);	break;
-						case queen_w :	berechneSlidingZug(	board, i, true, queen_moves);	break;
+						switch (board[startfeld]) {
+						case pawn_w :	berechneZugBauer(	board, startfeld, true, pawn_moves);	break;
+						case rook_w :	berechneSlidingZug(	board, startfeld, true, rook_moves);	break;
+						case knight_w : berechneZug(		board, startfeld, true, knight_moves);	break;
+						case bishop_w :	berechneSlidingZug(	board, startfeld, true, bishop_moves);	break;
+						case king_w :	berechneZugKing	(	board, startfeld, true, king_moves);	break;
+						case queen_w :	berechneSlidingZug(	board, startfeld, true, queen_moves);	break;
 						}
 				}
 			}//endfor
 		} else { //schwarz am Zug
 			//Gehe die gueltigen Felder des Board-Arrays durch, bis nur noch Felder des "Geisterboards" kommen
-			for (int i = 0;	i <= 119;	i++) {
+			for (byte startfeld = 0;	startfeld <= 119;	startfeld++) {
 				//wenn das Feld ein gueltiges ist und eine schwarze Figur darauf steht
-				if ((i & 136) == 0 &&	board[i] < 0) {
+				if ((startfeld & 136) == 0 &&	board[startfeld] < 0) {
 					//Uebergib das board und den aktuellen Index mit der aktiven Farbe (false = schwarz) und
 					//den erlaubten Zuegen der Figur an die Zugberechnung
-					switch (board[i]) {
-					case pawn_b :	berechneZugBauer(	board, i, false, pawn_moves);	break;
-					case rook_b : 	berechneSlidingZug(	board, i, false, rook_moves);	break;
-					case knight_b : berechneZug(		board, i, false, knight_moves);	break;
-					case bishop_b : berechneSlidingZug(	board, i, false, bishop_moves);	break;
-					case king_b : 	berechneZugKing	(	board, i, false, king_moves);	break;
-					case queen_b : 	berechneSlidingZug(	board, i, false, queen_moves);	break;
+					switch (board[startfeld]) {
+					case pawn_b :	berechneZugBauer(	board, startfeld, false, pawn_moves);	break;
+					case rook_b : 	berechneSlidingZug(	board, startfeld, false, rook_moves);	break;
+					case knight_b : berechneZug(		board, startfeld, false, knight_moves);	break;
+					case bishop_b : berechneSlidingZug(	board, startfeld, false, bishop_moves);	break;
+					case king_b : 	berechneZugKing	(	board, startfeld, false, king_moves);	break;
+					case queen_b : 	berechneSlidingZug(	board, startfeld, false, queen_moves);	break;
 					}
 				}
 			}
 		}
 	}
 	
-	private void berechneZug(byte[] board, int startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+	private void berechneZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
 		for (byte b : erlaubteZuege) {
 			int zielfeld = b + startfeld;
 			//wenn das Zielfeld ein gueltiges Feld ist
