@@ -87,7 +87,7 @@ implements MoveGeneratorInterface, Definitions {
 					case pawn_b :	berechneZugBauer(	board, startfeld, false, pawn_moves_b);
 									berechne2ZugBauer(	board, startfeld, false, pawn_moves_b2);
 									berechneSchlagBauer(board, startfeld, false, pawn_attack_moves_b);	break;
-					case rook_b : 	berechneSlidingZug(	board, startfeld, false, rook_moves);	break;
+					case rook_b :	berechneSlidingZug(	keineRochadeMehr(board, startfeld), startfeld, false, rook_moves);			break;
 					case knight_b : berechneZug(		board, startfeld, false, knight_moves);	break;
 					case bishop_b : berechneSlidingZug(	board, startfeld, false, bishop_moves);	break;
 					case king_b : 	berechneZugKing	(	board, startfeld, false, king_moves);	break;
@@ -99,6 +99,99 @@ implements MoveGeneratorInterface, Definitions {
 	}
 	
 
+	/** 
+	 * Diese Hilfsmethode setzt die Rochadenmoeglichkeit vor dem Zug eines Turms zurueck
+	 * 
+	 * @param startfeld
+	 * @param weissAmZug
+	 */
+
+	private byte[] keineRochadeMehr(byte[] board, byte startfeld) {
+		switch (startfeld) {
+		case 0	: board[122] = 0;
+			break;
+		case 7	: board[121] = 0;
+			break;
+		case 112: board[124] = 0;
+			break;
+		case 119: board[123] = 0;
+			break;
+		}
+		return board;
+	}
+	/**
+	 * Diese Methode berechnet Zuege fuer Sliding Pieces (Figuren, die eine beliebige Anzahl an Feldern ziehen duerfen)
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege
+	 */
+	private void berechneSlidingZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//setze en passant zurueck
+		board[125] = -1;
+
+		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
+		for (byte b : erlaubteZuege) {
+			
+			//Merker, ob das Zielfeld vor dem Zug frei ist, und das Sliding Piece die Schleife nochmals durchlaufen kann 	//<-sliding-Zusatz
+			boolean zielfeldFrei = false; //Initialisierung																	//<-sliding-Zusatz
+			
+			//berechne moegliches Zielfeld
+			int zielfeld = b + startfeld;  
+			//wenn das Zielfeld ein gueltiges Feld ist
+			if ((zielfeld & 136) == 0) {
+				//wenn das Zielfeld leer ist
+				if (board[zielfeld] == 0) {
+					
+					//Merker fur Sliding Piece																				//<-sliding-Zusatz
+					zielfeldFrei = true;																					//<-sliding-Zusatz
+					
+					//Figur auf Zielfeld ziehen
+					board[zielfeld] = board[startfeld];
+					//Startfeld leeren
+					board[startfeld] = 0;
+					//Zug hinzufuegen
+					zugHinzufuegen(board);
+				} else {//wenn Zielfeld besetzt
+					//wenn weiss am Zug ist
+					if (weissAmZug) {
+						//wenn auf dem Zielfeld der Gegner schwarz steht
+						if (board[zielfeld] < 0) {
+							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
+							board[zielfeld] = board[startfeld];
+							//Startfeld leeren
+							board[startfeld] = 0;
+							//Zug hinzufuegen
+							zugHinzufuegen(board);
+						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
+					} else { //schwarz ist am Zug
+						//wenn auf dem Zielfeld der Gegner weiss steht
+						if (board[zielfeld] > 0) {
+							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
+							board[zielfeld] = board[startfeld];
+							//Startfeld leeren
+							board[startfeld] = 0;
+							//Zug hinzufuegen
+							zugHinzufuegen(board);
+						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
+					}//endifelse weiss/schwarz am Zug
+				}//endifelse Feld leer/besetzt
+																								//ab hier weiterer Zusatz fuer Sliding Pieces -->
+				//wenn das Zielfeld vor dem Zug frei war
+				if (zielfeldFrei) {						
+					//setze die durchgefuehrte Schrittrichtung als einzigen erlaubten Zug in ein Array
+					byte[] zugrichtung = {b};																
+					//uebergib diese Zugrichtung nochmals der Methode mit dem neuen Startfeld, das jetzt eine Schrittweite weiter liegt
+					berechneSlidingZug(board, (byte)zielfeld, weissAmZug, zugrichtung);											
+				}																												
+				
+
+			}//endif "gueltiges Feld?" (wenn Feld nicht gueltig, mache nichts)
+			
+			
+		}//endfor b:erlaubteZuege
+	}
 
 	/**
 	 * Bauernzug mit Schrittlaenge 1
@@ -204,6 +297,8 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege	erlaubte Schrittweiten der Figur
 	 */
 	private void berechneZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//setze en passant zurueck
+		board[125] = -1;
 		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
 		for (byte b : erlaubteZuege) {
 			//berechne moegliche Zielfelder
@@ -216,8 +311,6 @@ implements MoveGeneratorInterface, Definitions {
 					board[zielfeld] = board[startfeld];
 					//Startfeld leeren
 					board[startfeld] = 0;
-					//setze en passant zurueck
-					board[125] = -1;
 					//Zug hinzufuegen
 					zugHinzufuegen(board);
 				} else {//wenn Zielfeld besetzt
@@ -229,8 +322,6 @@ implements MoveGeneratorInterface, Definitions {
 							board[zielfeld] = board[startfeld];
 							//Startfeld leeren
 							board[startfeld] = 0;
-							//setze en passant zurueck
-							board[125] = -1;
 							//Zug hinzufuegen
 							zugHinzufuegen(board);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
@@ -241,8 +332,6 @@ implements MoveGeneratorInterface, Definitions {
 							board[zielfeld] = board[startfeld];
 							//Startfeld leeren
 							board[startfeld] = 0;
-							//setze en passant zurueck
-							board[125] = -1;
 							//Zug hinzufuegen
 							zugHinzufuegen(board);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
