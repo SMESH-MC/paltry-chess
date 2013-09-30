@@ -57,7 +57,7 @@ implements Definitions {
 				//legaler Rochaden-Zug (die letzten 3 Punkte zusammengefasst):
 				!istRochadeIllegal(boardZuRochieren, true, true) //board, kurze Rochade, weiss am Zug
 				) {
-			byte[] boardNachRochade 
+			byte[] boardNachRochade;
 			
 			
 			/* alte FEN_Rochade
@@ -99,7 +99,7 @@ implements Definitions {
 			
 				) {
 			//rochieren Q
-			
+		}
 		}
 		
 	/**
