@@ -17,13 +17,13 @@ public class MoveEvaluatorTreeNode {
 	
 	public MoveEvaluatorTreeNode(Board board){
 		this.Board = board;
-		this.BoardValue = board.getBordValue();
+		this.BoardValue = board.getBoardValue();
 		this.hasChild = 0;
 	}
 	
 	public MoveEvaluatorTreeNode(Board board, LinkedList<String> BoardFens){
 		this.Board = board;
-		this.BoardValue = board.getBordValue();
+		this.BoardValue = board.getBoardValue();
 		setChildBoards(BoardFens);
 		}
 	
