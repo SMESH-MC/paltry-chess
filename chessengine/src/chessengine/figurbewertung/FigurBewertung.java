@@ -200,4 +200,27 @@ public class FigurBewertung implements FigurBewertungInterface {
 		return muster;
 		
 	} // getBewertung
+
+	
+	/**
+	 * addings @Dominik Erb
+	 * @return Werte der Figuren
+	 */
+	public static int getPawnValue() {
+		return PAWN_DEFAULT;
+	}
+	public static int getRookValue() {
+		return ROOK_DEFAULT;
+	}
+	public static int getKnightValue() {
+		return KING_DEFAULT;
+	}
+	public static int getBishopValue() {
+		return BISHOP_DEFAULT;
+	}
+	public static int getQueenValue() {
+		return QUEEN_DEFAULT;
+	}
+	
+	
 }
