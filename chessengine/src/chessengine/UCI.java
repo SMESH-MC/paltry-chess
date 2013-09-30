@@ -52,6 +52,7 @@ public class UCI implements UCI_Interface, Runnable {
     private int binc;
     private boolean go;
     private Manager manager;
+    private String movesList;
 
     public UCI(Manager manager) {
         //FEN initialisiert mit Standard Startposition
@@ -66,6 +67,7 @@ public class UCI implements UCI_Interface, Runnable {
         movetime = 60000;
         go = false;
         this.manager = manager;
+        movesList = null;
     }
 
     /**
@@ -83,6 +85,7 @@ public class UCI implements UCI_Interface, Runnable {
             //konvertiert den Befehl in Kleinbuchstaben
             cmdIN = cmdIN.toLowerCase();
             cmdArray = cmdIN.split(SPLITPOINT);
+            cmd = cmdArray[0];
 
             // Fallunterscheidung fuer die versch. Befehle
             switch (cmd) {
@@ -120,6 +123,7 @@ public class UCI implements UCI_Interface, Runnable {
 
     private void position(String cmdIN, String[] cmdArray) {
         int movesIndex = cmdIN.indexOf(MOVES);
+        
         if (cmdArray[1].equalsIgnoreCase("fen")) {
             String newFen = null;
             if (movesIndex == -1) {
@@ -131,8 +135,19 @@ public class UCI implements UCI_Interface, Runnable {
                 for (int i = 2; i < movesIndex; i++) {
                     newFen += cmdArray[i] + " ";
                 }
+                for (int j = movesIndex + 1; j < cmdArray.length; j++) {
+                    movesList += cmdArray[j] + " ";
+                }
             }
             fen = newFen;
+        } else {
+            if (movesIndex == -1) {
+                manager.setWhite();
+            } else {
+                for (int j = movesIndex + 1; j < cmdArray.length; j++) {
+                    movesList += cmdArray[j] + " ";
+                }
+            }
         }
     }
 
@@ -213,6 +228,10 @@ public class UCI implements UCI_Interface, Runnable {
     @Override
     public int getMovetime() {
         return movetime;
+    }
+    
+    public String getMovesList() {
+        return movesList;
     }
 
     @Override
