@@ -45,3 +45,4 @@ public class MoveEvaluatorTreeNode {
 		return hasChild;
 	}
 }
+
