@@ -68,7 +68,7 @@ implements MoveGeneratorInterface, Definitions {
 						case pawn_w :	berechneZugBauer(	board, startfeld, true, pawn_moves_w);
 										berechne2ZugBauer(	board, startfeld, true, pawn_moves_w2);
 										berechneSchlagBauer(board, startfeld, true, pawn_attack_moves_w);	break;
-						case rook_w :	berechneSlidingZug(	board, startfeld, true, rook_moves);	break;
+						case rook_w :	berechneSlidingZug(	keineRochadeMehr(board, startfeld), startfeld, true, rook_moves);	break;
 						case knight_w : berechneZug(		board, startfeld, true, knight_moves);	break;
 						case bishop_w :	berechneSlidingZug(	board, startfeld, true, bishop_moves);	break;
 						case king_w :	berechneZugKing	(	board, startfeld, true, king_moves);	break;
