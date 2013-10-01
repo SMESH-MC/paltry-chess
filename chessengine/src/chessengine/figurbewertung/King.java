@@ -6,6 +6,7 @@ package chessengine.figurbewertung;
 import java.util.LinkedList;
 import java.util.Stack;
 
+import chessengine.tools.Brett;
 import chessengine.tools.Figur;
 import chessengine.tools.SchachPosition;
 
@@ -14,7 +15,7 @@ public class King extends OberFigur{
 	private LinienLaeufer linienlaeufer;
 	//private String rochade;
 	char[] rochadeCharArray;
-	private Figur[][] schachBrett;
+	private Brett schachBrett;
 	private final static char[] ROCHADEOPTION = new char[4];
 	//Koenigspostionen
 	/*private final static SchachPosition SCHWARZKURZ = new SchachPosition(2,2);;
@@ -114,19 +115,19 @@ public class King extends OberFigur{
 		return rueckgabe;
 	}
 	private boolean istKurzeWeiseRochade(boolean istWeis){
-		return (schachBrett[5][0] == null && schachBrett[6][0] == null
+		return (schachBrett.getIsEmpty(5, 0) && schachBrett.getIsEmpty(6,0)
 				&& !istBedroht(5,0,istWeis) && !istBedroht(6,0,istWeis) && !istBedroht(4,0,istWeis) );
 	}
 	private boolean istLangeWeiseRochade(boolean istWeis){
-		return (schachBrett[1][0] == null && schachBrett[2][0] == null && schachBrett[3][0] == null
+		return (schachBrett.getIsEmpty(1,0) && schachBrett.getIsEmpty(2,0) && schachBrett.getIsEmpty(3,0)
 				&& !istBedroht(1,0,istWeis) && !istBedroht(2,0,istWeis) && !istBedroht(3,0,istWeis) && !istBedroht(4,0,istWeis));
 	}
 	private boolean istKurzeSchwarzeRochade(boolean istWeis){
-		return (schachBrett[5][7] == null && schachBrett[6][7] == null
+		return (schachBrett.getIsEmpty(5,7) && schachBrett.getIsEmpty(6,7)
 				&& !istBedroht(5,7,istWeis) && !istBedroht(6,7,istWeis) && !istBedroht(4,7,istWeis));
 	}
 	private boolean istLangeSchwarzeRochade(boolean istWeis){
-		return (schachBrett[1][7] == null && schachBrett[2][7] == null && schachBrett[3][7] == null
+		return (schachBrett.getIsEmpty(1,7)  && schachBrett.getIsEmpty(2,7) && schachBrett.getIsEmpty(3,7)
 				&& !istBedroht(1,7,istWeis) && !istBedroht(2,7,istWeis) && !istBedroht(3,7,istWeis) && !istBedroht(4,7,istWeis));
 	}
 	/**
@@ -169,8 +170,8 @@ public class King extends OberFigur{
 		
 		return neueRochade.toString();
 	}
-	public void inizialisiere(Figur[][] schachBrett, String rochade) {
-		this.schachBrett = schachBrett;
+	public void inizialisiere(Brett schachBrett2, String rochade) {
+		this.schachBrett = schachBrett2;
 		rochadeCharArray = rochade.toCharArray();
 	}
 	/**
@@ -185,8 +186,8 @@ public class King extends OberFigur{
 		Stack<SchachPosition> bewegungsMuster = new Stack<SchachPosition>(); // erstelle eine Reihe an bewegungsmuster
 		SchachPosition zeiger = new SchachPosition(0 , 0);  
 		Figur koenig;
-		koenig = schachBrett[position.getX()][position.getY()]; //zwischenspeich fuer den koenig
-		schachBrett[position.getX()][position.getY()] = null; //loescht den Koenig raus damit istBedroht sauber arbeitet
+		koenig = schachBrett.getInhalt(position); //zwischenspeich fuer den koenig
+		schachBrett.setEmpty(position); //loescht den Koenig raus damit istBedroht sauber arbeitet
 		for(int i = 0; i<8 ; i++){
 			zeiger.setX(position.getX()); // setzt den Zeiger auf die pos vom koenig
 			zeiger.setY(position.getY());
@@ -196,7 +197,7 @@ public class King extends OberFigur{
 				}
 			}
 		}
-		schachBrett[position.getX()][position.getY()] = koenig;//fuegt den koenig wieder ein den ohne koeenig ist doof
+		schachBrett.setInhalt(position, koenig );//fuegt den koenig wieder ein den ohne koeenig ist doof
 		return bewegungsMuster;
 	}
 	public Stack<SchachPosition> getMuster() {
@@ -252,29 +253,29 @@ public class King extends OberFigur{
 			zeiger.setY(position.getY());
 			if(istWeis){ // Wenn Weis
 				zeiger.bewege(1, 1);
-				if(schachBrett[zeiger.getX()][zeiger.getY()] != null){
-				if(schachBrett[zeiger.getX()][zeiger.getY()].toChar() == 'p'){
-					istBedroht = true;}
+				if(schachBrett.getIsEmpty(zeiger) == false){
+					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
+						istBedroht = true;}
 				}
 				zeiger.setX(position.getX()); 
 				zeiger.setY(position.getY());
 				zeiger.bewege(-1, 1);
-				if(schachBrett[zeiger.getX()][zeiger.getY()] != null){
-				if(schachBrett[zeiger.getX()][zeiger.getY()].toChar() == 'p'){
-					istBedroht = true;}
+				if(schachBrett.getIsEmpty(zeiger) == false){
+					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
+						istBedroht = true;}
 				}
 			}else{ //sonst schwarz
 				zeiger.bewege(-1, -1);
-				if(schachBrett[zeiger.getX()][zeiger.getY()] != null){
-				if(schachBrett[zeiger.getX()][zeiger.getY()].toChar() == 'P'){
-					istBedroht = true;}
+				if(schachBrett.getIsEmpty(zeiger) == false){
+					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
+						istBedroht = true;}
 				}
 				zeiger.setX(position.getX()); 
 				zeiger.setY(position.getY());
 				zeiger.bewege(1, -1);
-				if(schachBrett[zeiger.getX()][zeiger.getY()] != null){
-				if(schachBrett[zeiger.getX()][zeiger.getY()].toChar() == 'P'){
-					istBedroht = true;}
+				if(schachBrett.getIsEmpty(zeiger) == false){
+					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
+						istBedroht = true;}
 				}
 			}
 		return istBedroht;

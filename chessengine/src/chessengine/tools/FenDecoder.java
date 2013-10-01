@@ -19,9 +19,15 @@ package chessengine.tools;
 public class FenDecoder {
 	private final static String trennzeichen = "/";
 	private String[]  fenTeile; // der restlich teil vom FEN string der nicht für die Figuren positionen benötigt wird
+	private Brett schachBrett;
+	
+	public FenDecoder (Brett schachBrettFormat){
+		
+		schachBrett = schachBrettFormat;
+	}
+	
+	public Brett decodiere(String fen){
 
-	public Figur[][] decodiere(String fen){
-		Figur[][] schachBrett = new Figur[8][8];
 		//String[] brett 
 		 fenTeile =  fen.split(" ");//spaltet deb fen String
 		String[] zeilen = fenTeile[0].split(trennzeichen);  // teillt 
@@ -39,13 +45,18 @@ public class FenDecoder {
 					if(symbole[symbolPos]< 90){
 						istWeis = true;
 					}
-					schachBrett[x][y] = new Figur(istWeis, symbole[symbolPos] );
+					schachBrett.setInhalt(x, y , new Figur(istWeis, symbole[symbolPos]) );
 					
 					x++;
 				}else{
 					int zahl = symbole[symbolPos]  - 48; //berechnete aud dem asci code die Zahl der leeren felder
 					//if(zahl<1 || zahl > 8){Throw Exception} // Fehlerbehandlung???
-					x = x + zahl; 
+					
+					for(int i=0;i<zahl;i++){ //loescht  eventuel belegete Felder
+						schachBrett.setEmpty(x, y);
+						x++;
+					}
+					//x = x + zahl; 
 				}	
 				symbolPos++;	
 			}//while
@@ -63,7 +74,6 @@ public class FenDecoder {
 		if(fenTeile[3].length() == 2 ){ // Wenn eine gueltige rochade auf dem Feld . fenTeile[3].equals("-")
 
 			rueckgabe = new SchachPosition();
-			System.out.print(fenTeile[3].charAt(0));
 			rueckgabe.setX( fenTeile[3].charAt(0) ); // setX(char ) 
 			rueckgabe.setY( (char) (fenTeile[3].charAt(1) - 1 ) ); // -1 um es auf von dem Feld 1-8 auf 0-7 anzupassen
 			
@@ -87,13 +97,13 @@ public class FenDecoder {
 	
 	
 	
-	public String codiererNeuenZug(Figur[][] brett){
+	public String codiererNeuenZug(Brett brett){
 			return codiererNeuenZug(brett, "-",null); // "-" setzt fuer jeden zug das EnPassant auf nicht moeglich
 	}
-	public String codiererNeuenZug(Figur[][] brett, String rochade){
+	public String codiererNeuenZug(Brett brett, String rochade){
 		return codiererNeuenZug(brett, "-", rochade);
 	}
-	public String codiererNeuenZugEnpassant(Figur[][] brett, SchachPosition enPassant){
+	public String codiererNeuenZugEnpassant(Brett brett, SchachPosition enPassant){
 		String neuesEnPassant; 
 		
 		neuesEnPassant = enPassant.getCharX() +""+ enPassant.getY();
@@ -107,7 +117,7 @@ public class FenDecoder {
 	 * @param neuRochade
 	 * @return
 	 */
-	private String codiererNeuenZug(Figur[][] brett, String neuEnPassant, String neuRochade){
+	private String codiererNeuenZug(Brett brett, String neuEnPassant, String neuRochade){
 			
 			String rochade = fenTeile[2];
 			String enPassant = fenTeile[3];
@@ -142,14 +152,14 @@ public class FenDecoder {
 	 * @param brett
 	 * @return
 	 */
-	private String arrayFenWandler(Figur[][] brett){
+	private String arrayFenWandler(Brett brett){
 		StringBuffer rueckgabe = new StringBuffer();
 		char letztesZeichen = '?'; //  ? == dummer inizial wert der in den schleifen rausgefiltert wird  
 		for(int y = 7; y >= 0 ; y--){ //Zeilen
 			
 			for(int x = 0; x < 8 ; x++){ //spalten
 				
-				if(brett[x][y] != null){ // Wenn istFigur	(<-nicht leer)
+				if(brett.getIsEmpty(x, y) == false){ // Wenn istFigur	(<-nicht leer)
 					
 						
 						if(letztesZeichen != '?'){ //filterung des dummes Zeichen  das nicht in den String reingeschoben werden soll
@@ -157,7 +167,7 @@ public class FenDecoder {
 						}
 						
 						
-						letztesZeichen =  brett[x][y].toChar();
+						letztesZeichen =  brett.getInhalt(x, y).toChar();
 				}else{  //sonst leeres Feld
 					if( letztesZeichen >= '0' && letztesZeichen <= '9'){ // Wenn letztes Zeiche eine Zahl
 						letztesZeichen++;

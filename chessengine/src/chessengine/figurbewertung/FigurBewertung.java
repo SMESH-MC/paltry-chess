@@ -30,14 +30,18 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	private Knight knight;
 	private Rook rook;
 	private Pawn pawn;
-	private Figur[][] schachBrett;
+	private Brett schachBrett;
 	
 	private LinienLaeufer linienLaeufer;
 	private FenDecoder decoder;
 	
 	public FigurBewertung(){
-		 
-		 decoder = new FenDecoder();
+		 //schachBrett = new Array2Dim();
+		 //Brett brett = new Array2Dim();
+		 schachBrett = new X88();
+		 Brett brett = new X88();
+		
+		 decoder = new FenDecoder(brett);
 		 linienLaeufer = new LinienLaeufer(); // Eine Klasse die Zugeneration von mehrenKlassen uebernimmt
 		 
 		 
@@ -73,7 +77,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	 */
 	public  LinkedList<String> ermittleZuege(SchachPosition position) {
 		LinkedList<String> rueckgabe = new LinkedList<String>();
-		Figur figur 	= schachBrett[ position.getX() ][ position.getY() ];
+		Figur figur 	= schachBrett.getInhalt(position);
 		char typ 		= figur.getTyp();
 		boolean istWeis = figur.getIstWeis();
 		
@@ -118,19 +122,22 @@ public class FigurBewertung implements FigurBewertungInterface  {
 			{
 				for (int x =0; x < 8 ; x++ ){
 					position.setXY(x, y);
-					if(schachBrett[x][y] != null){//ein figur auf dem feld
-						if( istWeisAmZug == schachBrett[x][y].getIstWeis() ){ // Wenn Figur auf Feld die gleiche Farbe hat wie der der am Zug ist
+					if( schachBrett.getIsEmpty(x, y) == false){//ein figur auf dem feld
+						if( istWeisAmZug == schachBrett.getInhalt(x, y).getIstWeis() ){ // Wenn Figur auf Feld die gleiche Farbe hat wie der der am Zug ist
 							rueckgabe.addAll( ermittleZuege(position) );
+							
 						}
 						
 					}
 				}//for spalten
 			}//for zeilen
 			
-			if(king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ //sucht den koenig und prueft ob er bedroht ist
+			 //System.out.println("t"+ rueckgabe.size());
+			/*if(king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ //sucht den koenig und prueft ob er bedroht ist
 
 				rueckgabe = loescheBedrohteZuege(rueckgabe, istWeisAmZug); //Filtert zuege Raus die die Bedrohung nicht aufheben
-			}
+			}*/
+			//System.out.println("t"+ rueckgabe.size());
 			return rueckgabe;
 				
 			
@@ -146,7 +153,6 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		String lokalerFen;
 		while(!liste.isEmpty()){
 			lokalerFen = liste.pop();
-			//System.out.print("pop");
 			inizialisiereBrett(lokalerFen); 
 			if(!king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ // Wenn koenig nach Zug nicht bedroht
 				modifierteListe.add(lokalerFen);
@@ -161,14 +167,15 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	 */
 	private SchachPosition sucheKoenig(boolean istWeisAmZug) {
 		SchachPosition koenig = new SchachPosition();
-
+		Figur figur ;
 		for(int y =0 ;y <8;y++)
 		{
 			for (int x =0; x < 8 ; x++ ){
 				
-				if(schachBrett[x][y] != null){//ein figur auf dem feld
-					if( istWeisAmZug == schachBrett[x][y].getIstWeis()  ){ // Wenn Figur auf Feld die gleiche Farbe hat wie der der am Zug ist
-						if(schachBrett[x][y].getTyp() == KING){
+				if(schachBrett.getIsEmpty(x, y) == false){//ein figur auf dem feld
+					figur = schachBrett.getInhalt(x,y);
+					if( istWeisAmZug == figur.getIstWeis()  ){ // Wenn Figur auf Feld die gleiche Farbe hat wie der der am Zug ist
+						if(figur.getTyp() == KING){
 							koenig.setXY(x, y);
 						}
 					}
@@ -301,4 +308,5 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	public  int getPawnBewertung() {
 		return pawn.getBewertung();
 	}
+	
 }

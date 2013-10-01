@@ -8,16 +8,16 @@ package chessengine.figurbewertung;
 
 import java.util.LinkedList;
 
-import chessengine.tools.Figur;
-import chessengine.tools.SchachPosition;
-import chessengine.tools.FenDecoder;
+import chessengine.tools.*;
 public class TestKlasse {
 
 
 	public static void main (String[] args){
 			String fen;
-			 FenDecoder decoder = new FenDecoder();
-			Figur[][] schachBrett;
+			Brett brett = new X88();
+			//Brett brett = new Array2Dim();
+			 FenDecoder decoder = new FenDecoder(brett);
+			Brett schachBrett;
 			//startstellung
 			//Figur[][] "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 			// rochaden
@@ -25,8 +25,8 @@ public class TestKlasse {
 			//fen =  "rnbk3r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1");
-			//fen =  "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
-			fen =  "r3k2r/ppppRppp/7N/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
+			fen =  "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
+			//fen =  "r3k2r/ppppRppp/7N/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/8/p7/PPPP4/3pp3/4pppp/8/RNBQKBNR w KQkq - 0 1";
@@ -64,8 +64,9 @@ public class TestKlasse {
 			}	
 		}*/
 		System.out.println("Alle Zuege fur farbe am Zug---------------------------------------");
-		LinkedList<String> liste2= figuren.ermittleAlleZuege(fen);
+		LinkedList<String> liste2 = figuren.ermittleAlleZuege(fen);
 		while(liste2.isEmpty() == false){
+			
 			fenAusgabe(liste2.pop(),decoder );
 		}
 	}
@@ -74,18 +75,18 @@ public class TestKlasse {
 	
 	
 	public static void fenAusgabe(String ausgabeFen, FenDecoder decoder){
-		Figur[][] ausgabe = decoder.decodiere(ausgabeFen);
+		Brett ausgabe = decoder.decodiere(ausgabeFen);
 		if(ausgabe != null){
 			System.out.println("X||0|1|2|3|4|5|6|7");
 			System.out.println("-------------------");
-			for(int i = ausgabe.length-1; i >= 0 ;i--){
+			for(int i = 7; i >= 0 ;i--){
 				System.out.print(i+"||");
-				for(int k = 0 ; k < ausgabe.length; k++){
+				for(int k = 0 ; k < 8; k++){
 					
-					if(ausgabe[k][i]!= null){
+					if(ausgabe.getIsEmpty(k, i) == false ){
 					
 					
-						System.out.print( ausgabe[k][i] + "|");//\t
+						System.out.print( ausgabe.getInhalt(k, i) + "|");//\t
 					}else{
 					
 						System.out.print(" |");
