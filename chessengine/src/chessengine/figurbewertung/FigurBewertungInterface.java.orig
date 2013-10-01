@@ -1,0 +1,70 @@
+package chessengine.figurbewertung;
+/**  
+* @author Philip Hunsicker
+* Stand : 25.09.2013
+*/
+import java.util.LinkedList;
+import java.util.Stack;
+
+import chessengine.tools.SchachPosition;
+
+public interface FigurBewertungInterface {
+
+	/**
+	 *Methoder die Alle Figuren mit einem Spielfeld versorgt auf grunde dessen es das Zuege berechnet
+	 */
+	public abstract void inizialisiereBrett(String fen);
+
+	/**
+	 * @param position die Position von der Figure desen Zuegen ermittlet werden soll (x=0 unten | y = 0  links| Weis ist unten
+<<<<<<< HEAD
+	 * @return liefert Zuege CHO CHO CHO CHO CHO CHO CHO CHO als Linked List
+=======
+	 * @param schachbrett ein Schachbrett das mit dem FenDecoder genereriert worden ist
+	 * @param rochade Welche Rochaden moeglich sind
+	 * @param enPassant ob ein querschlagen des Bauers moeglich ist
+	 * @return liefert Zuege CHO CHO CHO CHO CHO CHO CHO CHO als Stack 
+>>>>>>> 3100010941466c89a02bc8bba7d242a40af54b71
+	 */
+	public abstract LinkedList<String> ermittleZuege(SchachPosition position); //ermittle
+
+	/**
+	 *  Ermittle alle zuege fuer die farbe die gerade am Zug ist
+	 * @param fen der aktuellen ausgangstellung
+	 * @return list Alle Zuege die von diese Stellung ausgefuehrt werden koennen
+	 */
+	public abstract LinkedList<String> ermittleAlleZuege(String fen); //ermittle Alle
+
+	/**
+	 * q b n r p 
+	 */
+	public abstract void setBewertung(int q, int b, int n, int r, int p);
+
+	/* (non-Javadoc)
+	 * @see figurbewertung.FigurBewewertung#getBewertung(char)
+	 */
+	public abstract int getBewertung(char typ); // getBewertung
+
+	/**
+	 * liefert die Bewegungsmuster  fuer einfache Bewegungen
+	 * KEINE SPEZIAL FAELLER
+	 * KEIE BAUER
+	 * KEINE DAME (da dame = Turm + laeufer)
+	 * @param typ figur : qbrnpk
+	 * @return Stack mit Bewegungsmuster
+	 */
+	public abstract Stack<SchachPosition> getMuster(char typ); // getBewertung
+
+	public abstract int getKingBewertung();
+
+	public abstract int getQuennBewertung();
+
+	public abstract int getBishopBewertung();
+
+	public abstract int getKinghtBewertung();
+
+	public abstract int getRookBewertung();
+
+	public abstract int getPawnBewertung();
+
+}
