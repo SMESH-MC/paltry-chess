@@ -208,7 +208,7 @@ public class King extends OberFigur{
 		return bewegungsMuster;
 	}
 	public Stack<SchachPosition> getMuster() {
-		/* könnte von Rook und Bishop uebernommen werden.
+		/* koennte von Rook und Bishop uebernommen werden.
 		 * 
 		 */
 		Stack<SchachPosition> bewegungsMuster = new Stack<SchachPosition>(); // erstelle eine Reihe an bewegungsmuster

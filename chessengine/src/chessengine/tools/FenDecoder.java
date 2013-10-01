@@ -18,7 +18,7 @@ package chessengine.tools;
 
 public class FenDecoder {
 	private final static String trennzeichen = "/";
-	private String[]  fenTeile; // der restlich teil vom FEN string der nicht für die Figuren positionen benötigt wird
+	private String[]  fenTeile; // der restlich teil vom FEN string der nicht fuer die Figuren positionen benoetigt wird
 	private Brett schachBrett;
 	
 	public FenDecoder (Brett schachBrettFormat){

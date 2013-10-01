@@ -16,7 +16,7 @@ implements MoveGeneratorInterface, Definitions {
 	 * d.h. 0-7 gültige Felder, 8-15 ungültige, 16-23 gültig, ... 112-119 gültig
 	 * schachbrett[120] = 1 (Weiss am Zug) | 0 (Schwarz am Zug)
 	 * schachbrett[121, 122, 123, 124] = Bitmarker ( 0 | 1) fuer Rochademoeglichkeiten: K Q k q 
-	 * schachbrett[125] =  En-Passant-Feld des letzten Zuges in 0x88-Darstellung (z.B.: 83 = schachbrett[83] = D6)
+	 * schachbrett[125] = En-Passant-Feld des letzten Zuges in 0x88-Darstellung (z.B.: 83 = schachbrett[83] = D6)
 	 * schachbrett[126] = Anzahl der Halbzuege
 	 * schachbrett[127] = Zugnummer 
 	 */
@@ -36,79 +36,352 @@ implements MoveGeneratorInterface, Definitions {
      */
     public void setFEN(String aktuelleFEN) {
 		//Erstellt ein Objekt der Klasse FenDecode
-    	FenDecode f1 = new FenDecode();
+    	FenDecode fd = new FenDecode();
 		//uebergibt FenDecode die aktuelle FEN
-		f1.setFEN(aktuelleFEN);
+		fd.setFEN(aktuelleFEN);
 		//nimmt sich die von FenDecode in ein Array umgewandelte aktuelle Stellung
-		schachbrett  = f1.getSchachbrett();
+		schachbrett  = fd.getSchachbrett();
 
-/* alte Version der Rochade
-		///wenn der Inhalt NICHT "-" ist, stosse Rochadenueberpruefung an, die dann eventuell moegliche Rochadenzuege in die Liste
-        // der moeglichen Zuege schreibt
-    	if (!splittedFEN[9].equals("-")) {
-        	if (splittedFEN[8].equals("w")) {
-        		Rochade r1 = new Rochade(splittedFEN, true);
-        	} else {
-        		Rochade r1 = new Rochade(splittedFEN, false);
-        	}
-        	r1.get
-        }
-*/
-    	
-		/* neue Version der Rochade */
+		/* neue Version der Rochade 
 		Rochade0x88 r1 = new Rochade0x88();
 		r1.setSchachbrett(schachbrett);
 		r1.getZuege();
-		
+													funzt noch nicht
+		*/
 		zuegeBerechnen(schachbrett);
     }
     
     
-	/*
+	/**
 	 * 
 	 * @param	board	Die aktuelle Stellung, aus der alle normalen Zuege (ohne Sonderzuege) berechnet werden sollen
 	 */
 	private void zuegeBerechnen(byte[] board) {
-		//Gehe das gesamte Board-Array durch, bis nur noch Felder des "Geisterboards" kommen
-		for (int i = 0; i < 120; i++) {
-			//wenn das Feld mit Index i ein Feld des gueltigen Schachbretts ist und dies dann kein leeres Feld ist,
-			if ((i & 136) == 0	&&	board[i] != 0) {
-				//Wenn der Wert an diesem Index positiv ist, also Weiss am Zug ist
-				if (board[i] > 0) {
-					//Uebergib das Board un den aktuellen mit der aktiven Farbe (true = weiss) und
-					//den erlaubten Zuegen der Fiugr an die Zugberechnung
-					switch (board[i]) {
-					case pawn_w :	berechneZugPawn(board, i, true, pawn_moves);		break;
-					case rook_w :	berechneZugRook(board, i, true, rook_moves);		break;
-					case knight_w : berechneZugKnight(board, i, true, knight_moves);	break;
-					case bishop_w :	berechneZugBishop(board, i, true, bishop_moves);	break;
-					case king_w :	berechneZugKing(board, i, true, king_moves);		break;
-					case queen_w :	berechneZugQueen(board, i, true, queen_moves);		break;
-					}
-				} else {	//Wenn der Inhalt an diesem Index negativ ist, also Schwarz am Zug ist
+		if (board[120] == 1) { //weiss am Zug
+			//Gehe die Felder des Board-Arrays durch, bis nur noch Felder des "Geisterboards" kommen
+			for (byte startfeld = 0;	startfeld <= 119;	startfeld++) {
+				//wenn das Feld ein gueltiges ist und eine weisse Figur darauf steht
+				if ((startfeld & 136) == 0 &&	board[startfeld] > 0) {
+						//Uebergib das Board und den aktuellen Index mit der aktiven Farbe (true = weiss) und
+						//den erlaubten Zuegen der Figur an die Zugberechnung
+						switch (board[startfeld]) {
+						case pawn_w :	berechneZugBauer(	board, startfeld, true, pawn_moves_w);
+										berechne2ZugBauer(	board, startfeld, true, pawn_moves_w2);
+										berechneSchlagBauer(board, startfeld, true, pawn_attack_moves_w);	break;
+						case rook_w :	berechneSlidingZug(	keineRochadeMehr(board, startfeld), startfeld, true, rook_moves);	break;
+						case knight_w : berechneZug(		board, startfeld, true, knight_moves);	break;
+						case bishop_w :	berechneSlidingZug(	board, startfeld, true, bishop_moves);	break;
+						case king_w :	berechneZugKing	(	board, startfeld, true, king_moves);	break;
+						case queen_w :	berechneSlidingZug(	board, startfeld, true, queen_moves);	break;
+						}
+				}
+			}//endfor
+		} else { //schwarz am Zug
+			//Gehe die gueltigen Felder des Board-Arrays durch, bis nur noch Felder des "Geisterboards" kommen
+			for (byte startfeld = 0;	startfeld <= 119;	startfeld++) {
+				//wenn das Feld ein gueltiges ist und eine schwarze Figur darauf steht
+				if ((startfeld & 136) == 0 &&	board[startfeld] < 0) {
 					//Uebergib das board und den aktuellen Index mit der aktiven Farbe (false = schwarz) und
 					//den erlaubten Zuegen der Figur an die Zugberechnung
-					switch (board[i]) {
-					case pawn_b :	berechneZugPawn(board, i, false, pawn_moves);		break;
-					case rook_b : 	berechneZugRook(board, i, false, rook_moves);		break;
-					case knight_b : berechneZugKnight(board, i, false, knight_moves);	break;
-					case bishop_b : berechneZugBishop(board, i, false, bishop_moves);	break;
-					case king_b : 	berechneZugKing(board, i, false, king_moves);		break;
-					case queen_b : 	berechneZugQueen(board, i, false, queen_moves);		break;
+					switch (board[startfeld]) {
+					case pawn_b :	berechneZugBauer(	board, startfeld, false, pawn_moves_b);
+									berechne2ZugBauer(	board, startfeld, false, pawn_moves_b2);
+									berechneSchlagBauer(board, startfeld, false, pawn_attack_moves_b);	break;
+					case rook_b :	berechneSlidingZug(	keineRochadeMehr(board, startfeld), startfeld, false, rook_moves);			break;
+					case knight_b : berechneZug(		board, startfeld, false, knight_moves);	break;
+					case bishop_b : berechneSlidingZug(	board, startfeld, false, bishop_moves);	break;
+					case king_b : 	berechneZugKing	(	board, startfeld, false, king_moves);	break;
+					case queen_b : 	berechneSlidingZug(	board, startfeld, false, queen_moves);	break;
 					}
 				}
 			}
 		}
 	}
 	
-    
-    /**
+
+	/** 
+	 * Diese Hilfsmethode setzt die Rochadenmoeglichkeit vor dem Zug eines Turms zurueck
+	 * 
+	 * @param startfeld
+	 * @param weissAmZug
+	 */
+
+	private byte[] keineRochadeMehr(byte[] board, byte startfeld) {
+		switch (startfeld) {
+		case 0	: board[122] = 0;
+			break;
+		case 7	: board[121] = 0;
+			break;
+		case 112: board[124] = 0;
+			break;
+		case 119: board[123] = 0;
+			break;
+		}
+		return board;
+	}
+	/**
+	 * Diese Methode berechnet Zuege fuer Sliding Pieces (Figuren, die eine beliebige Anzahl an Feldern ziehen duerfen)
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege
+	 */
+	private void berechneSlidingZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//setze en passant zurueck
+		board[125] = -1;
+
+		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
+		for (byte b : erlaubteZuege) {
+			
+			//Merker, ob das Zielfeld vor dem Zug frei ist, und das Sliding Piece die Schleife nochmals durchlaufen kann 	//<-sliding-Zusatz
+			boolean zielfeldFrei = false; //Initialisierung																	//<-sliding-Zusatz
+			
+			//berechne moegliches Zielfeld
+			int zielfeld = b + startfeld;  
+			//wenn das Zielfeld ein gueltiges Feld ist
+			if ((zielfeld & 136) == 0) {
+				//wenn das Zielfeld leer ist
+				if (board[zielfeld] == 0) {
+					
+					//Merker fur Sliding Piece																				//<-sliding-Zusatz
+					zielfeldFrei = true;																					//<-sliding-Zusatz
+					
+					//Figur auf Zielfeld ziehen
+					board[zielfeld] = board[startfeld];
+					//Startfeld leeren
+					board[startfeld] = 0;
+					//Zug hinzufuegen
+					zugHinzufuegen(board);
+				} else {//wenn Zielfeld besetzt
+					//wenn weiss am Zug ist
+					if (weissAmZug) {
+						//wenn auf dem Zielfeld der Gegner schwarz steht
+						if (board[zielfeld] < 0) {
+							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
+							board[zielfeld] = board[startfeld];
+							//Startfeld leeren
+							board[startfeld] = 0;
+							//Zug hinzufuegen
+							zugHinzufuegen(board);
+						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
+					} else { //schwarz ist am Zug
+						//wenn auf dem Zielfeld der Gegner weiss steht
+						if (board[zielfeld] > 0) {
+							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
+							board[zielfeld] = board[startfeld];
+							//Startfeld leeren
+							board[startfeld] = 0;
+							//Zug hinzufuegen
+							zugHinzufuegen(board);
+						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
+					}//endifelse weiss/schwarz am Zug
+				}//endifelse Feld leer/besetzt
+																								//ab hier weiterer Zusatz fuer Sliding Pieces -->
+				//wenn das Zielfeld vor dem Zug frei war
+				if (zielfeldFrei) {						
+					//setze die durchgefuehrte Schrittrichtung als einzigen erlaubten Zug in ein Array
+					byte[] zugrichtung = {b};																
+					//uebergib diese Zugrichtung nochmals der Methode mit dem neuen Startfeld, das jetzt eine Schrittweite weiter liegt
+					berechneSlidingZug(board, (byte)zielfeld, weissAmZug, zugrichtung);											
+				}																												
+				
+
+			}//endif "gueltiges Feld?" (wenn Feld nicht gueltig, mache nichts)
+			
+			
+		}//endfor b:erlaubteZuege
+	}
+
+	/**
+	 * Bauernzug mit Schrittlaenge 1
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege	
+	 */
+	private void berechneZugBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		int zielfeld = startfeld + erlaubteZuege[0];
+		//wenn der Zug noch auf dem Brett enden wuerde
+		if ((zielfeld & 136) == 0) {
+			//Wenn Zielfeld vor dem Bauern leer ist, fuehre Schritt durch 
+			if (board[zielfeld] == 0) {
+				//ruecke Figur
+				board[zielfeld] = board[startfeld];
+				//Startfeld leeren
+				board[startfeld] = 0;
+				//setze en passant zurueck
+				board[125] = -1;
+				//Zug hinzufuegen
+				zugHinzufuegen(board);
+			}
+		}
+	}
+
+
+	/**
+	 * Doppelzug Bauern hardcoded
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege	wird nicht benutzt
+	 */
+	private void berechne2ZugBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//Uberpruefen, ob 2 Schritte moeglich sind (von Ausgangsposition des Bauern)
+		if (weissAmZug) { //wenn weiss am Zug ist
+			//wenn das Startfeld auf der Startreihe der weissen Bauern ist
+			if (16 <= startfeld && startfeld <= 23) {
+				//wenn die Felder 1 und 2 Schritte vor dem Bauern frei sind
+				if (board[startfeld + 16] == 0 && board[startfeld + 32] == 0 ) {
+					//mache Zweischrittzug
+					board[startfeld + 32] = board[startfeld];
+					board[startfeld] = 0;
+					//setze en passant Feld
+					board[125] = (byte)(startfeld + 16);
+					//Zug hinzufuegen
+					zugHinzufuegen(board);
+				}
+			}
+		} else { //wenn schwarz am Zug ist
+			//wenn das Startfeld auf der Startreihe der schwarzen Bauern ist
+			if (96 <= startfeld && startfeld <= 103) {
+				//wenn die Felder 1 und 2 Schritte vor dem Bauern frei sind
+				if (board[startfeld - 16] == 0 && board[startfeld - 32] == 0 ) {
+					//mache Zweischrittzug
+					board[startfeld - 32] = board[startfeld];
+					board[startfeld] = 0;
+					//setze en passant Feld
+					board[125] = (byte)(startfeld - 16);
+					//Zug hinzufuegen
+					zugHinzufuegen(board);
+				}
+			}
+		}//endifelse Ueberpruefung Zweischrittzug
+	}
+	
+	/**
+	 * Schlagzug eines Bauern
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege
+	 */
+	private void berechneSchlagBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//fuer die erlaubten Schrittweiten bei einem Bauernschlag
+		for (byte b : erlaubteZuege) {
+			//berechne das Zielfeld
+			int zielfeld = startfeld + b;
+			//Wenn die gegnerische Farbe auf dem Zielfeld steht 
+			if ((weissAmZug && board[zielfeld] < 0) || (!weissAmZug && board[zielfeld] > 0)) {
+				//ziehe eigene figur = schlage Gegner
+				board[zielfeld] = board[startfeld];
+				//Startfeld leeren
+				board[startfeld] = 0;
+				//setze en passant zurueck
+				board[125] = -1;
+				//Zug hinzufuegen
+				zugHinzufuegen(board);
+			} 
+		}
+	}
+
+	/**
+	 * Diese Methode berechnet einen einfachen Zug (Springer)
+	 * 
+	 * @param board			aktuelle Stellung als 0x88-Board
+	 * @param startfeld		Das Feld, von dem aus gezogen werden soll
+	 * @param weissAmZug	true = weiss am Zug, false = schwarz am Zug
+	 * @param erlaubteZuege	erlaubte Schrittweiten der Figur
+	 */
+	private void berechneZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//setze en passant zurueck
+		board[125] = -1;
+		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
+		for (byte b : erlaubteZuege) {
+			//berechne moegliche Zielfelder
+			int zielfeld = b + startfeld;
+			//wenn das Zielfeld ein gueltiges Feld ist
+			if ((zielfeld & 136) == 0) {
+				//wenn das Zielfeld leer ist
+				if (board[zielfeld] == 0) {
+					//Figur auf Zielfeld ziehen
+					board[zielfeld] = board[startfeld];
+					//Startfeld leeren
+					board[startfeld] = 0;
+					//Zug hinzufuegen
+					zugHinzufuegen(board);
+				} else {//wenn Zielfeld besetzt
+					//wenn weiss am Zug ist
+					if (weissAmZug) {
+						//wenn auf dem Zielfeld der Gegner schwarz steht
+						if (board[zielfeld] < 0) {
+							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
+							board[zielfeld] = board[startfeld];
+							//Startfeld leeren
+							board[startfeld] = 0;
+							//Zug hinzufuegen
+							zugHinzufuegen(board);
+						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
+					} else { //schwarz ist am Zug
+						//wenn auf dem Zielfeld der Gegner weiss steht
+						if (board[zielfeld] > 0) {
+							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
+							board[zielfeld] = board[startfeld];
+							//Startfeld leeren
+							board[startfeld] = 0;
+							//Zug hinzufuegen
+							zugHinzufuegen(board);
+						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
+					}//endifelse weiss/schwarz am Zug
+				}//endifelse Feld leer/besetzt
+			}//endif "gueltiges Feld?" (wenn Feld nicht gueltig, mache nichts)
+		}//endfor b:erlaubteZuege
+	}
+ 
+	/**
+	 * Diese Methode berechnet den Zug eines Koenigs
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege
+	 */
+	private void berechneZugKing(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		//setze Rochaden-Marker, dass der Koenig zieht (d.h. keine Rochade mehr fuer die Farbe am Zug moeglich ist)
+		if (weissAmZug) {
+			board[121] = 0;
+			board[122] = 0;
+		} else {
+			board[123] = 0;
+			board[124] = 0;
+		}
+		//uebergebe an die normale Zug-Methode
+		berechneZug(board, startfeld, weissAmZug, erlaubteZuege);
+		
+	}
+
+	
+	/**
 	 * getter der Klasse, der die moeglichen Zuege ausgibt
 	 * 
 	 * @return	Liste aller moeglichen Zuege
 	 */
 	public LinkedList<String> getZuege() {
 		return outgoingFEN;
+	}
+	
+	/**
+	 * Hilfsmethode, die einen Zug zu der Liste der Zuege hinzufuegt
+	 * 
+	 * @param 
+	 */
+	public void zugHinzufuegen(byte[] board) {
+		FenEncode fe = new FenEncode();
+		fe.setBoard(board);
+		outgoingFEN.add(fe.getFEN());
 	}
 
 

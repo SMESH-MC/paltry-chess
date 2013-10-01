@@ -30,7 +30,7 @@ public class LinienLaeufer {
  * @param istWeis
  * @param schachbrett
  * @param bewegungsMuster art die die Figure bewegt werden soll
- * @param reichWeite 1 für ein feld 2 für 2felder
+ * @param reichWeite 1 fuer ein feld 2 fuer 2felder
  * @return
  */
 	public LinkedList<String> ermittleZuege(SchachPosition position, boolean istWeis, Stack<SchachPosition> bewegungsMuster, int reichWeite) {
@@ -44,7 +44,7 @@ public class LinienLaeufer {
 		int y = position.getY();
 		int weite;
 		
-		while( !bewegungsMuster.isEmpty()  ){//läuft alle Muster ab
+		while( !bewegungsMuster.isEmpty()  ){//laeuft alle Muster ab
 			x =  position.getX(); //setze auf Ausgangsposition
 			y =  position.getY();
 			weite = 0;
@@ -60,7 +60,7 @@ public class LinienLaeufer {
 						moeglichkeiten.push( generiereFen(x, y, position , neueRochade) );//schlage //, schachBrett[x][y].getTyp()) typ der geschlagen figur
 						
 					}
-					x=8; //in beiden fällen beende schleife
+					x=8; //in beiden fuellen beende schleife
 					
 				}else{//else keine figure auf dem Feld
 					
@@ -68,7 +68,7 @@ public class LinienLaeufer {
 					x = x + bewegungsMuster.peek().getX();//bewege nach muster
 					y = y + bewegungsMuster.peek().getY();
 				}//else
-				weite++ ; //weite +1 das nächstes Feld  geprüft wird. Diesen komentar ignorieren
+				weite++ ; //weite +1 das naechstes Feld  geprueft wird. Diesen komentar ignorieren
 				
 			}//linie /Muster
 			bewegungsMuster.pop(); // naechste muster bearbeiten

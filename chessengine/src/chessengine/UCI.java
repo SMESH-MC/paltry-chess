@@ -1,18 +1,16 @@
 /**
  * The UCI protocol as publiced by Stefan-Meyer Kahlen
  */
-// Nur ein kleiner Testkommentar um Commit zu testen.
 package chessengine;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * @author Alexander Kessler
- *
+ * UCI-Klasse, dient zur Kommunikation zwischen Engine und der GUI.
+ * @author Alexander Kessler, Thorsten Jakobs
  */
-public class UCI implements UCI_Interface, Runnable  {
+public class UCI implements UCI_Interface, Runnable {
 
     /**
      * GUI to engine :(ueber Reader.readln) uci, debug [on | off], isready,
@@ -51,36 +49,46 @@ public class UCI implements UCI_Interface, Runnable  {
     private int movetime;
     private int winc;
     private int binc;
+    private boolean go;
+    private Manager manager;
+    private String movesList;
 
-    public UCI() {
+    /**
+     * Konstruktor der UCI-Klasse.
+     * @param manager Referenz auf den zustaendigen Manager.
+     */
+    public UCI(Manager manager) {
         //FEN initialisiert mit Standard Startposition
         fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR "
                 + "w KQkq - 0 1";
         reader = new BufferedReader(new InputStreamReader(System.in));
         stop = false;
-        wtime = 0;
-        btime = 0;
+        wtime = 999999999;
+        btime = 999999999;
         winc = 0;
         binc = 0;
-        movetime = 0;
-
+        movetime = 60000;
+        go = false;
+        this.manager = manager;
+        movesList = null;
     }
 
     /**
-     *
+     * input-Methode, liest Eingaben aud stdin ein und wertet diese aus.
      * @throws IOException
      */
     @Override
-    public void input() throws IOException {
+    public void input() throws Exception {
         String cmdIN = null;
         String[] cmdArray = null;
         String cmd = null;
 
-        while (!cmdIN.equals(QUIT)) {
+        do {
             cmdIN = reader.readLine();
             //konvertiert den Befehl in Kleinbuchstaben
             cmdIN = cmdIN.toLowerCase();
             cmdArray = cmdIN.split(SPLITPOINT);
+            cmd = cmdArray[0];
 
             // Fallunterscheidung fuer die versch. Befehle
             switch (cmd) {
@@ -95,45 +103,62 @@ public class UCI implements UCI_Interface, Runnable  {
                     position(cmdIN, cmdArray);
                     break;
                 case STOP:
-                    stop = true;
+                    manager.setStop(true);
                     break;
                 case GO:
+                    go = true;
                     go(cmdArray);
                     break;
-                default:
-                    // TODO falsche kommandos sollen ignoriert werden.
-                    //Keine fehlermeldung?
-                    System.err.println(UNKNOWN_CMD);
-                    break;
+                case "setoption":
+                    throw new UnsupportedOperationException("not yet "
+                            + "implemented");
             }
-            System.exit(0);
-        }
+        } while (!cmdIN.equals(QUIT));
+        System.exit(0);
     }
 
     /**
      * Gibt die ID der Engine auf stdout aus.
      */
     private void id() {
-        System.out.print("id name " + NAME + "\nid author " + AUTHOR);
+        System.out.println("id name " + NAME + "\nid author " + AUTHOR);
     }
 
     private void position(String cmdIN, String[] cmdArray) {
         int movesIndex = cmdIN.indexOf(MOVES);
+        
         if (cmdArray[1].equalsIgnoreCase("fen")) {
             String newFen = null;
             if (movesIndex == -1) {
                 for (int i = 2; i < cmdArray.length; i++) {
                     newFen += cmdArray[i] + " ";
+                    manager.setWhite();
                 }
             } else {
                 for (int i = 2; i < movesIndex; i++) {
                     newFen += cmdArray[i] + " ";
                 }
+                for (int j = movesIndex + 1; j < cmdArray.length; j++) {
+                    movesList += cmdArray[j] + " ";
+                }
             }
             fen = newFen;
+        } else {
+            if (movesIndex == -1) {
+                manager.setWhite();
+            } else {
+                for (int j = movesIndex + 1; j < cmdArray.length; j++) {
+                    movesList += cmdArray[j] + " ";
+                }
+            }
         }
     }
 
+    /**
+     * go-Methode, empfaengt die Einstellungen fuer das go-Kommando und 
+     * leitet den aufruf an die Engine weiter.
+     * @param cmdArray 
+     */
     private void go(String[] cmdArray) {
         for (int i = 1; i < cmdArray.length; i++) {
             try {
@@ -162,16 +187,20 @@ public class UCI implements UCI_Interface, Runnable  {
                 System.out.println("e");
             }
         }
+
+        manager.run();
     }
 
     /**
-     *
+     * bestmove-Methode, gibt den von der Engine errechneten Zug in die 
+     * stdout aus und setzt die go- und stop-variable wieder auf false zurueck.
      * @param move - der beste Zug, der durch die Engine gefunden wurde
      */
     @Override
     public void bestmove(String move) {
         //Stop wird auf false gesetzt, fuer den naechsten Zug
-        stop = false;
+        manager.setStop(false);
+        go = false;
         System.out.println("bestmove " + move);
     }
 
@@ -185,47 +214,68 @@ public class UCI implements UCI_Interface, Runnable  {
         return fen;
     }
 
-    @Override
-    public boolean getStop() {
-        return stop;
-    }
-
+    /**
+     * Getter fuer wtime.
+     * @return wtime
+     */
     @Override
     public int getWtime() {
         return wtime;
     }
 
+    /**
+     * Getter fuer btime
+     * @return btime
+     */
     @Override
     public int getBtime() {
         return btime;
     }
 
+    /**
+     * Getter fuer winc
+     * @return winc
+     */
     @Override
     public int getWinc() {
         return winc;
     }
 
+    /**
+     * Getter fuer binc
+     * @return binc
+     */
     @Override
     public int getBinc() {
         return binc;
     }
 
+    /**
+     * Getter fuer movetime
+     * @return movetime
+     */
     @Override
     public int getMovetime() {
         return movetime;
     }
+    
+    /**
+     * Getter fuer moveList
+     * @return moveList
+     */
+    public String getMovesList() {
+        return movesList;
+    }
 
+    /**
+     * Threadstart fuer das Einlesen der Kommandos.
+     */
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
-    class UCIListener implements Runnable{
-
-        @Override
-        public void run() {
-            throw new UnsupportedOperationException("Not supported yet.");
+        try {
+            input();
+        } catch (Exception e) {
+            System.out.println(e);
         }
-        
     }
 }

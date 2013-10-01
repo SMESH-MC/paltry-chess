@@ -92,7 +92,7 @@ implements Definitions {
 		String rochade0x88 = rochade0x88(fenRest[1]);
 		//setzt die Markerbits fuer Rochadenmoeglichkeiten in das 0x88-Arrays
 		// Indizes: 121=K, 122=Q, 123=k, 124=q
-		for (int i=0; i<4; i++) {
+		for (int i=0; i<=3; i++) {
 			schachbrett[121 + i] = Byte.parseByte(rochade0x88.substring(i, i+1));
 		}
 		
@@ -111,7 +111,7 @@ implements Definitions {
 	 * @param stellung	Die aktuelle Stellung als String in 0x88-Darstellung aufbereitet
 	 */
 	private void stellungInsArray(String stellung) {
-		for (int i=0; i<120; i++) {
+		for (int i=0; i<=119; i++) {
 			switch (stellung.charAt(i)) {
 			/*
 			 * x = Feld des 0x88-"Geisterschachbretts"

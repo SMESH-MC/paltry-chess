@@ -8,12 +8,14 @@ public interface BoardInterface {
 
 	public abstract void BoardOutputFen(String boardFen);
 
-	public abstract Board getBoard(); 							//gibt das aktuelle Board zurück
+	public abstract Board getBoard(); 							//gibt das aktuelle Board zurueck
 
 	public abstract int[] FenDecode(String s);
 
 	public abstract String FenEncode();
 
 	public abstract Character IntToFen(int toConvert);
+	
+	public abstract int getBoardValue();
 
 }
