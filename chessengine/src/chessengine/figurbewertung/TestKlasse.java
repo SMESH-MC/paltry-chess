@@ -24,11 +24,11 @@ public class TestKlasse {
 			//fen =  "r2kqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbk3r/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/R3KBNR w KQkq - 0 1";
-			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1");
-			fen =  "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
+			//fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQK2R w KQkq - 0 1";
+			//fen =  "r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
 			//fen =  "r3k2r/ppppRppp/7N/8/8/8/PPPPPPPP/R3K2R b KQkq - 0 1";
 			//Szenarien
-			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
+			fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/8/p7/PPPP4/3pp3/4pppp/8/RNBQKBNR w KQkq - 0 1";
 			
 			//enPassannt
@@ -36,39 +36,25 @@ public class TestKlasse {
 			fenAusgabe(fen,decoder);
 			schachBrett = decoder.decodiere(fen);
 			//arrayAusgabe( schachBrett);
+		
+		Long time = System.currentTimeMillis();	
+		
+		for(int i = 0 ;i<10000;i++){
+			//System.out.println(fen);	
+			FigurBewertungInterface figuren= new FigurBewertung();
+			SchachPosition position = new SchachPosition(0,0);
+		
+			//System.out.println("Alle Zuege fur farbe am Zug---------------------------------------");
+			LinkedList<String> liste2 = figuren.ermittleAlleZuege(fen);
+			/*
+			while(liste2.isEmpty() == false){
 			
-		System.out.println(fen);	
-		FigurBewertungInterface figuren= new FigurBewertung();
-		figuren.inizialisiereBrett( fen ); //WICHTIG
-		SchachPosition position = new SchachPosition(0,0);
-		/*
-		System.out.print("Alle Zuege-fuer beide farben--------------------------------------");
-		for(int y =0 ;y <8;y++)
-		{
-			for (int x =0; x < 8 ; x++ ){
-				position.setXY(x, y);
-					
-				if(schachBrett[x][y] != null){//ein figur auf dem feld
-					Figur figur 	= schachBrett[ position.getX() ][ position.getY() ];
-					String typ 		= figur.toString();
-					System.out.print("Zuege für "+typ+" auf"+ position + "--------------------");
-					System.out.println("Zuege für "+typ+" auf"+ position + "-----------------------------------------");
-					//System.out.println( figuren.ermittleZuege(position)  );
-					
-					LinkedList<String> liste= figuren.ermittleZuege(position);
-					while(liste.isEmpty() == false){
-						fenAusgabe(liste.pop(),decoder );
-					}
-					
-				}
-			}	
-		}*/
-		System.out.println("Alle Zuege fur farbe am Zug---------------------------------------");
-		LinkedList<String> liste2 = figuren.ermittleAlleZuege(fen);
-		while(liste2.isEmpty() == false){
-			
-			fenAusgabe(liste2.pop(),decoder );
+				fenAusgabe(liste2.pop(),decoder );
+			}*/
+			//System.out.print(".");
 		}
+		System.out.println();
+		System.out.println("Zeit:"+(System.currentTimeMillis()-time) );
 	}
 	
 	

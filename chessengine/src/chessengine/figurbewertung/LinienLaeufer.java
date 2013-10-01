@@ -55,7 +55,7 @@ public class LinienLaeufer {
 
 				if( schachBrett.getIsEmpty(x, y) == false  ){//Wenn eine Figur auf dem Feld
 					
-					if(istWeis != schachBrett.getInhalt(x, y).getIstWeis()){// Wenn feindlich figure
+					if(istWeis != schachBrett.getInhalt(x, y).istWeis()){// Wenn feindlich figure
 						
 						moeglichkeiten.push( generiereFen(x, y, position , neueRochade) );//schlage //, schachBrett[x][y].getTyp()) typ der geschlagen figur
 						
@@ -161,7 +161,7 @@ public class LinienLaeufer {
 
 				if( schachBrett.getIsEmpty(x, y) == false ){//Wenn eine Figur auf dem Feld
 					figur =  schachBrett.getInhalt(x, y);
-					if(istWeis != figur.getIstWeis()){// Wenn feindlich figure
+					if(istWeis != figur.istWeis()){// Wenn feindlich figure
 						treffer.add(figur);
 					}
 					x=8; //in beiden fällen beende schleife

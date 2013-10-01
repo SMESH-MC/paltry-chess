@@ -41,11 +41,8 @@ public class FenDecoder {
 				//rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
 				
 				if( symbole[symbolPos] <122 && symbole[symbolPos] > 65){ //wenn buchstabe
-					boolean istWeis = false;
-					if(symbole[symbolPos]< 90){
-						istWeis = true;
-					}
-					schachBrett.setInhalt(x, y , new Figur(istWeis, symbole[symbolPos]) );
+					
+					schachBrett.setInhalt(x, y , new Figur( symbole[symbolPos]) );
 					
 					x++;
 				}else{

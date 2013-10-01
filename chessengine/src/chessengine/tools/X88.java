@@ -16,7 +16,7 @@ public class X88 extends Brett{
 		{
 		
 			if( schachBrett[i] != null){
-				Figur neueFigur = new Figur( schachBrett[i].getIstWeis() , schachBrett[i].toChar());	
+				Figur neueFigur = new Figur( schachBrett[i].getZahl());	
 				neuesBrett.schachBrett[i] = neueFigur;
 			}
 		}

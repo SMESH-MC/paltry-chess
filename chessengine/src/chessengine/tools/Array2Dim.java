@@ -25,7 +25,7 @@ public class Array2Dim extends Brett{
 			{
 				for (int x =0; x < 8 ; x++ ){
 						if( schachBrett[x][y] != null){
-							Figur neueFigur = new Figur( schachBrett[x][y].getIstWeis() , schachBrett[x][y].toChar());	
+							Figur neueFigur = new Figur( schachBrett[x][y].getZahl());	
 							neuesBrett.setInhalt(x, y, neueFigur);
 						}
 					}

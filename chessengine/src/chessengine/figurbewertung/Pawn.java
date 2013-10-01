@@ -46,7 +46,7 @@ public class Pawn extends OberFigur {
 				
 					zielX = x+1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false ){ // vorne rechts eine Figur
-						if (schachBrett.getInhalt(zielX,zielY).getIstWeis() != istWeis) { // vorne rechts ein gegner _> schlage
+						if (schachBrett.getInhalt(zielX,zielY).istWeis() != istWeis) { // vorne rechts ein gegner _> schlage
 							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position, null ) );
 						}
 					}
@@ -60,7 +60,7 @@ public class Pawn extends OberFigur {
 				if(x>0){//links ein feld
 					zielX = x-1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false){ // vorne rechts eine Figur
-						if (schachBrett.getInhalt(zielX, zielY).getIstWeis() != istWeis) {// vorne Links ein gegner _> schlage
+						if (schachBrett.getInhalt(zielX, zielY).istWeis() != istWeis) {// vorne Links ein gegner _> schlage
 							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position , null));
 						}
 					}
@@ -86,7 +86,7 @@ public class Pawn extends OberFigur {
 				if(x < 7){//rechts ein feld
 					zielX = x+1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false){ // vorne rechts eine Figur
-						if (schachBrett.getInhalt(zielX, zielY).getIstWeis() != istWeis) { // vorne rechts ein gegner _> schlage
+						if (schachBrett.getInhalt(zielX, zielY).istWeis() != istWeis) { // vorne rechts ein gegner _> schlage
 							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position , null));
 						}
 					}
@@ -97,7 +97,7 @@ public class Pawn extends OberFigur {
 				if(x>0){//links ein feld
 					zielX = x-1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false){ // vorne rechts eine Figur
-						if (schachBrett.getInhalt(zielX, zielY).getIstWeis() != istWeis) {// vorne Links ein gegner _> schlage
+						if (schachBrett.getInhalt(zielX, zielY).istWeis() != istWeis) {// vorne Links ein gegner _> schlage
 							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position , null));
 						}
 					}

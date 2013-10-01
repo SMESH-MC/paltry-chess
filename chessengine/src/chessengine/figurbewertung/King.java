@@ -32,6 +32,13 @@ public class King extends OberFigur{
 	private final static SchachPosition WEISLANGSTART = new SchachPosition(0,0);;
 	private final static SchachPosition WEISLANGZIEL = new SchachPosition(3,0);;
 	
+	private final static int KING 	= 	6;
+	private final static int QUEEN = 	5;
+	private final static int BISHOP=	4;
+	private final static int KNIGHT=	3;
+	private final static int ROOK	=	2;
+	//private final static int PAWN	=	1;
+	
 	private final static SchachPosition[] MUSTER = new SchachPosition[8];
 	private   SchachPosition[] knightMuster;
 	private   SchachPosition[] rookMuster;
@@ -222,69 +229,82 @@ public class King extends OberFigur{
 	}//istBedrohte
 	public boolean istBedroht(SchachPosition position, boolean istWeis){
 		SchachPosition zeiger = new SchachPosition(0 , 0);  
-
+		Figur figur;
 		boolean istBedroht = false;
 		Stack<Figur> figuren;
 		//pruefe auf Koenig
 		figuren = linienlaeufer.ermittleSchlaege(position, istWeis, MUSTER, 1);
-		if( pruefeAuf('k', figuren) && !istBedroht) {
+		if( pruefeAuf(KING, figuren) && !istBedroht) {
 			istBedroht = true;}
 		//preufe auf Pferd
 		figuren = linienlaeufer.ermittleSchlaege(position, istWeis, knightMuster, 1);
-		if( pruefeAuf('n', figuren)&& !istBedroht) {
+		if( pruefeAuf(KNIGHT, figuren)&& !istBedroht) {
 			istBedroht = true;}
 		//preufe auf Turm
 		figuren = linienlaeufer.ermittleSchlaege(position, istWeis, rookMuster, 8);
-		if( pruefeAuf('r', figuren)&& !istBedroht) {
+		if( pruefeAuf(ROOK, figuren)&& !istBedroht) {
 			istBedroht = true;}
 		//preufe auf Laeufer
 		figuren = linienlaeufer.ermittleSchlaege(position, istWeis, bishopMuster, 8);
-		if( pruefeAuf('b', figuren)&& !istBedroht) {
+		if( pruefeAuf(BISHOP, figuren)&& !istBedroht) {
 			istBedroht = true;}
 		//pruefe auf Dame
 		figuren = linienlaeufer.ermittleSchlaege(position, istWeis, rookMuster, 8);
-		if( pruefeAuf('d', figuren)&& !istBedroht) {
+		if( pruefeAuf(QUEEN, figuren)&& !istBedroht) {
 			istBedroht = true;}
 		figuren = linienlaeufer.ermittleSchlaege(position, istWeis, bishopMuster, 8);
-		if( pruefeAuf('d', figuren)&& !istBedroht) {
+		if( pruefeAuf(QUEEN, figuren)&& !istBedroht) {
 			istBedroht = true;}
 		//preufe auf Bauer
 			zeiger.setX(position.getX()); 
 			zeiger.setY(position.getY());
 			if(istWeis){ // Wenn Weis
 				zeiger.bewege(1, 1);
+				
 				if(schachBrett.getIsEmpty(zeiger) == false){
-					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
-						istBedroht = true;}
+					figur = schachBrett.getInhalt(zeiger);
+					if(figur.istPawn()){
+						if(figur.istBlack()){
+							istBedroht = true;}
+						}
 				}
 				zeiger.setX(position.getX()); 
 				zeiger.setY(position.getY());
 				zeiger.bewege(-1, 1);
 				if(schachBrett.getIsEmpty(zeiger) == false){
-					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
-						istBedroht = true;}
+					figur = schachBrett.getInhalt(zeiger);
+					if(figur.istPawn()){
+						if(figur.istBlack()){
+							istBedroht = true;}
+						}
 				}
 			}else{ //sonst schwarz
 				zeiger.bewege(-1, -1);
 				if(schachBrett.getIsEmpty(zeiger) == false){
-					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
-						istBedroht = true;}
+					figur = schachBrett.getInhalt(zeiger);
+					if(figur.istPawn()){
+						if(figur.istWeis()){
+							istBedroht = true;}
+						}
 				}
 				zeiger.setX(position.getX()); 
 				zeiger.setY(position.getY());
 				zeiger.bewege(1, -1);
 				if(schachBrett.getIsEmpty(zeiger) == false){
-					if(schachBrett.getInhalt(zeiger).toChar() == 'p'){
-						istBedroht = true;}
+					figur = schachBrett.getInhalt(zeiger);
+					if(figur.istPawn()){
+						if(figur.istWeis()){
+							istBedroht = true;}
+						}
 				}
 			}
 		return istBedroht;
 	}//istBedrohte
-	private boolean pruefeAuf (char figur, Stack<Figur> figuren){
+	private boolean pruefeAuf (int figur, Stack<Figur> figuren){
 		boolean istGetroffen = false;
 		while(!figuren.isEmpty()){
 
-			if(figuren.pop().getTyp() == figur){
+			if(figuren.pop().getZahlModulo() == figur){
 				istGetroffen = true;
 				
 			}
