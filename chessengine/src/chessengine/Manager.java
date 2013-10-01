@@ -1,11 +1,14 @@
 package chessengine;
 
 /**
- *
+ * Manager-Klassen, dient zum inizialisieren der anderen Module und deren 
+ * Kommunikation untereinander.
+ * 
  * @author Alexander Kessler, Thorsten Jakobs
  */
 public class Manager implements Runnable {
 
+    //---------------------------Objektvariablen
     private UCI_Interface newUCI;
     private BoardInterface Board;
     private String fen;
@@ -19,6 +22,9 @@ public class Manager implements Runnable {
     private String bestZug;
     private boolean engineIsWhite;
 
+    /**
+     * Standartkonstruktor des Managers.
+     */
     public Manager() {
         stop = false;
         go = false;
@@ -33,7 +39,7 @@ public class Manager implements Runnable {
     }
 
     /**
-     * Initialisiert den Manager fuer den ersten gebrauch.
+     * Initialisiert den Manager fuer den ersten Gebrauch.
      */
     public void initialize() {
         try {
@@ -45,7 +51,7 @@ public class Manager implements Runnable {
     }
 
     /**
-     * Uebernimmt alle relevanten Variablenwerte
+     * Uebernimmt alle relevanten Variablenwerte aus UCI.
      */
     private void getAll() {
         fen = newUCI.getFEN();
@@ -68,20 +74,30 @@ public class Manager implements Runnable {
     /**
      * Getter fuer die stop-Variable.
      *
-     * @return
+     * @return liefert den aktuellen Wert von stop zurueck.
      */
     public boolean getStop() {
         return stop;
     }
 
+    /**
+     * Setzt engineIsWhite auf true.
+     */
     public void setWhite() {
         engineIsWhite = true;
     }
 
+    /**
+     * Liefert den Wert von engineIsWhite zurueck.
+     * @return engineIsWhite
+     */
     public boolean isWhite() {
         return engineIsWhite;
     }
 
+    /**
+     * Startpunkt eines Threads. Dieser dient zur Zugberechnung.
+     */
     @Override
     public void run() {
         getAll();
