@@ -1,18 +1,23 @@
 package chessengine;
 
 /**
+ * Klasse zur Umschreibung des letzten Zug des Spielers in einen FEN String
+ * Benutzung:
+ * 1. Erstellung eines Objektes (benoetigt aktuelles UCI Objektreferenz + aktuelles Board)
+ * 2. Benutzung der (noch nicht vorhandenen) getFEN Methode
  * @author Christopher Schuetz
  */
 public class ToFen extends Board {
 	
 	// TODO (von chschuetz)
-	// aktuelles Board abgreifen (muss am Board geändert werden)								80%
+	// aktuelles Board abgreifen (muss am Board geaendert werden)								80%
 	// alle moves abgreifen																		ERLEDIGT
-	// letzten move des spielers abgreifen (muss in UCI geändert werden, statische Methode)		80%
+	// letzten move des spielers abgreifen														ERLEDIGT
 	// Figuren ändern																			80%
 	// +- Rochade 	 																			ERLEDIGT
 	// +- normaler Zug 																			ERLEDIGT
 	// +- En passant?!?!																		0%
+	// +- PROMOTION																				ERLEDIGT
 	// neues Board in ein FEN umwandeln															0%
 	
 	// Fragen:
@@ -20,11 +25,13 @@ public class ToFen extends Board {
 	// wie registriere ich einen enpassant zug?
 
 	private String allMoves;		// String aller Moves bis dato
+	private String[] allMovesSplit;	// alle Moves gesplittet
 	private String lastMove;		// String des letzten Zuges des Spielers
 	private boolean currentColor;	// Farbe am Zug
 	private Board currentBoard;		// aktuelles Board
 	private int[] temp;				// Inhalt des Boards in Zahlen
-	private String OutgoingFen;		// Fertiger FEN String
+	private String outgoingFen;		// Fertiger FEN String
+	private UCI uci;
 	private boolean rochadeGrossW;
 	private boolean rochadeKleinW;
 	private boolean rochadeGrossS;
@@ -34,20 +41,58 @@ public class ToFen extends Board {
 
 	/**
 	 * Konstruktor, benoetigt aktuelles Board
+	 * @param uci aktuelle UCI Objektreferenz
 	 * @param currentBoard aktuelles Board
 	 */
-	public ToFen(Board currentBoard) {
+	public ToFen(UCI uci, Board currentBoard) {
+		this.uci = uci;
 		this.currentBoard = currentBoard;
 		this.temp = currentBoard.boardArray;
 		this.currentColor = !currentBoard.color;	// Da der Spieler am Zug ist/war muss negiert werden, oder?
-		this.allMoves = UCI.getMovesList();			// muss die Funktion statisch machen damits funzt
-		this.lastMove = allMoves.substring(allMoves.length()-4, allMoves.length());
+		this.allMoves = uci.getMovesList();			// muss die Funktion statisch machen damits funzt
+		this.allMovesSplit = this.allMoves.split(" ");
+		this.lastMove = this.allMovesSplit[allMovesSplit.length-1];
 		this.aktuelleRochade = 0;
-		detectRochade();
+		start();
+		setFEN();
+	}
+	
+	/**
+	 * startmethode zum schauen ob der String laenger ist als 4 Zeichen
+	 * Wenn ja ist es eine Promotion
+	 * Wenn nein schauen ob Rochade
+	 */
+	private void start() {
+		if (this.lastMove.length() > 4) {
+			runPromotion();
+		} else {
+			detectRochade();
+		}
+	}
+	
+	/**
+	 * Methode zum Ausfuehren einer Promotion
+	 */
+	private void runPromotion() {
+		String startPos = this.lastMove.substring(0, 2);		// Erste zwei Zeichen Startposition
+		String endPos = this.lastMove.substring(2, 4);			// Zweite zwei Zeichen Endposition
+		char neueFigur = this.lastMove.charAt(4);				// letztes Zeichen Buchstabe der neuen Figur
+		if (this.currentColor) {
+			neueFigur = Character.toUpperCase(neueFigur);		// wenn weiss, Grossbuchstabe
+		} else {
+			neueFigur = Character.toLowerCase(neueFigur);		// wenn schwarz, Kleinbuchstabe
+		}
+		int figurWert = this.getFigur(neueFigur);				// int wert fuer die Figur (wie im Board)
+		int startFeld = this.getField(startPos);				// # des Startfeldes im Array
+		int endFeld = this.getField(endPos);					// # des Endfeldes im Array
+		this.temp[startFeld] = 0;								// Startfeld loeschen
+		this.temp[endFeld] = figurWert;							// neue Figur in das Endfeld schreiben
 	}
 	
 	/**
 	 * Methode zur Ueberpruefung einer Rochade
+	 * Wenn die Rochade noch moeglich ist und ein Rochadenzug erscheint wird diese ausgefuehrt 
+	 * und die Rochademoeglichkeit geloescht
 	 */
 	private void detectRochade() {
 		if (rochadeGrossW && this.lastMove == "e1b1") {
@@ -325,6 +370,45 @@ public class ToFen extends Board {
 			break;	
 		}
 		return fieldNum;
+	}
+	
+	private int getFigur(char c) {
+		switch (c) {
+		case 'p':
+			return 1;
+		case 'P':
+			return 11;
+		case 'r':
+			return 2;
+		case 'R':
+			return 12;
+		case 'n':
+			return 3;
+		case 'N':
+			return 13;
+		case 'b':
+			return 4;
+		case 'B':
+			return 14;
+		case 'q':
+			return 5;
+		case 'Q':
+			return 15;
+		case 'k':
+			return 6;
+		case 'K':
+			return 16;
+		default:
+			return 0;	
+		}
+	}
+	
+	private void setFEN() {
+		
+	}
+	
+	public String getFEN() {
+		return this.outgoingFen;
 	}
 	
 }
