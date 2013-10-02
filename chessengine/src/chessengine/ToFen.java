@@ -7,7 +7,7 @@ package chessengine;
  * 2. Benutzung der (noch nicht vorhandenen) getFEN Methode
  * @author Christopher Schuetz
  */
-public class ToFen extends Board {
+public class ToFen extends Board implements ToFenInterface {
 	
 	// TODO (von chschuetz)
 	// aktuelles Board abgreifen (muss am Board geaendert werden)								80%
@@ -407,6 +407,10 @@ public class ToFen extends Board {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.ToFenInterface#getFEN()
+	 */
+	@Override
 	public String getFEN() {
 		return this.outgoingFen;
 	}
