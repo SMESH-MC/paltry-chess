@@ -30,7 +30,7 @@ public class MoveEvaluatorTree {
 	}
 	
 	/**
-	 * erzeugt den Baum bis Tiefe 3
+	 * erzeugt den Baum bis Tiefe 3 
 	 */
 	private void generateTree() {
 		MoveEvaluatorTreeNode currentNode;

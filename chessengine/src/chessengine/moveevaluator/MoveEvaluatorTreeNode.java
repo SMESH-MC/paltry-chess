@@ -5,7 +5,7 @@ import chessengine.Board;
 
 /**
  * 
- * @author Dominik A. Erb
+ * @author Dominik A. Erb 
  *
  */
 public class MoveEvaluatorTreeNode {
