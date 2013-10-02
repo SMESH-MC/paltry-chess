@@ -60,6 +60,27 @@ public class MoveEvaluatorTree {
 		return childList;
 	}
 	
+	public MoveEvaluatorTreeNode getBestMove() {
+		MoveEvaluatorTreeNode parrentNode;
+		MoveEvaluatorTreeNode currentNode;
+		int max = -10000;
+		int maxPosition =1;
+		for (int i = 0; i < root.hasChild(); i++) {
+			parrentNode = root.getChildAtPos(i);
+			for (int j = 0; j < parrentNode.hasChild(); j++) {
+				currentNode = parrentNode.getChildAtPos(j);
+				if (currentNode.getBoardValue() < currentNode.minChild) {
+					currentNode.minChild = currentNode.getBoardValue();
+					currentNode.posMinChild = j;
+				}
+			}
+			if (parrentNode.getBoardValue() > max) {
+				max = parrentNode.getBoardValue();
+				maxPosition = i;
+			}
+		}
+		return root.getChildAtPos(maxPosition);
+	}
 	
 	
 	
