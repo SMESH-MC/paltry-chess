@@ -54,7 +54,7 @@ public interface FigurBewertungInterface {
 
 	public abstract int getBishopBewertung();
 
-	public abstract int getKinghtBewertung();
+	public abstract int getKnightBewertung();
 
 	public abstract int getRookBewertung();
 

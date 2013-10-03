@@ -113,7 +113,7 @@ public class Pawn extends OberFigur {
 	}
 
 	/**
-	 * Ermittler ob sich der Bauer auf der Startposition befindet
+	 * Ermittlet ob sich der Bauer auf der Startposition befindet
 	 * 
 	 * @param istWeis
 	 *            ob es sich um eine Weise Figur handelt Position die position
@@ -134,7 +134,11 @@ public class Pawn extends OberFigur {
 		}
 		return istAufStartPos;
 	}
-
+	/**
+	 * inizialisiert den Bauer mit allen benoetigt information fuer di zug ermittlung
+	 * @param schachBrett2
+	 * @param enPassant
+	 */
 	public void inizialisiere(Brett schachBrett2, SchachPosition enPassant) {
 		this.schachBrett = schachBrett2;
 		this.enPassant = enPassant;

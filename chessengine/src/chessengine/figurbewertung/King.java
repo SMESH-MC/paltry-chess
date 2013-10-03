@@ -177,6 +177,11 @@ public class King extends OberFigur{
 		
 		return neueRochade.toString();
 	}
+	/**
+	 * inizialisiert den Koenig mit allen benoetigt information fuer dei zug ermittlung
+	 * @param schachBrett2
+	 * @param enPassant
+	 */
 	public void inizialisiere(Brett schachBrett2, String rochade) {
 		this.schachBrett = schachBrett2;
 		rochadeCharArray = rochade.toCharArray();
@@ -300,6 +305,12 @@ public class King extends OberFigur{
 			}
 		return istBedroht;
 	}//istBedrohte
+	/**
+	 * prueft ob in dem stack tein typ der figur vorhanden ist
+	 * @param figur
+	 * @param figuren
+	 * @return
+	 */
 	private boolean pruefeAuf (int figur, Stack<Figur> figuren){
 		boolean istGetroffen = false;
 		while(!figuren.isEmpty()){
@@ -313,12 +324,18 @@ public class King extends OberFigur{
 		
 		return istGetroffen;
 	}//pruefeAuf
+	/**
+	 * 
+	 * @param muster
+	 * @return
+	 */
 	private SchachPosition[] toArray (Stack<SchachPosition> muster){
 		int size = muster.size();
 		SchachPosition[] array =  new SchachPosition[size];
-		for(int i  = 0 ; i < size; i++){
+		/*for(int i  = 0 ; i < size; i++){
 			array[i] = muster.pop();
-		}
+		}*/
+		muster.toArray( array);
 		return array;
 	}//pruefeAuf
 }

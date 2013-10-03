@@ -11,6 +11,7 @@ import chessengine.tools.SchachPosition;
 
 /**
  *  erzeugt zugmöglichkeiten für klassische linieneinheiten wie Läufer und Turm und König
+ *  und generiet Fen mithilfe des FendDecoder
  * @author Philip Hunsicker
  * Stand : 25.09.2013
  */
@@ -87,8 +88,16 @@ public class LinienLaeufer {
 		this.decoder = decoder;
 	}
 	
+	
+	/**
+	 * Generiert mit Hilfe des Decoder einen Fen aus Asugang und ZielPosition
+	 * @param x
+	 * @param y
+	 * @param position
+	 * @param neueRochade
+	 * @return
+	 */
 	public String generiereFen(int x, int y, SchachPosition position, String neueRochade){
-
 		neuesBrett = schachBrett.bewegeFigur(x, y ,position);
 		return decoder.codiererNeuenZug(neuesBrett, neueRochade);
 	}
@@ -96,7 +105,7 @@ public class LinienLaeufer {
 
 	
 	/**
-	 * variations von genereFend spezialisiertfuer rochade
+	 * variations von generiereFend spezialisiertfuer rochade
 	 * @param x
 	 * @param y
 	 * @param position
@@ -112,7 +121,7 @@ public class LinienLaeufer {
 		return decoder.codiererNeuenZug(neuesBrett, neueRochade);
 	}
 	/**
-	 *  
+	 *   variations von generiereFend spezialisiertfuer EnPassant schlaege
 	 * @param x
 	 * @param y
 	 * @param position

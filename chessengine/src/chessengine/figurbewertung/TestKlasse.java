@@ -36,14 +36,16 @@ public class TestKlasse {
 			
 			
 		//fenAusgabe(fen,decoder);
+		//System.out.println(fen);	
 		schachBrett = decoder.decodiere(fen);
 		//arrayAusgabe( schachBrett);
 		long zeit = 0;
 		int durchlaeufe = 100000;
+		//int durchlaeufe = 1;
 		Long time = System.currentTimeMillis();	
 		
 		for(int i = 0 ;i <= durchlaeufe;i++){
-			//System.out.println(fen);	
+			
 			FigurBewertungInterface figuren= new FigurBewertung();
 			SchachPosition position = new SchachPosition(0,0);
 		

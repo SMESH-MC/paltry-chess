@@ -268,40 +268,42 @@ public class Board implements BoardInterface  {
 	 * positiver wert ist ein vorteil fuer Weiss
 	 */
 	public int getBoardValue() {
+		FigurBewertung bewertung = new FigurBewertung(); // philip dieses Object muss vom Manager aus weitergeleitet oder veraendert werden 
+		//und ist erstmal nur ein notloesung. Sonst werden immer nur default werden verwendet.
 		int figur;
 		int value = 0;
 		for(int i = 0; i < 128; i++ ){
 			figur = boardArray[i];
 			switch (figur) {
 			case 1:
-				value -= FigurBewertung.getPawnValue();
+				value -= bewertung.getPawnBewertung();
 				break;
 			case 11:
-				value += FigurBewertung.getPawnValue();
+				value += bewertung.getPawnBewertung();
 				break;
 			case 2:
-				value -= FigurBewertung.getRookValue();
+				value -= bewertung.getRookBewertung();
 				break;
 			case 12:
-				value += FigurBewertung.getRookValue();
+				value += bewertung.getRookBewertung();
 				break;
 			case 3:
-				value -= FigurBewertung.getKnightValue();
+				value -= bewertung.getKnightBewertung();
 				break;
 			case 13:
-				value += FigurBewertung.getKnightValue();
+				value += bewertung.getKnightBewertung();
 				break;
 			case 4:
-				value -= FigurBewertung.getBishopValue();
+				value -= bewertung.getBishopBewertung();
 				break;
 			case 14:
-				value += FigurBewertung.getBishopValue();
+				value += bewertung.getBishopBewertung();
 				break;
 			case 5:
-				value -= FigurBewertung.getQueenValue();
+				value -= bewertung.getQueenBewertung();
 				break;
 			case 15:
-				value += FigurBewertung.getQueenValue();
+				value += bewertung.getQueenBewertung();
 				break;
 			default:
 				break;

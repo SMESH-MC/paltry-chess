@@ -6,50 +6,62 @@ package chessengine.tools;
  */
 public class Figur {
 	
-	private int zahl;
-	
+	private byte zahl;
+	private final static byte KING 	= 	6;
+	private final static byte QUEEN = 	5;
+	private final static byte BISHOP=	4;
+	private final static byte KNIGHT=	3;
+	private final static byte ROOK	=	2;
+	private final static byte PAWN	=	1;
+	private final static byte WEISMODIFER	=	10;
+	private final static byte GRENZE	=	10;
 	public Figur( char typ) {
 		setFigur(typ);
 	}
-	public Figur( int zahl) {
+	public Figur( byte zahl) {
 		this.zahl = zahl;
 	}	
 	
-	public int getZahl(){
+	public byte getZahl(){
 		return zahl ;
 	}
 	/**
 	 *  gibt die Ziffer zurueck die fuer die figurtyp bestimmung notwenig ist 1,2,3,4,5,6
 	 * @return zahl%10
 	 */
-	public int getZahlModulo(){
-		return zahl%10 ;
+	public byte getZahlModulo(){
+		return (byte)(zahl%GRENZE) ;
+		/*if(zahl/10>=1){
+			return (byte)(zahl-10);
+		}else{
+			return zahl;
+		}*/
 	}
 	
 	
 	public boolean istWeis() {
-		return zahl>9;
+		return zahl>=GRENZE;
 	}
 	public boolean istBlack() {
 		return !istWeis();
 	}
 	public boolean istPawn(){
-		return zahl%10 ==1;
+		return getZahlModulo() ==PAWN;
 	}
 	public boolean istRook(){
-		return zahl%10 ==2;
+		return getZahlModulo() ==ROOK;
 	}
 	public boolean istKnight(){
-		return zahl%10 ==3;
+		return getZahlModulo() ==KNIGHT;
 	}
 	public boolean istBishop(){
-		return zahl%10 ==4;
+		return getZahlModulo() ==BISHOP;
 	}
 	public boolean istQueen(){
-		return zahl%10 ==5;
+		return getZahlModulo() ==QUEEN;
 	}
 	public boolean istKing(){
-		return zahl%10 ==6;
+		return getZahlModulo() ==KING;
 	}
 
 
@@ -61,40 +73,40 @@ public class Figur {
 	
 		char rueckgabe;
 		switch (zahl) {
-		case 1:
+		case PAWN:
 			rueckgabe = 'p';
 			break;
-		case 11:
+		case PAWN+WEISMODIFER:
 			rueckgabe = 'P';
 			break;
-		case 2:
+		case ROOK:
 			rueckgabe = 'r';
 			break;
-		case 12:
+		case ROOK+WEISMODIFER:
 			rueckgabe = 'R';
 			break;
-		case 3:
+		case KNIGHT:
 			rueckgabe = 'n';
 			break;
-		case 13:
+		case KNIGHT+WEISMODIFER:
 			rueckgabe= 'N';
 			break;
-		case 4:
+		case BISHOP:
 			rueckgabe = 'b';
 			break;
-		case 14:
+		case BISHOP+WEISMODIFER:
 			rueckgabe = 'B';
 			break;
-		case 5:
+		case QUEEN:
 			rueckgabe = 'q';
 			break;
-		case 15:
+		case QUEEN+WEISMODIFER:
 			rueckgabe = 'Q';
 			break;
-		case 6:
+		case KING:
 			rueckgabe= 'k';
 			break;
-		case 16:
+		case KING+WEISMODIFER:
 			rueckgabe = 'K';
 			break;
 			default : 
@@ -105,41 +117,59 @@ public class Figur {
 	public void setFigur(char typ){
 		switch (typ) {
 		case 'p':
-			zahl = 1;
+			zahl = PAWN;
 			break;
 		case 'P':
-			zahl = 11;
+			zahl = PAWN+WEISMODIFER;
 			break;
 		case 'r':
-			zahl = 2;
+			zahl = ROOK;
 			break;
 		case 'R':
-			zahl = 12;
+			zahl = ROOK+WEISMODIFER;
 			break;
 		case 'n':
-			zahl = 3;
+			zahl = KNIGHT;
 			break;
 		case 'N':
-			zahl = 13;
+			zahl = KNIGHT+WEISMODIFER;
 			break;
 		case 'b':
-			zahl = 4;
+			zahl = BISHOP;
 			break;
 		case 'B':
-			zahl = 14;
+			zahl = BISHOP+WEISMODIFER;
 			break;
 		case 'q':
-			zahl = 5;
+			zahl = QUEEN;
 			break;
 		case 'Q':
-			zahl = 15;
+			zahl = QUEEN+WEISMODIFER;
 			break;
 		case 'k':
-			zahl = 6;
+			zahl = KING;
 			break;
 		case 'K':
-			zahl = 16;
+			zahl = KING+WEISMODIFER;
 			break;
 		}
+	}
+	public byte getPawn(){
+		return PAWN;
+	}
+	public byte getRook(){
+		return ROOK;
+	}
+	public byte getKnight(){
+		return KNIGHT;
+	}
+	public byte getBishop(){
+		return BISHOP;
+	}
+	public byte getQueen(){
+		return QUEEN;
+	}
+	public byte getKing(){
+		return KING;
 	}
 }

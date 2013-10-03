@@ -18,20 +18,19 @@ package chessengine.tools;
 
 public class FenDecoder {
 	private final static String trennzeichen = "/";
-	private String[]  fenTeile; // der restlich teil vom FEN string der nicht fuer die Figuren positionen benoetigt wird
+<<<<<<< HEAD
+	private String[]  fenTeile; // der restlich teil vom FEN string der nicht für die Figuren positionen benötigt wird
 	private Brett schachBrett;
-	StringBuffer leereBuffer = new StringBuffer();
 	
 	public FenDecoder (Brett schachBrettFormat){
 		
 		schachBrett = schachBrettFormat;
 	}
-	/**
-	 *  erstellt aus einem Fen ein schachBrett vom typ Brett 
-	 * @param fen
-	 * @return
-	 */
+	
 	public Brett decodiere(String fen){
+=======
+	private String[]  fenTeile; // der restlich teil vom FEN string der nicht fuer die Figuren positionen benoetigt wird
+>>>>>>> 3100010941466c89a02bc8bba7d242a40af54b71
 
 		//String[] brett 
 		 fenTeile =  fen.split(" ");//spaltet deb fen String
@@ -84,18 +83,10 @@ public class FenDecoder {
 		}
 		return rueckgabe ;
 	}
-	/**
-	 * liefert den Teil des FEN zurueck der die Rochaden angibt
-	 * @return
-	 */
 	public String getRochaden(){
 		
 		return fenTeile[2];
 	}
-	/**
-	 * liefert true wenn Weis am Zug ist
-	 * @return
-	 */
 	public boolean getIstWeisAmZug(){
 		if(fenTeile[1].equals("w")){
 			return true;
@@ -104,6 +95,8 @@ public class FenDecoder {
 		}
 		
 	}
+	
+	
 	
 	public String codiererNeuenZug(Brett brett){
 			return codiererNeuenZug(brett, "-",null); // "-" setzt fuer jeden zug das EnPassant auf nicht moeglich
@@ -156,13 +149,12 @@ public class FenDecoder {
 	}//codierung
 	
 	/**
-	 * Wandelt ein Brett in die 1 Gruppe vom Fen String um
+	 * Wandelt ein 2dim Figure array in die 1 Gruppe vom Fen String um
 	 * @param brett
 	 * @return
 	 */
 	private String arrayFenWandler(Brett brett){
 		StringBuffer rueckgabe = new StringBuffer();
-		
 		char letztesZeichen = '?'; //  ? == dummer inizial wert der in den schleifen rausgefiltert wird  
 		for(int y = 7; y >= 0 ; y--){ //Zeilen
 			

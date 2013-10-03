@@ -17,12 +17,12 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	private final static int ROOK_DEFAULT 	=500;
 	private final static int PAWN_DEFAULT 	=100;
 	
-	private final static int KING 	= 	6;
-	private final static int QUEEN = 	5;
-	private final static int BISHOP=	4;
-	private final static int KNIGHT=	3;
-	private final static int ROOK	=	2;
-	private final static int PAWN	=	1;
+	private final static byte KING 	= 	6;
+	private final static byte QUEEN = 	5;
+	private final static byte BISHOP=	4;
+	private final static byte KNIGHT=	3;
+	private final static byte ROOK	=	2;
+	private final static byte PAWN	=	1;
 	
 	private King king;
 	private Queen queen;
@@ -38,9 +38,8 @@ public class FigurBewertung implements FigurBewertungInterface  {
 
 	
 	public FigurBewertung(){
-		 //schachBrett = new Array2Dim();
+		
 		 //Brett brett = new Array2Dim();
-		 schachBrett = new X88();
 		 Brett brett = new X88();
 		
 		 decoder = new FenDecoder(brett);
@@ -80,7 +79,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	public  LinkedList<String> ermittleZuege(SchachPosition position) {
 		LinkedList<String> rueckgabe = new LinkedList<String>();
 		Figur figur 	= schachBrett.getInhalt(position);
-		int typ 		= figur.getZahlModulo();//ho
+		byte typ 		= figur.getZahlModulo();//ho
 		boolean istWeis = figur.istWeis();
 		
 		switch ( typ )
@@ -298,7 +297,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		return bishop.getBewertung();
 	}
 
-	public  int getKinghtBewertung() {
+	public  int getKnightBewertung() {
 		return knight.getBewertung();
 	}
 
