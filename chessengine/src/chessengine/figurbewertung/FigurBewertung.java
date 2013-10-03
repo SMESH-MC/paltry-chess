@@ -290,7 +290,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		return king.getBewertung();
 	}
 
-	public  int getQuennBewertung() {
+	public  int getQueenBewertung() {
 		return queen.getBewertung();
 	}
 
