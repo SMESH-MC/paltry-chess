@@ -23,18 +23,20 @@ implements Definitions {
 	 * @param board	Das board der aktuellen Stellung in 0x88-Darstellung
 	 */
 	public void setBoard(byte[] board) {
-		for (int i=0; i<=119 ; i++) { //fuer alle Stellungsfelder des aktuellen 0x88-boards
-			if ((i & 136) == 0) { //Wenn das Feld an der Stelle board[i] ein gueltiges Feld des Schachbretts ist
-				if (board[i] == leeresFeld) { //wenn das Feld an der Stelle board[i] ein leeres Feld ist
+		//Zaehle die gueltigen Felder des Boards in zwei for-Schleifen in der Reihenfolge, in der sie in den FEN-String geschrieben werden
+		for (int i=112; i>=0; i-=16) {
+			for (int j=0; j<=7; j++) {
+				if (board[i+j] == leeresFeld) { //wenn das Feld an der Stelle board[i+j] ein leeres Feld ist
 					outgoingFEN += "1"; //fuege der FEN ein leeres Feld hinzu
-				} else { //wenn auf dem Feld an der Stelle i eine Figur steht
-					outgoingFEN += figurNachFEN(board[i]); //wandle die Figur mit Hilfsmethode in FEN um
+				} else { //wenn auf dem Feld an der Stelle i+j eine Figur steht
+					outgoingFEN += figurNachFEN(board[i+j]); //wandle die Figur mit Hilfsmethode in FEN um
 				}
-			} else { //Wenn das Feld an der Stelle board[i] ein Feld des 0x88-"Geisterbretts" ist
-				outgoingFEN += "/";	//Setze ein Slash in den FEN-String
-				i += 7; //erhoehe den Zaehler bis zum naechsten gueltigen Feld
 			}
+			outgoingFEN += "/";	//Die Reihe wurde komplett in den FEN-String geschrieben, setze daher ein Slash in den FEN-String
 		}
+		//letztes Slash entfernen
+		outgoingFEN = outgoingFEN.substring(0, outgoingFEN.length()-1);
+
 		//Hilfsmethode, die aus aufeinanderfolgenden Leerfeldern eine einzelne Ziffer aufeinanderfolgender Leerfelder macht
 		outgoingFEN = summiereLeerfelder(outgoingFEN); 
 		
@@ -62,7 +64,7 @@ implements Definitions {
 	/**
 	 * Hilfsmethode zu setBoard, die eine Figur als byte in eine Figur als FEN-Figur umwandelt
 	 * 
-	 * @param figur Die in FEN zumzuschreibende Figur als byte-Zahl
+	 * @param figur	Die in FEN umzuschreibende Figur als byte-Zahl
 	 * @return	Die in FEN umgewandelte eingegebene Figur
 	 */
 	private String figurNachFEN(byte figur) {
