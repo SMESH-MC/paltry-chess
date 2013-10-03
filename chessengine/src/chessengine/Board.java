@@ -6,7 +6,7 @@ import chessengine.figurbewertung.FigurBewertung;
 /**
  * @author Christian Koenig & Dominik Erb
  */
-public class Board implements BoardInterface  {
+public class Board implements  BoardInterface  {
 	
 	//Variablendeklaration
 	private static final String boardStart = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
@@ -47,15 +47,27 @@ public class Board implements BoardInterface  {
 			
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#InitBoard()
+	 */
+	@Override
 	public void InitBoard() {
 		IncomingFen = boardStart;
 		FenDecode(IncomingFen);
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#InitBoard(java.lang.String)
+	 */
+	@Override
 	public void InitBoard(String fen) {
 		FenDecode(fen);
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#ResetBoard()
+	 */
+	@Override
 	public boolean ResetBoard() {
 		IncomingFen = boardStart;
 		FenDecode(IncomingFen);
@@ -64,12 +76,20 @@ public class Board implements BoardInterface  {
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#BoardOutputFen(java.lang.String)
+	 */
+	@Override
 	public void BoardOutputFen(String boardFen) {
 		
 	}
 	
-	public Board getBoard() {
-		Board currentBoard = new Board();
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#getBoard()
+	 */
+	@Override
+	public BoardInterface getBoard() {
+		BoardInterface currentBoard = new Board();
 		return currentBoard;
 	}
 	
@@ -152,6 +172,10 @@ public class Board implements BoardInterface  {
 	}
 	
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#FenDecode(java.lang.String)
+	 */
+	@Override
 	public int[] FenDecode(String s) {
 		int[] ausgabe = new int[128];
 		Character fenPart;
@@ -222,6 +246,10 @@ public class Board implements BoardInterface  {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#FenEncode()
+	 */
+	@Override
 	public String FenEncode() {
 		//decodiert FEN Strings
 		
@@ -229,6 +257,10 @@ public class Board implements BoardInterface  {
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#IntToFen(int)
+	 */
+	@Override
 	public Character IntToFen(int toConvert) {
 		switch (toConvert) {
 		case 1:
@@ -260,13 +292,10 @@ public class Board implements BoardInterface  {
 		}
 	}
 	
-	/**
-	 * 
-	 * @return int wert die die Stellung des Bords hat
-	 * nach schachbewertung 
-	 * negativer wert ist ein vorteil fuer Schwarz
-	 * positiver wert ist ein vorteil fuer Weiss
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#getBoardValue()
 	 */
+	@Override
 	public int getBoardValue() {
 		FigurBewertung bewertung = new FigurBewertung(); // philip dieses Object muss vom Manager aus weitergeleitet oder veraendert werden 
 		//und ist erstmal nur ein notloesung. Sonst werden immer nur default werden verwendet.
@@ -313,13 +342,46 @@ public class Board implements BoardInterface  {
 		return value;
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#getRochadeGross()
+	 */
+	@Override
 	public int getRochadeGross() {
 		return this.rochade_gross;
 	}
 	
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#getRochadeKlein()
+	 */
+	@Override
 	public int getRochadeKlein() {
 		return this.rochade_klein;
 	}
+
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#isEnPassent()
+	 */
+	@Override
+	public boolean isEnPassent() {
+		return enPassent;
+	}
+
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#getZugnummer()
+	 */
+	@Override
+	public int getZugnummer() {
+		return zugnummer;
+	}
+
+	/* (non-Javadoc)
+	 * @see chessengine.BoardInterface#getHalbzuege()
+	 */
+	@Override
+	public int getHalbzuege() {
+		return halbzuege;
+	}
+	
 	
 	
 }
