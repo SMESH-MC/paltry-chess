@@ -14,17 +14,17 @@ public interface Definitions {
     //Konstanten fur die weissen Figuren
     public static final byte pawn_w		= 1;
 	public static final byte knight_w	= 2;
-    public static final byte queen_w	= 3;
+    public static final byte king_w		= 3;
     public static final byte bishop_w	= 5;
     public static final byte rook_w		= 6;
-    public static final byte king_w		= 7;
+    public static final byte queen_w	= 7;
     //Konstanten fur die schwarzen Figuren
     public static final byte pawn_b		= -1;
 	public static final byte knight_b	= -2;
-    public static final byte queen_b	= -3;
+    public static final byte king_b		= -3;
     public static final byte bishop_b	= -5;
     public static final byte rook_b		= -6;
-    public static final byte king_b		= -7;
+    public static final byte queen_b	= -7;
     //Konstanten fuer die Zuege
     public static final byte[] pawn_moves_w	= {16};
     public static final byte[] pawn_moves_w2= {32};
