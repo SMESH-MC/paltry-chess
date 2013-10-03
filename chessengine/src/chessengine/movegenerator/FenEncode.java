@@ -33,7 +33,7 @@ implements Definitions {
 				}
 			} else { //Wenn das Feld an der Stelle board[i] ein Feld des 0x88-"Geisterbretts" ist
 				outgoingFEN += "/";	//Setze ein Slash in den FEN-String
-				i += 8; //erhoehe den Zaehler bis zum naechsten gueltigen Feld
+				i += 7; //erhoehe den Zaehler bis zum naechsten gueltigen Feld
 			}
 		}
 		//Hilfsmethode, die aus aufeinanderfolgenden Leerfeldern eine einzelne Ziffer aufeinanderfolgender Leerfelder macht
