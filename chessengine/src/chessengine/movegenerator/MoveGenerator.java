@@ -389,7 +389,7 @@ implements MoveGeneratorInterface, Definitions {
 	 * 
 	 * @param 
 	 */
-	public void zugHinzufuegen(byte[] board) {
+	private void zugHinzufuegen(byte[] board) {
 		FenEncode fe = new FenEncode();
 		fe.setBoard(board);
 		outgoingFEN.add(fe.getFEN());
