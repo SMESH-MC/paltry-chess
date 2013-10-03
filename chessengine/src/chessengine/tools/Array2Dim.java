@@ -21,7 +21,7 @@ public class Array2Dim extends Brett{
 		@Override
 		public Brett copy() {
 			Array2Dim neuesBrett = new Array2Dim();
-			for(int y =0 ;y <8;y++)
+			/*for(int y =0 ;y <8;y++)
 			{
 				for (int x =0; x < 8 ; x++ ){
 						if( schachBrett[x][y] != null){
@@ -29,8 +29,8 @@ public class Array2Dim extends Brett{
 							neuesBrett.setInhalt(x, y, neueFigur);
 						}
 					}
-				}
-
+				}*/
+			System.arraycopy(schachBrett,0,neuesBrett.schachBrett,0,schachBrett.length);
 			return neuesBrett;
 			
 		}

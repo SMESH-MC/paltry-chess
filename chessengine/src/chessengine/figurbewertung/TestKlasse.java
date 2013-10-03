@@ -33,28 +33,33 @@ public class TestKlasse {
 			
 			//enPassannt
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
-			fenAusgabe(fen,decoder);
-			schachBrett = decoder.decodiere(fen);
-			//arrayAusgabe( schachBrett);
-		
+			
+			
+		//fenAusgabe(fen,decoder);
+		schachBrett = decoder.decodiere(fen);
+		//arrayAusgabe( schachBrett);
+		long zeit = 0;
+		int durchlaeufe = 100000;
 		Long time = System.currentTimeMillis();	
 		
-		for(int i = 0 ;i<10000;i++){
+		for(int i = 0 ;i <= durchlaeufe;i++){
 			//System.out.println(fen);	
 			FigurBewertungInterface figuren= new FigurBewertung();
 			SchachPosition position = new SchachPosition(0,0);
 		
 			//System.out.println("Alle Zuege fur farbe am Zug---------------------------------------");
 			LinkedList<String> liste2 = figuren.ermittleAlleZuege(fen);
-			/*
-			while(liste2.isEmpty() == false){
+			
+			/*while(liste2.isEmpty() == false){
 			
 				fenAusgabe(liste2.pop(),decoder );
 			}*/
 			//System.out.print(".");
 		}
+		zeit = System.currentTimeMillis()-time;
 		System.out.println();
-		System.out.println("Zeit:"+(System.currentTimeMillis()-time) );
+		System.out.println("Zeit(ms):"+ zeit + "fuer " + durchlaeufe + "durchlaeufe");
+		System.out.println("Zeit/durchlaufe(ms) : "+ zeit/(double)durchlaeufe);
 	}
 	
 	

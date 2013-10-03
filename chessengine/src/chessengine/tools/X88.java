@@ -11,7 +11,7 @@ public class X88 extends Brett{
 
 	@Override
 	public Brett copy() {
-		X88 neuesBrett = new X88();
+		/*X88 neuesBrett = new X88();
 		for(int i =0 ;i <128;i++)
 		{
 		
@@ -20,7 +20,9 @@ public class X88 extends Brett{
 				neuesBrett.schachBrett[i] = neueFigur;
 			}
 		}
-			
+			*/
+		X88 neuesBrett = new X88();
+		System.arraycopy(schachBrett,0,neuesBrett.schachBrett,0,schachBrett.length);
 		return neuesBrett;
 	}
 
@@ -51,8 +53,26 @@ public class X88 extends Brett{
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		StringBuffer buffer= new StringBuffer();
+		buffer.append("X|0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F \n");
+		buffer.append("-------------------------------- \n");
+		for(int i = 7; i >= 0 ;i--){
+			buffer.append(i+"||");
+			for(int k = 0 ; k < 16; k++){
+				
+				if(this.getIsEmpty(k, i) == false ){
+					buffer.append( this.getInhalt(k, i) + "|");//\t
+				}else{
+				
+					buffer.append(" |");
+				
+				}
+			
+			}
+			buffer.append("\n");
+		}
+		buffer.append("--------------------------------\n ");
+		return buffer.toString();
 	}
 	
 	private int getPosition(int x, int y){

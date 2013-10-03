@@ -11,7 +11,6 @@ public class SchachPosition {
 	int y;
 	
 	public SchachPosition() {
-		super();
 		this.x = 0;
 		this.y = 0;
 	}

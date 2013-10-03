@@ -20,6 +20,7 @@ public class FenDecoder {
 	private final static String trennzeichen = "/";
 	private String[]  fenTeile; // der restlich teil vom FEN string der nicht fuer die Figuren positionen benoetigt wird
 	private Brett schachBrett;
+	StringBuffer leereBuffer = new StringBuffer();
 	
 	public FenDecoder (Brett schachBrettFormat){
 		
@@ -151,6 +152,7 @@ public class FenDecoder {
 	 */
 	private String arrayFenWandler(Brett brett){
 		StringBuffer rueckgabe = new StringBuffer();
+		
 		char letztesZeichen = '?'; //  ? == dummer inizial wert der in den schleifen rausgefiltert wird  
 		for(int y = 7; y >= 0 ; y--){ //Zeilen
 			

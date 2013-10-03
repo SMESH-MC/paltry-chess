@@ -35,6 +35,8 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	private LinienLaeufer linienLaeufer;
 	private FenDecoder decoder;
 	
+
+	
 	public FigurBewertung(){
 		 //schachBrett = new Array2Dim();
 		 //Brett brett = new Array2Dim();
@@ -133,10 +135,10 @@ public class FigurBewertung implements FigurBewertungInterface  {
 				}//for spalten
 			}//for zeilen
 			
-			if(king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ //sucht den koenig und prueft ob er bedroht ist
+			/*if(king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ //sucht den koenig und prueft ob er bedroht ist
 
 				rueckgabe = loescheBedrohteZuege(rueckgabe, istWeisAmZug); //Filtert zuege Raus die die Bedrohung nicht aufheben
-			}
+			}*/
 			return rueckgabe;
 				
 			
