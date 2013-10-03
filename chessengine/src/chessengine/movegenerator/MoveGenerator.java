@@ -124,13 +124,13 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege
 	 */
 	private void berechneSlidingZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
-		byte[] neuesBoard = board.clone();
 		//setze en passant zurueck
-		neuesBoard[125] = -1;
+		board[125] = -1;
 
 		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
 		for (byte b : erlaubteZuege) {
-			
+			byte[] neuesBoard = board.clone();
+				
 			//Merker, ob das Zielfeld vor dem Zug frei ist, und das Sliding Piece die Schleife nochmals durchlaufen kann 	//<-sliding-Zusatz
 			boolean zielfeldFrei = false; //Initialisierung																	//<-sliding-Zusatz
 			
@@ -271,10 +271,10 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege
 	 */
 	private void berechneSchlagBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
-		byte[] neuesBoard = board.clone();
 		
 		//fuer die erlaubten Schrittweiten bei einem Bauernschlag
 		for (byte b : erlaubteZuege) {
+			byte[] neuesBoard = board.clone();
 			//berechne das Zielfeld
 			int zielfeld = startfeld + b;
 			//Wenn die gegnerische Farbe auf dem Zielfeld steht 
@@ -300,20 +300,19 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege	erlaubte Schrittweiten der Figur
 	 */
 	private void berechneZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
-		byte[] neuesBoard = board.clone();
-		
 		//setze en passant zurueck
-		neuesBoard[125] = -1;
+		board[125] = -1;
 		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
 		for (byte b : erlaubteZuege) {
+			byte[] neuesBoard = board.clone();
 			//berechne moegliche Zielfelder
 			int zielfeld = b + startfeld;
 			//wenn das Zielfeld ein gueltiges Feld ist
 			if ((zielfeld & 136) == 0) {
 				//wenn das Zielfeld leer ist
-				if (neuesBoard[zielfeld] == 0) {
+				if (board[zielfeld] == 0) {
 					//Figur auf Zielfeld ziehen
-					neuesBoard[zielfeld] = neuesBoard[startfeld];
+					neuesBoard[zielfeld] = board[startfeld];
 					//Startfeld leeren
 					neuesBoard[startfeld] = 0;
 					//Zug hinzufuegen
@@ -322,9 +321,9 @@ implements MoveGeneratorInterface, Definitions {
 					//wenn weiss am Zug ist
 					if (weissAmZug) {
 						//wenn auf dem Zielfeld der Gegner schwarz steht
-						if (neuesBoard[zielfeld] < 0) {
+						if (board[zielfeld] < 0) {
 							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
-							neuesBoard[zielfeld] = neuesBoard[startfeld];
+							neuesBoard[zielfeld] = board[startfeld];
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
@@ -332,9 +331,9 @@ implements MoveGeneratorInterface, Definitions {
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
 					} else { //schwarz ist am Zug
 						//wenn auf dem Zielfeld der Gegner weiss steht
-						if (neuesBoard[zielfeld] > 0) {
+						if (board[zielfeld] > 0) {
 							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
-							neuesBoard[zielfeld] = neuesBoard[startfeld];
+							neuesBoard[zielfeld] = board[startfeld];
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
