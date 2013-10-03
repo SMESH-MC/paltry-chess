@@ -107,17 +107,18 @@ implements MoveGeneratorInterface, Definitions {
 	 */
 
 	private byte[] keineRochadeMehr(byte[] board, byte startfeld) {
+		byte[] neuesBoard = board.clone();
 		switch (startfeld) {
-		case 0	: board[122] = 0;
+		case 0	: neuesBoard[122] = 0;
 			break;
-		case 7	: board[121] = 0;
+		case 7	: neuesBoard[121] = 0;
 			break;
-		case 112: board[124] = 0;
+		case 112: neuesBoard[124] = 0;
 			break;
-		case 119: board[123] = 0;
+		case 119: neuesBoard[123] = 0;
 			break;
 		}
-		return board;
+		return neuesBoard;
 	}
 	/**
 	 * Diese Methode berechnet Zuege fuer Sliding Pieces (Figuren, die eine beliebige Anzahl an Feldern ziehen duerfen)
@@ -128,8 +129,9 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege
 	 */
 	private void berechneSlidingZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		byte[] neuesBoard = board.clone();
 		//setze en passant zurueck
-		board[125] = -1;
+		neuesBoard[125] = -1;
 
 		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
 		for (byte b : erlaubteZuege) {
@@ -142,38 +144,38 @@ implements MoveGeneratorInterface, Definitions {
 			//wenn das Zielfeld ein gueltiges Feld ist
 			if ((zielfeld & 136) == 0) {
 				//wenn das Zielfeld leer ist
-				if (board[zielfeld] == 0) {
+				if (neuesBoard[zielfeld] == 0) {
 					
 					//Merker fur Sliding Piece																				//<-sliding-Zusatz
 					zielfeldFrei = true;																					//<-sliding-Zusatz
 					
 					//Figur auf Zielfeld ziehen
-					board[zielfeld] = board[startfeld];
+					neuesBoard[zielfeld] = neuesBoard[startfeld];
 					//Startfeld leeren
-					board[startfeld] = 0;
+					neuesBoard[startfeld] = 0;
 					//Zug hinzufuegen
-					zugHinzufuegen(board);
+					zugHinzufuegen(neuesBoard);
 				} else {//wenn Zielfeld besetzt
 					//wenn weiss am Zug ist
 					if (weissAmZug) {
 						//wenn auf dem Zielfeld der Gegner schwarz steht
-						if (board[zielfeld] < 0) {
+						if (neuesBoard[zielfeld] < 0) {
 							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
-							board[zielfeld] = board[startfeld];
+							neuesBoard[zielfeld] = neuesBoard[startfeld];
 							//Startfeld leeren
-							board[startfeld] = 0;
+							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(board);
+							zugHinzufuegen(neuesBoard);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
 					} else { //schwarz ist am Zug
 						//wenn auf dem Zielfeld der Gegner weiss steht
-						if (board[zielfeld] > 0) {
+						if (neuesBoard[zielfeld] > 0) {
 							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
-							board[zielfeld] = board[startfeld];
+							neuesBoard[zielfeld] = neuesBoard[startfeld];
 							//Startfeld leeren
-							board[startfeld] = 0;
+							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(board);
+							zugHinzufuegen(neuesBoard);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
 					}//endifelse weiss/schwarz am Zug
 				}//endifelse Feld leer/besetzt
@@ -183,7 +185,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze die durchgefuehrte Schrittrichtung als einzigen erlaubten Zug in ein Array
 					byte[] zugrichtung = {b};																
 					//uebergib diese Zugrichtung nochmals der Methode mit dem neuen Startfeld, das jetzt eine Schrittweite weiter liegt
-					berechneSlidingZug(board, (byte)zielfeld, weissAmZug, zugrichtung);											
+					berechneSlidingZug(neuesBoard, (byte)zielfeld, weissAmZug, zugrichtung);											
 				}																												
 				
 
@@ -202,19 +204,21 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege	
 	 */
 	private void berechneZugBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		byte[] neuesBoard = board.clone();
+		
 		int zielfeld = startfeld + erlaubteZuege[0];
 		//wenn der Zug noch auf dem Brett enden wuerde
 		if ((zielfeld & 136) == 0) {
 			//Wenn Zielfeld vor dem Bauern leer ist, fuehre Schritt durch 
-			if (board[zielfeld] == 0) {
+			if (neuesBoard[zielfeld] == 0) {
 				//ruecke Figur
-				board[zielfeld] = board[startfeld];
+				neuesBoard[zielfeld] = neuesBoard[startfeld];
 				//Startfeld leeren
-				board[startfeld] = 0;
+				neuesBoard[startfeld] = 0;
 				//setze en passant zurueck
-				board[125] = -1;
+				neuesBoard[125] = -1;
 				//Zug hinzufuegen
-				zugHinzufuegen(board);
+				zugHinzufuegen(neuesBoard);
 			}
 		}
 	}
@@ -229,33 +233,35 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege	wird nicht benutzt
 	 */
 	private void berechne2ZugBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		byte[] neuesBoard = board.clone();
+		
 		//Uberpruefen, ob 2 Schritte moeglich sind (von Ausgangsposition des Bauern)
 		if (weissAmZug) { //wenn weiss am Zug ist
 			//wenn das Startfeld auf der Startreihe der weissen Bauern ist
 			if (16 <= startfeld && startfeld <= 23) {
 				//wenn die Felder 1 und 2 Schritte vor dem Bauern frei sind
-				if (board[startfeld + 16] == 0 && board[startfeld + 32] == 0 ) {
+				if (neuesBoard[startfeld + 16] == 0 && neuesBoard[startfeld + 32] == 0 ) {
 					//mache Zweischrittzug
-					board[startfeld + 32] = board[startfeld];
-					board[startfeld] = 0;
+					neuesBoard[startfeld + 32] = neuesBoard[startfeld];
+					neuesBoard[startfeld] = 0;
 					//setze en passant Feld
-					board[125] = (byte)(startfeld + 16);
+					neuesBoard[125] = (byte)(startfeld + 16);
 					//Zug hinzufuegen
-					zugHinzufuegen(board);
+					zugHinzufuegen(neuesBoard);
 				}
 			}
 		} else { //wenn schwarz am Zug ist
 			//wenn das Startfeld auf der Startreihe der schwarzen Bauern ist
 			if (96 <= startfeld && startfeld <= 103) {
 				//wenn die Felder 1 und 2 Schritte vor dem Bauern frei sind
-				if (board[startfeld - 16] == 0 && board[startfeld - 32] == 0 ) {
+				if (neuesBoard[startfeld - 16] == 0 && neuesBoard[startfeld - 32] == 0 ) {
 					//mache Zweischrittzug
-					board[startfeld - 32] = board[startfeld];
-					board[startfeld] = 0;
+					neuesBoard[startfeld - 32] = neuesBoard[startfeld];
+					neuesBoard[startfeld] = 0;
 					//setze en passant Feld
-					board[125] = (byte)(startfeld - 16);
+					neuesBoard[125] = (byte)(startfeld - 16);
 					//Zug hinzufuegen
-					zugHinzufuegen(board);
+					zugHinzufuegen(neuesBoard);
 				}
 			}
 		}//endifelse Ueberpruefung Zweischrittzug
@@ -270,20 +276,22 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege
 	 */
 	private void berechneSchlagBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		byte[] neuesBoard = board.clone();
+		
 		//fuer die erlaubten Schrittweiten bei einem Bauernschlag
 		for (byte b : erlaubteZuege) {
 			//berechne das Zielfeld
 			int zielfeld = startfeld + b;
 			//Wenn die gegnerische Farbe auf dem Zielfeld steht 
-			if ((weissAmZug && board[zielfeld] < 0) || (!weissAmZug && board[zielfeld] > 0)) {
+			if ((weissAmZug && neuesBoard[zielfeld] < 0) || (!weissAmZug && neuesBoard[zielfeld] > 0)) {
 				//ziehe eigene figur = schlage Gegner
-				board[zielfeld] = board[startfeld];
+				neuesBoard[zielfeld] = neuesBoard[startfeld];
 				//Startfeld leeren
-				board[startfeld] = 0;
+				neuesBoard[startfeld] = 0;
 				//setze en passant zurueck
-				board[125] = -1;
+				neuesBoard[125] = -1;
 				//Zug hinzufuegen
-				zugHinzufuegen(board);
+				zugHinzufuegen(neuesBoard);
 			} 
 		}
 	}
@@ -297,8 +305,10 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege	erlaubte Schrittweiten der Figur
 	 */
 	private void berechneZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		byte[] neuesBoard = board.clone();
+		
 		//setze en passant zurueck
-		board[125] = -1;
+		neuesBoard[125] = -1;
 		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
 		for (byte b : erlaubteZuege) {
 			//berechne moegliche Zielfelder
@@ -306,34 +316,34 @@ implements MoveGeneratorInterface, Definitions {
 			//wenn das Zielfeld ein gueltiges Feld ist
 			if ((zielfeld & 136) == 0) {
 				//wenn das Zielfeld leer ist
-				if (board[zielfeld] == 0) {
+				if (neuesBoard[zielfeld] == 0) {
 					//Figur auf Zielfeld ziehen
-					board[zielfeld] = board[startfeld];
+					neuesBoard[zielfeld] = neuesBoard[startfeld];
 					//Startfeld leeren
-					board[startfeld] = 0;
+					neuesBoard[startfeld] = 0;
 					//Zug hinzufuegen
-					zugHinzufuegen(board);
+					zugHinzufuegen(neuesBoard);
 				} else {//wenn Zielfeld besetzt
 					//wenn weiss am Zug ist
 					if (weissAmZug) {
 						//wenn auf dem Zielfeld der Gegner schwarz steht
-						if (board[zielfeld] < 0) {
+						if (neuesBoard[zielfeld] < 0) {
 							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
-							board[zielfeld] = board[startfeld];
+							neuesBoard[zielfeld] = neuesBoard[startfeld];
 							//Startfeld leeren
-							board[startfeld] = 0;
+							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(board);
+							zugHinzufuegen(neuesBoard);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
 					} else { //schwarz ist am Zug
 						//wenn auf dem Zielfeld der Gegner weiss steht
-						if (board[zielfeld] > 0) {
+						if (neuesBoard[zielfeld] > 0) {
 							//Figur auf Zielfeld ziehen und damit den Gegner auf dem Zielfeld schlagen
-							board[zielfeld] = board[startfeld];
+							neuesBoard[zielfeld] = neuesBoard[startfeld];
 							//Startfeld leeren
-							board[startfeld] = 0;
+							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(board);
+							zugHinzufuegen(neuesBoard);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
 					}//endifelse weiss/schwarz am Zug
 				}//endifelse Feld leer/besetzt
@@ -350,16 +360,18 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege
 	 */
 	private void berechneZugKing(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		byte[] neuesBoard = board.clone();
+		
 		//setze Rochaden-Marker, dass der Koenig zieht (d.h. keine Rochade mehr fuer die Farbe am Zug moeglich ist)
 		if (weissAmZug) {
-			board[121] = 0;
-			board[122] = 0;
+			neuesBoard[121] = 0;
+			neuesBoard[122] = 0;
 		} else {
-			board[123] = 0;
-			board[124] = 0;
+			neuesBoard[123] = 0;
+			neuesBoard[124] = 0;
 		}
 		//uebergebe an die normale Zug-Methode
-		berechneZug(board, startfeld, weissAmZug, erlaubteZuege);
+		berechneZug(neuesBoard, startfeld, weissAmZug, erlaubteZuege);
 		
 	}
 
