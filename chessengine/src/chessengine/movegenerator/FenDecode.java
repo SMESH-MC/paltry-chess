@@ -29,7 +29,6 @@ implements Definitions {
 		String stellung = fen.substring(0, fen.indexOf(" "));
 		//bereitet mit einer Hilfsmethode diese Stellungsteil auf die 0x88-Darstellung vor
 		String stellung0x88 = stellungTo0x88(stellung);
-		//=> stellung0x88.length() = 120
 		
 		//splitted die restlichen Infos der FEN an Leerzeichen auf und schreibt die Bestandteile in ein Array 
 		String[] fenInfos = (fen.substring(fen.indexOf(" ") + 1)).split(" ");
@@ -50,10 +49,11 @@ implements Definitions {
 	 * das "/" (Reihentrenner) durch ungueltige 0x88-Felder ("x") ersetzt
 	 * 
 	 * @param stellung	Der Stellungsteil der FEN
-	 * @return	String der Laenge 120: Die Stellung in 0x88 Darstellung von A1 bis H8
+	 * @return	String der Laenge 64: Die Stellung in 0x88 Darstellung von A8-H8, A7-H7, A6-H6, ... A2-H2, A1-H1
 	 */
 	private String stellungTo0x88(String stellung) {
-		stellung = stellung.replace("/", "xxxxxxxx");
+		//stellung = stellung.replace("/", "xxxxxxxx"); //Trenner durch 8 ungueltige Felder ersetzen
+		stellung = stellung.replace("/", ""); //Trenner entfernen
 		stellung = stellung.replace("2","11");
 		stellung = stellung.replace("3","111");
 		stellung = stellung.replace("4","1111");
@@ -111,30 +111,35 @@ implements Definitions {
 	 * @param stellung	Die aktuelle Stellung als String in 0x88-Darstellung aufbereitet
 	 */
 	private void stellungInsArray(String stellung) {
-		for (int i=0; i<=119; i++) {
-			switch (stellung.charAt(i)) {
-			/*
-			 * x = Feld des 0x88-"Geisterschachbretts"
-			 */
-			//1. Moeglichkeit: breche bei einem Feld des 0x88-Geisterschachbretts ab, ohne etwas hineinzuschreiben
-			case 'x' :	break;
-			//2. Moeglichkeit: schreibe einen Wert in das Feld. Verhindert Zugriff auf null beim durchlaufen des ganzen Arrays
-			//case 'x' : schachbrett[i] = ungueltigesFeld;
-				//break;
-			case '1' : schachbrett[i] = leeresFeld;	break;
-			case 'P' : schachbrett[i] = pawn_w;		break;
-			case 'p' : schachbrett[i] = pawn_b;		break;
-			case 'R' : schachbrett[i] = rook_w;		break;
-			case 'r' : schachbrett[i] = rook_b;		break;
-			case 'N' : schachbrett[i] = knight_w;	break;
-			case 'n' : schachbrett[i] = knight_b;	break;
-			case 'B' : schachbrett[i] = bishop_w;	break;
-			case 'b' : schachbrett[i] = bishop_b;	break;
-			case 'K' : schachbrett[i] = king_w;		break;
-			case 'k' : schachbrett[i] = king_b;		break;
-			case 'Q' : schachbrett[i] = queen_w;	break;
-			case 'q' : schachbrett[i] = queen_b;	break;
+		//Hilfssummand, um Index im Bord anzugeben
+		int summand = 112;
+		
+		//Zaehle von 0 bis 63 (alle Stellen des uebergebenen Strings), aber in zwei for-Schleifen, um nach 8 Stellen den Summand zu verringern
+		for (int j=0; j <= 56; j += 8) {
+			for (int i=0; i<=7; i++) {
+				switch (stellung.charAt(j+i)) { //naechste Stelle im String
+				 // x = Feld des 0x88-"Geisterschachbretts" (nur, wenn in aufrufender Methode so umgewandelt wurde)
+				//1. Moeglichkeit: breche bei einem Feld des 0x88-Geisterschachbretts ab, ohne etwas hineinzuschreiben
+				//case 'x' :  break;
+            	//2. Moeglichkeit: schreibe einen Wert in das Feld. Verhindert Zugriff auf null beim durchlaufen des ganzen Arrays
+				//case 'x' : schachbrett[i] = ungueltigesFeld;
+					//break;
+				case '1' : schachbrett[(j+i)+summand] = leeresFeld; break;
+				case 'P' : schachbrett[(j+i)+summand] = pawn_w;     break;
+				case 'p' : schachbrett[(j+i)+summand] = pawn_b;     break;
+				case 'R' : schachbrett[(j+i)+summand] = rook_w;     break;
+				case 'r' : schachbrett[(j+i)+summand] = rook_b;     break;
+				case 'N' : schachbrett[(j+i)+summand] = knight_w;   break;
+				case 'n' : schachbrett[(j+i)+summand] = knight_b;   break;
+				case 'B' : schachbrett[(j+i)+summand] = bishop_w;   break;
+				case 'b' : schachbrett[(j+i)+summand] = bishop_b;   break;
+				case 'K' : schachbrett[(j+i)+summand] = king_w;     break;
+				case 'k' : schachbrett[(j+i)+summand] = king_b;     break;
+				case 'Q' : schachbrett[(j+i)+summand] = queen_w;    break;
+				case 'q' : schachbrett[(j+i)+summand] = queen_b;    break;
+				}
 			}
+			summand -= 24;
 		}
 	}
 	/**
