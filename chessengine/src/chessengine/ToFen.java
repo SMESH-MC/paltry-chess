@@ -11,6 +11,7 @@ public class ToFen extends Board implements ToFenInterface {
 	
 	// TODO (von chschuetz)
 	// aktuelles Board abgreifen (muss am Board geaendert werden)								80%
+	// BOOLs fuer Rochade abgreifen																0%
 	// alle moves abgreifen																		ERLEDIGT
 	// letzten move des spielers abgreifen														ERLEDIGT
 	// Figuren ändern																			80%
@@ -21,7 +22,6 @@ public class ToFen extends Board implements ToFenInterface {
 	// neues Board in ein FEN umwandeln															0%
 	
 	// Fragen:
-	// was passiert bei Rochade?
 	// wie registriere ich einen enpassant zug?
 
 	private String allMoves;		// String aller Moves bis dato
@@ -32,6 +32,8 @@ public class ToFen extends Board implements ToFenInterface {
 	private int[] temp;				// Inhalt des Boards in Zahlen
 	private String outgoingFen;		// Fertiger FEN String
 	private UCI uci;
+	private int rochadeGross;
+	private int rochadeKlein;
 	private boolean rochadeGrossW;
 	private boolean rochadeKleinW;
 	private boolean rochadeGrossS;
@@ -40,7 +42,7 @@ public class ToFen extends Board implements ToFenInterface {
 	
 
 	/**
-	 * Konstruktor, benoetigt aktuelles Board
+	 * Konstruktor, benoetigt aktuelles Board + UCI Objektreferenz
 	 * @param uci aktuelle UCI Objektreferenz
 	 * @param currentBoard aktuelles Board
 	 */
@@ -49,10 +51,15 @@ public class ToFen extends Board implements ToFenInterface {
 		this.currentBoard = currentBoard;
 		this.temp = currentBoard.boardArray;
 		this.currentColor = !currentBoard.color;	// Da der Spieler am Zug ist/war muss negiert werden, oder?
-		this.allMoves = uci.getMovesList();			// muss die Funktion statisch machen damits funzt
+		this.allMoves = uci.getMovesList();			
 		this.allMovesSplit = this.allMoves.split(" ");
 		this.lastMove = this.allMovesSplit[allMovesSplit.length-1];
+		this.outgoingFen = "";
 		this.aktuelleRochade = 0;
+		this.rochadeGross = currentBoard.getRochadeGross();
+		this.rochadeKlein = currentBoard.getRochadeKlein();
+		initRochadeGross(rochadeGross);
+		initRochadeKlein(rochadeKlein);
 		start();
 		setFEN();
 	}
@@ -70,6 +77,51 @@ public class ToFen extends Board implements ToFenInterface {
 		}
 	}
 	
+	private void initRochadeGross(int rochade) {
+		switch (rochade) {
+		case (0):
+			this.rochadeGrossS = false;
+			this.rochadeGrossW = false;
+			break;
+		case (1):
+			this.rochadeGrossS = false;
+			this.rochadeGrossW = true;
+			break;
+		case (2):
+			this.rochadeGrossS = true;
+			this.rochadeGrossW = false;
+			break;
+		case (3):
+			this.rochadeGrossS = true;
+			this.rochadeGrossW = true;
+		default:
+			break;
+		}
+	}
+	
+	private void initRochadeKlein (int rochade) {
+		switch (rochade) {
+		case (0):
+			this.rochadeKleinS = false;
+			this.rochadeKleinW = false;
+			break;
+		case (1):
+			this.rochadeKleinS = false;
+			this.rochadeKleinW = true;
+			break;
+		case (2):
+			this.rochadeKleinS = true;
+			this.rochadeKleinW = false;
+			break;
+		case (3):
+			this.rochadeKleinS = true;
+			this.rochadeKleinW = true;
+			break;
+		default:
+			break;
+		}
+	}
+	
 	/**
 	 * Methode zum Ausfuehren einer Promotion
 	 */
@@ -82,7 +134,7 @@ public class ToFen extends Board implements ToFenInterface {
 		} else {
 			neueFigur = Character.toLowerCase(neueFigur);		// wenn schwarz, Kleinbuchstabe
 		}
-		int figurWert = this.getFigur(neueFigur);				// int wert fuer die Figur (wie im Board)
+		int figurWert = this.getWertFigur(neueFigur);				// int wert fuer die Figur (wie im Board)
 		int startFeld = this.getField(startPos);				// # des Startfeldes im Array
 		int endFeld = this.getField(endPos);					// # des Endfeldes im Array
 		this.temp[startFeld] = 0;								// Startfeld loeschen
@@ -372,7 +424,7 @@ public class ToFen extends Board implements ToFenInterface {
 		return fieldNum;
 	}
 	
-	private int getFigur(char c) {
+	private int getWertFigur(char c) {
 		switch (c) {
 		case 'p':
 			return 1;
@@ -403,8 +455,102 @@ public class ToFen extends Board implements ToFenInterface {
 		}
 	}
 	
+	private char figurNachFen (int figur) {
+		switch (figur) {
+		case 1:
+			return 'p';
+		case 11:
+			return 'P';
+		case 2:
+			return 'r';
+		case 12:
+			return 'R';
+		case 3:
+			return 'n';
+		case 13:
+			return 'N';
+		case 4:
+			return 'b';
+		case 14:
+			return 'B';
+		case 5:
+			return 'q';
+		case 15:
+			return 'Q';
+		case 6:
+			return 'k';
+		case 16:
+			return 'K';
+		default:
+			return '1';
+		}
+	}
+	
 	private void setFEN() {
+		// Konstruiere das Brett als Fen
+		for (int i = 0; i <=119; i++) {
+			if ((i & 136) == 0) {
+				outgoingFen += figurNachFen(temp[i]);
+			} else {
+				outgoingFen += "/";
+				i += 7;
+			}
+		}
+		// Leerfelder richtig schreiben
+		outgoingFen = summiereLeerfelder(outgoingFen);
+		// Farbe hinzufuegen
+		if (this.currentColor) {
+			outgoingFen += " w ";
+		} else {
+			outgoingFen += " s ";
+		}
+		// Rochade hinzufuegen
+		int keineRochade = 0;
+		if (this.rochadeKleinW) {
+			outgoingFen += "K";
+		} else {
+			keineRochade++;
+		}
 		
+		if (this.rochadeGrossW) {
+			outgoingFen += "Q";
+		} else {
+			keineRochade++;
+		}
+		
+		if (this.rochadeKleinS) {
+			outgoingFen += "k";
+		} else {
+			keineRochade++;
+		}
+		
+		if (this.rochadeGrossS) {
+			outgoingFen += "q";
+		} else {
+			keineRochade++;
+		}
+		
+		if (keineRochade == 4) {
+			outgoingFen += "-";
+		}
+		
+		// Enpassant Feld
+		// Halbzuege
+		// Zugnummer
+		
+		
+	}
+	
+	private String summiereLeerfelder(String fen) {
+		fen = fen.replace("00000000","8");
+		fen = fen.replace("0000000","7");
+		fen = fen.replace("000000","6");
+		fen = fen.replace("00000","5");
+		fen = fen.replace("0000","4");
+		fen = fen.replace("000","3");
+		fen = fen.replace("00","2");
+		fen = fen.replace("0","1");
+		return fen;
 	}
 	
 	/* (non-Javadoc)
