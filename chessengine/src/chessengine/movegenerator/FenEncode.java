@@ -70,18 +70,18 @@ implements Definitions {
 	private String figurNachFEN(byte figur) {
 		String outgoingPiece = ""; 
 		switch (figur) {
-			case pawn_w : 	outgoingPiece = "P";
-			case pawn_b :	outgoingPiece = "p";
-			case rook_w :	outgoingPiece = "R";
-			case rook_b :	outgoingPiece = "r"; 
-			case knight_w : outgoingPiece = "N";
-			case knight_b : outgoingPiece = "n";
-			case bishop_w : outgoingPiece = "B";
-			case bishop_b : outgoingPiece = "b";
-			case king_w : 	outgoingPiece = "K";
-			case king_b : 	outgoingPiece = "k";
-			case queen_w : 	outgoingPiece = "Q";
-			case queen_b : 	outgoingPiece = "q";
+			case pawn_w : 	outgoingPiece = "P";	break;
+			case pawn_b :	outgoingPiece = "p";	break;
+			case rook_w :	outgoingPiece = "R";	break;
+			case rook_b :	outgoingPiece = "r";	break;
+			case knight_w : outgoingPiece = "N";	break;
+			case knight_b : outgoingPiece = "n";	break;
+			case bishop_w : outgoingPiece = "B";	break;
+			case bishop_b : outgoingPiece = "b";	break;
+			case king_w : 	outgoingPiece = "K";	break;
+			case king_b : 	outgoingPiece = "k";	break;
+			case queen_w : 	outgoingPiece = "Q";	break;
+			case queen_b : 	outgoingPiece = "q";	break;
 		}
 		return outgoingPiece;
 	}

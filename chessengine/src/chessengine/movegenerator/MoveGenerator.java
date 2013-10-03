@@ -108,14 +108,10 @@ implements MoveGeneratorInterface, Definitions {
 	private byte[] keineRochadeMehr(byte[] board, byte startfeld) {
 		byte[] neuesBoard = board.clone();
 		switch (startfeld) {
-		case 0	: neuesBoard[122] = 0;
-			break;
-		case 7	: neuesBoard[121] = 0;
-			break;
-		case 112: neuesBoard[124] = 0;
-			break;
-		case 119: neuesBoard[123] = 0;
-			break;
+		case 0	: neuesBoard[122] = 0;	break;
+		case 7	: neuesBoard[121] = 0;	break;
+		case 112: neuesBoard[124] = 0;	break;
+		case 119: neuesBoard[123] = 0;	break;
 		}
 		return neuesBoard;
 	}
