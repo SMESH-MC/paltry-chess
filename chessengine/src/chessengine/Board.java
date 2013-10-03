@@ -311,5 +311,13 @@ public class Board implements BoardInterface  {
 		return value;
 	}
 	
+	public int getRochadeGross() {
+		return this.rochade_gross;
+	}
+	
+	public int getRochadeKlein() {
+		return this.rochade_klein;
+	}
+	
 	
 }

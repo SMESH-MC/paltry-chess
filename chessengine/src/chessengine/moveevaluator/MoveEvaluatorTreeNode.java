@@ -5,7 +5,7 @@ import chessengine.Board;
 
 /**
  * 
- * @author Dominik A. Erb
+ * @author Dominik A. Erb 
  *
  */
 public class MoveEvaluatorTreeNode {
@@ -13,6 +13,9 @@ public class MoveEvaluatorTreeNode {
 	private int BoardValue;
 	private LinkedList<MoveEvaluatorTreeNode> ChildBoards;
 	private int hasChild; 
+	private int lastVisitedChild = 0;
+	public int minChild = 10000;
+	public int posMinChild;
 
 	
 	public MoveEvaluatorTreeNode(Board board){
@@ -43,6 +46,18 @@ public class MoveEvaluatorTreeNode {
 	
 	public int hasChild() {
 		return hasChild;
+	}
+	
+	public int getLastVisitedChild() {
+		return lastVisitedChild;
+	}
+	
+	public void setLastVisitedChild() {
+		this.lastVisitedChild = lastVisitedChild++;
+	}
+	
+	public int getBoardValue() {
+		return this.BoardValue;
 	}
 }
 
