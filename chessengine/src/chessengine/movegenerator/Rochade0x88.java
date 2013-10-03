@@ -5,7 +5,6 @@ import java.util.LinkedList;
 /**
  * 
  * @author Schuhmacher, Kaub
- * @version 201309111303
  *
  */
 public class Rochade0x88

@@ -3,7 +3,6 @@ package chessengine.movegenerator;
  * Diese Klasse macht aus einem FEN-String ein Board in 0x88-Darstellung (Arrays aus Zahlen vom Typ Byte)
  * 
  * @author Schuhmacher, Kaub
- * @version 201309102044
  *
  */
 public class FenDecode

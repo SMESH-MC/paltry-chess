@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 /**
  *	@author Schuhmacher, Kaub
- *	@version 201309101638
  */
 public class MoveGenerator
 implements MoveGeneratorInterface, Definitions {
