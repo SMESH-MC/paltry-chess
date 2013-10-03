@@ -1,19 +1,19 @@
-package chessengine.movegenerator;
+/**package chessengine.movegenerator;
 
 import java.util.LinkedList;
 
 /**
  * 
- * @author SMESH
+ * @author Schuhmacher, Kaub
  *
- */
+ *
 public class Rochade {
 //	////Die Liste aller moeglichen Rochaden-Zuege, die zurueckgegeben wird
 //	private LinkedList<String> moeglicheRochadenZuege = new LinkedList<String>();
 //	
 //	/**
 //	 * Konstruktor
-//	 */
+//	 *
 //	public Rochade (String[] splittedFEN, boolean weiss) {
 //		if (weiss) {
 //			berechneWhiteRochade(splittedFEN[9], splittedFEN);
@@ -26,7 +26,7 @@ public class Rochade {
 //	 * 
 //	 * @param	rochadeMoeglichkeiten		Die Rochaden, die Weiss noch durchfuehren koennte
 //	 *   
-//	 */
+//	 *
 //	private void berechneWhiteRochade(String rochadeMoeglichkeiten, String[] splittedFEN) {
 //		for (int i=0; i < rochadeMoeglichkeiten.length(); i++) {
 //			switch (rochadeMoeglichkeiten.charAt(i)) {
@@ -37,10 +37,11 @@ public class Rochade {
 //		}
 //	}
 	/**
+	 * 
 	 * Diese Methode fuehrt eine kurze Rochade von Weiss durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
 	 * @param	splittedFEN		Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
-	 */
+	 *
 	private void rochiereKurzW(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				
@@ -74,7 +75,7 @@ public class Rochade {
 	 * Diese Methode fuehrt eine lange Rochade von Weiss durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
 	 * @param	splittedFEN		Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
-	 */
+	 *
 	private void rochiereLangW(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				
@@ -113,7 +114,7 @@ public class Rochade {
 //	 * Diese Methode prueft, welche Rochaden Schwarz noch durchfuehren darf und berechnet diese dann
 //	 * 
 //	 * @param	rochadeMoeglichkeiten		Die Rochaden, die Schwarz noch durchfuehren koennte
-//	 */
+//	 *
 //	private void berechneBlackRochade(String rochadeMoeglichkeiten, String[] splittedFEN) {
 //		for (int i=0; i < rochadeMoeglichkeiten.length(); i++) {
 //			switch (rochadeMoeglichkeiten.charAt(i)) {
@@ -127,7 +128,7 @@ public class Rochade {
 	 * Diese Methode fuehrt eine kurze Rochade von Schwarz durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
 	 * @param	splittedFEN		Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
-	 */
+	 *
 	private void rochiereKurzB(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				
@@ -161,7 +162,7 @@ public class Rochade {
 	 * Diese Methode fuehrt eine lange Rochade von Schwarz durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
 	 * @param	splittedFEN		Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
-	 */
+	 *
 	private void rochiereLangB(String[] splittedFEN) {
 		if ( //ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				
@@ -200,7 +201,8 @@ public class Rochade {
 	 * 
 	 * @param	entknoddelterFEN	String-Array mit allen Teilen der FEN, die wieder in einen FEN-String umgewandelt werden soll
 	 * @return	Ein neu zusammengesetzte FEN-String
-	 */
+	 *
+
 	private String setFEN(String[] entknoddelterFEN) {
 		String newFEN =	splittedFEN[0] + "/" + splittedFEN[1] + "/" + splittedFEN[2] +"/" +  splittedFEN[3] + "/" + 
 						splittedFEN[4] + "/" + splittedFEN[5] + "/" + splittedFEN[6] + "/" + splittedFEN[7] + " " + 
@@ -211,8 +213,9 @@ public class Rochade {
 
 	/**
 	 * getter
-	 */
+	 *
 	public LinkedList<String >getZuege () {
 		return moeglicheRochadenZuege;
 	}
 }
+**/
