@@ -10,8 +10,8 @@ package chessengine;
 public class ToFen extends Board implements ToFenInterface {
 	
 	// TODO (von chschuetz)
-	// aktuelles Board abgreifen (muss am Board geaendert werden)								80%
-	// BOOLs fuer Rochade abgreifen																0%
+	// aktuelles Board abgreifen (muss am Board geaendert werden)								95%
+	// BOOLs fuer Rochade abgreifen																ERLEDIGT
 	// alle moves abgreifen																		ERLEDIGT
 	// letzten move des spielers abgreifen														ERLEDIGT
 	// Figuren ändern																			80%
@@ -19,7 +19,7 @@ public class ToFen extends Board implements ToFenInterface {
 	// +- normaler Zug 																			ERLEDIGT
 	// +- En passant?!?!																		0%
 	// +- PROMOTION																				ERLEDIGT
-	// neues Board in ein FEN umwandeln															0%
+	// neues Board in ein FEN umwandeln															ERLEDIGT
 	
 	// Fragen:
 	// wie registriere ich einen enpassant zug?
@@ -32,12 +32,18 @@ public class ToFen extends Board implements ToFenInterface {
 	private int[] temp;				// Inhalt des Boards in Zahlen
 	private String outgoingFen;		// Fertiger FEN String
 	private UCI uci;
+	private int boardValueOld;
+	private int boardValueNew;
 	private int rochadeGross;
 	private int rochadeKlein;
+	private String enpassantNew;
+	private int halbzuege;
+	private int zuege;
 	private boolean rochadeGrossW;
 	private boolean rochadeKleinW;
 	private boolean rochadeGrossS;
 	private boolean rochadeKleinS;
+	private char bewegteFigur;
 	private byte aktuelleRochade;	// Gebrauch bei runRochade(), 0 = nix, 1 = grossW, 2 = kleinW, 3 = grossS, 4 = kleinS
 	
 
@@ -49,17 +55,19 @@ public class ToFen extends Board implements ToFenInterface {
 	public ToFen(UCI uci, Board currentBoard) {
 		this.uci = uci;
 		this.currentBoard = currentBoard;
-		this.temp = currentBoard.boardArray;
-		this.currentColor = !currentBoard.color;	// Da der Spieler am Zug ist/war muss negiert werden, oder?
-		this.allMoves = uci.getMovesList();			
+		this.temp = this.currentBoard.boardArray;
+		this.currentColor = !this.currentBoard.color;	// Da der Spieler am Zug ist/war muss negiert werden, oder?
+		this.allMoves = this.uci.getMovesList();			
 		this.allMovesSplit = this.allMoves.split(" ");
 		this.lastMove = this.allMovesSplit[allMovesSplit.length-1];
+		//this.enpassant = this.currentBoard.isEnPassent();	<- bringt mir als bool nix, brauch das Feld
+		this.halbzuege = this.currentBoard.getHalbzuege();
+		this.zuege = this.currentBoard.getZugnummer();
 		this.outgoingFen = "";
 		this.aktuelleRochade = 0;
-		this.rochadeGross = currentBoard.getRochadeGross();
-		this.rochadeKlein = currentBoard.getRochadeKlein();
-		initRochadeGross(rochadeGross);
-		initRochadeKlein(rochadeKlein);
+		this.rochadeGross = this.currentBoard.getRochadeGross();
+		this.rochadeKlein = this.currentBoard.getRochadeKlein();
+		this.boardValueOld = this.currentBoard.getBoardValue();
 		start();
 		setFEN();
 	}
@@ -70,11 +78,59 @@ public class ToFen extends Board implements ToFenInterface {
 	 * Wenn nein schauen ob Rochade
 	 */
 	private void start() {
-		if (this.lastMove.length() > 4) {
+		initRochadeGross(rochadeGross);														// initiiert grosse Rochaden
+		initRochadeKlein(rochadeKlein);														// initiiert kleine Rochaden
+		if (this.lastMove.length() > 4) {													// wenn der String laenger ist als 4 ist es eine Promotion
 			runPromotion();
-		} else {
+		} else {																			// wenn nicht schaue nach obs eine Rochade ist
 			detectRochade();
 		}
+		// das hier ist ein wenig kompliziert:
+		// das endergebnis des folgenden Ausdrucks ist ein char der Figur
+		// Erst wird das Startfeld aus dem letzten Zug extrahiert
+		// dieses mittels getField in ein int umgewandelt
+		// dann wird geschaut was im boardarray temp an dieser Stelle steht
+		// und zuletzt dann zu dem richtigen char umgewandelt
+		this.bewegteFigur = figurNachFen(temp[getField(this.lastMove.substring(0, 2))]);	
+		this.currentBoard.boardArray = temp;
+		this.boardValueNew = this.currentBoard.getBoardValue();
+	}
+	
+	private int detectSchlag(int alterWert, int neuerWert) {
+		return alterWert - neuerWert;
+	}
+	
+	private String detectEnpassant() {
+		String feld = this.lastMove.substring(0, 2);
+		char figur = figurNachFen(temp[getField(feld)]);
+		// enpassant erkennung fuer weiss
+		if ((this.lastMove == "a2a4" || 
+			this.lastMove == "b2b4" ||
+			this.lastMove == "c2c4" ||
+			this.lastMove == "d2d4" ||
+			this.lastMove == "e2e4" ||
+			this.lastMove == "f2f4" ||
+			this.lastMove == "g2g4" ||
+			this.lastMove == "h2h4") &&
+			figur == 'P') {
+			String enpassant = feld.charAt(0) + "3";
+			return enpassant;
+		} else if ((this.lastMove == "a7a5" ||	// enpassant erkennung fuer schwarz
+					this.lastMove == "b7b5" ||
+					this.lastMove == "c7c5" ||
+					this.lastMove == "d7d5" ||
+					this.lastMove == "e7e5" ||
+					this.lastMove == "f7f5" ||
+					this.lastMove == "g7g5" ||
+					this.lastMove == "h7h5") &&
+					figur == 'p') {
+			String enpassant = feld.charAt(0) + "6";
+			return enpassant;
+		} else {						// wenn kein bauerx2 zug, kein enpassant
+			String enpassant = "-";
+			return enpassant;
+		}
+		
 	}
 	
 	private void initRochadeGross(int rochade) {
@@ -488,13 +544,11 @@ public class ToFen extends Board implements ToFenInterface {
 	
 	private void setFEN() {
 		// Konstruiere das Brett als Fen
-		for (int i = 0; i <=119; i++) {
-			if ((i & 136) == 0) {
-				outgoingFen += figurNachFen(temp[i]);
-			} else {
-				outgoingFen += "/";
-				i += 7;
+		for (int i = 112; i >= 0; i -= 16) {
+			for (int j = 0; j <= 7; j++) {
+				outgoingFen += figurNachFen(temp[i+j]);
 			}
+			outgoingFen += "/";
 		}
 		// Leerfelder richtig schreiben
 		outgoingFen = summiereLeerfelder(outgoingFen);
@@ -535,21 +589,36 @@ public class ToFen extends Board implements ToFenInterface {
 		}
 		
 		// Enpassant Feld
+		outgoingFen += " ";
+		this.enpassantNew = this.detectEnpassant();
+		outgoingFen += this.enpassantNew;
 		// Halbzuege
-		// Zugnummer
+		outgoingFen += " ";
+		// wenn nichts geschlagen wurde und kein bauer bewegt wurde, halbzuege +1, ansonsten halbzuege reset (= 0)
+		if ((this.detectSchlag(boardValueOld, boardValueNew) == 0) && (this.bewegteFigur != 'p' || this.bewegteFigur != 'P')) {
+			this.halbzuege += 1;
+		} else {
+			this.halbzuege = 0;
+		}
+		outgoingFen += this.halbzuege;
+		// Zugnummer, wenn weiss, zug +1
+		if (this.currentColor) {
+			this.zuege += 1;
+		}
+		outgoingFen += " ";
+		outgoingFen += this.zuege;
 		
 		
 	}
 	
 	private String summiereLeerfelder(String fen) {
-		fen = fen.replace("00000000","8");
-		fen = fen.replace("0000000","7");
-		fen = fen.replace("000000","6");
-		fen = fen.replace("00000","5");
-		fen = fen.replace("0000","4");
-		fen = fen.replace("000","3");
-		fen = fen.replace("00","2");
-		fen = fen.replace("0","1");
+		fen = fen.replace("11111111","8");
+		fen = fen.replace("1111111","7");
+		fen = fen.replace("111111","6");
+		fen = fen.replace("11111","5");
+		fen = fen.replace("1111","4");
+		fen = fen.replace("111","3");
+		fen = fen.replace("11","2");
 		return fen;
 	}
 	
