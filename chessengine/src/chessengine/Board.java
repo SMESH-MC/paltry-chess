@@ -4,6 +4,7 @@ package chessengine;
 import chessengine.figurbewertung.FigurBewertung;
 
 /**
+ * Klasse Board, repraesentiert das Spielbrett.
  * @author Christian Koenig & Dominik Erb
  */
 public class Board implements  BoardInterface  {
@@ -24,6 +25,9 @@ public class Board implements  BoardInterface  {
 	
 	//Ende Variablendeklaration
 	
+        /**
+         * Standartkonstruktor der Klasse Board
+         */
 	public Board() {
 		boardArray = new int[128];	//Boardarray
 		color = true;				//Farbe am Zug, true = weiss; false = schwarz
@@ -35,6 +39,10 @@ public class Board implements  BoardInterface  {
 			
 	}
 	
+        /**
+         * Konstruktor der Klasse Board mit FEN-String als Parameter.
+         * @param fen FEN-String, der beim erzeugen als Startwert verwendet wird.
+         */
 	public Board(String fen) {
 		boardArray = new int[128];	//Boardarray
 		color = true;				//Farbe am Zug, true = weiss; false = schwarz
@@ -93,6 +101,12 @@ public class Board implements  BoardInterface  {
 		return currentBoard;
 	}
 	
+        /**
+         * Methode, analysiert den Rest des FEN-Strings um Moeglichkeiten von 
+         * Sonderzuegen zu ermitteln.
+         * @param s
+         * @param pos 
+         */
 	private void fenRemainingParts(String s, int pos) {
 		//rochademoeglichkeit initialisieren
 		rochade_gross = 0;
