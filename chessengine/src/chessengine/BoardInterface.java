@@ -19,11 +19,7 @@ public interface BoardInterface {
          */
 	public abstract boolean ResetBoard();
 
-        /**
-         * TODO Kommentar ergaenzen
-         * @param boardFen 
-         */
-	public abstract void BoardOutputFen(String boardFen);
+
 
         /**
          * Getter-Methode fuer das aktuelle Board.

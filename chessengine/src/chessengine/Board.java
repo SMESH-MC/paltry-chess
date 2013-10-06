@@ -84,13 +84,6 @@ public class Board implements  BoardInterface  {
 		
 	}
 
-	/* (non-Javadoc)
-	 * @see chessengine.BoardInterface#BoardOutputFen(java.lang.String)
-	 */
-	@Override
-	public void BoardOutputFen(String boardFen) {
-		
-	}
 	
 	/* (non-Javadoc)
 	 * @see chessengine.BoardInterface#getBoard()
