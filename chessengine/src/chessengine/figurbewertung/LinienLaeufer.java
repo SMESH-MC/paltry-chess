@@ -105,7 +105,9 @@ public class LinienLaeufer {
 		LinkedList<String> moeglichkeiten = new LinkedList<String>();
 		neuesBrett = schachBrett.bewegeFigur(x, y ,position);
 		
+		;
 		if(promotion){
+			neuesBrett = neuesBrett.copy();
 			neuesBrett.promotionQueen(x, y);
 			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
 			neuesBrett = neuesBrett.copy();
@@ -117,6 +119,7 @@ public class LinienLaeufer {
 			neuesBrett = neuesBrett.copy();
 			neuesBrett.promotionRook(x, y);
 			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
+			neuesBrett.degradiereToPawn(x, y);//Da neuesBrett und schachBrett auf das das gleiche Object Figur zeigt muss dieses auf Ausgangstellungn zurueckgesetzt werden
 		}else{
 			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
 		}

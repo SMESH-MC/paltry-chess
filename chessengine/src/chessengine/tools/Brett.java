@@ -58,16 +58,19 @@ public abstract class Brett {
 	public abstract String toString();
 	
 	public void promotionRook(int x, int y){
-		getInhalt(x, y).promotionRook();
+		this.getInhalt(x, y).promotionRook();
 	}
 	public void promotionKnight(int x, int y){
-		getInhalt(x, y).promotionKnight();
+		this.getInhalt(x, y).promotionKnight();
 	}
 	public void promotionQueen(int x, int y){
-		getInhalt(x, y).promotionQueen();
+		this.getInhalt(x, y).promotionQueen();
 	}
 	public void promotionBishop(int x, int y){
-		getInhalt(x, y).promotionBishop();
+		this.getInhalt(x, y).promotionBishop();
+	}
+	public void degradiereToPawn(int x, int y){
+		this.getInhalt(x, y).degradiereToPawn();
 	}
 	
 }

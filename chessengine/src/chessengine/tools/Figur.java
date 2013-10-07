@@ -195,5 +195,8 @@ public class Figur {
 	public void promotionBishop(){
 		promotion(BISHOP);
 	}
+	public void degradiereToPawn(){
+		promotion(PAWN);
+	}
 	
 }
