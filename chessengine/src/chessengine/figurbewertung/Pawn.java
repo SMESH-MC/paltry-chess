@@ -28,9 +28,12 @@ public class Pawn extends OberFigur {
 		int y = position.getY();
 		int zielX = 0; 
 		int zielY = 0;
+		boolean promotion = false;//gibt an ob die figur beim zug befoerdert wird(also ein ein zeile vorm ende)
 		
 		if (istWeis) { // Fuer weise Baueren
-
+			if(y==6){
+				promotion = true ; 
+			}
 			if (istAufStartPosition(position, istWeis)
 					&& schachBrett.getIsEmpty(x, 3) && schachBrett.getIsEmpty(x,2) ) { // wenn auf Start Position
 													// und 2 vor ist Frei
@@ -40,14 +43,14 @@ public class Pawn extends OberFigur {
 			if (y < 7) { // ist eins vorm Bauer ueberhaupt ein Feld
 				zielY = y+1;
 				if (schachBrett.getIsEmpty(x, zielY) ) {// eins vor ist frei
-					moeglichkeiten.push( linienlaeufer.generiereFen(x, zielY , position, null));
+					moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(x, zielY , position, null, promotion));
 				}
 				if(x < 7){//rechts ein feld
 				
 					zielX = x+1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false ){ // vorne rechts eine Figur
 						if (schachBrett.getInhalt(zielX,zielY).istWeis() != istWeis) { // vorne rechts ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position, null ) );
+							moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(zielX, zielY, position, null , promotion) );
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 6 ){ // vorne rechts schlag per enPassant#
@@ -61,7 +64,7 @@ public class Pawn extends OberFigur {
 					zielX = x-1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false){ // vorne rechts eine Figur
 						if (schachBrett.getInhalt(zielX, zielY).istWeis() != istWeis) {// vorne Links ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY, position , null));
+							moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(zielX, zielY, position , null, promotion));
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 6)   { // vorne rechts schlag per enPassant
@@ -70,24 +73,26 @@ public class Pawn extends OberFigur {
 				}
 			}// ist eins vorm Bauer ueberhaupt ein Feld
 
-		} else {
-			if (istAufStartPosition(position, istWeis)
+		} else {// sonst schwarz
+			if(y==1){
+				promotion = true ; 
+			}
+			if (istAufStartPosition(position, istWeis)//2 felder regel
 					&& schachBrett.getIsEmpty(x,4) && schachBrett.getIsEmpty(x,5)) { // wenn auf Start Position
 													// und 2 vor ist Frei
-
 				moeglichkeiten.push( linienlaeufer.generiereEnPassantFenZiehe(x, 4, position ,new SchachPosition( x, 5)));
 			}
 
 			if (y > 0) { // ist eins vorm Bauer ueberhaupt ein Feld
 				zielY = y-1;
 				if (schachBrett.getIsEmpty(x,zielY)) {// eins vor ist frei
-					moeglichkeiten.push( linienlaeufer.generiereFen(x, zielY, position, null));
+					moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(x, zielY, position, null, promotion));	
 				}
 				if(x < 7){//rechts ein feld
 					zielX = x+1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false){ // vorne rechts eine Figur
 						if (schachBrett.getInhalt(zielX, zielY).istWeis() != istWeis) { // vorne rechts ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position , null));
+							moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(zielX, zielY,  position , null, promotion));
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 2 )   { // vorne rechts schlag per enPassant
@@ -98,7 +103,7 @@ public class Pawn extends OberFigur {
 					zielX = x-1;
 					if(schachBrett.getIsEmpty(zielX,zielY) == false){ // vorne rechts eine Figur
 						if (schachBrett.getInhalt(zielX, zielY).istWeis() != istWeis) {// vorne Links ein gegner _> schlage
-							moeglichkeiten.push( linienlaeufer.generiereFen(zielX, zielY,  position , null));
+							moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(zielX, zielY,  position , null, promotion));
 						}
 					}
 					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 2 )  { // vorne rechts schlag per enPassant

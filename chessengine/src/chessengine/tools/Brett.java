@@ -56,4 +56,18 @@ public abstract class Brett {
 		return this;
 	}
 	public abstract String toString();
+	
+	public void promotionRook(int x, int y){
+		getInhalt(x, y).promotionRook();
+	}
+	public void promotionKnight(int x, int y){
+		getInhalt(x, y).promotionKnight();
+	}
+	public void promotionQueen(int x, int y){
+		getInhalt(x, y).promotionQueen();
+	}
+	public void promotionBishop(int x, int y){
+		getInhalt(x, y).promotionBishop();
+	}
+	
 }

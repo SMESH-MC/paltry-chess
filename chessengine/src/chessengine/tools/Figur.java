@@ -114,6 +114,9 @@ public class Figur {
 				}
 		return rueckgabe;
 	}
+	private void setFigur(byte typ){
+		zahl = typ;
+	}
 	public void setFigur(char typ){
 		switch (typ) {
 		case 'p':
@@ -172,4 +175,25 @@ public class Figur {
 	public byte getKing(){
 		return KING;
 	}
+	private void promotion(byte typ){
+		if(istWeis()){
+			this.setFigur((byte)(typ+WEISMODIFER));
+		}else{
+			this.setFigur(typ);
+		}
+		
+	}
+	public void promotionQueen(){
+		promotion(QUEEN);
+	}
+	public void promotionRook(){
+		promotion(ROOK);
+	}
+	public void promotionKnight(){
+		promotion(KNIGHT);
+	}
+	public void promotionBishop(){
+		promotion(BISHOP);
+	}
+	
 }

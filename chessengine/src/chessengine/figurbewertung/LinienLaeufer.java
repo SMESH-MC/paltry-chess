@@ -101,7 +101,27 @@ public class LinienLaeufer {
 		neuesBrett = schachBrett.bewegeFigur(x, y ,position);
 		return decoder.codiererNeuenZug(neuesBrett, neueRochade);
 	}
-
+	public LinkedList<String> generiereFenPromotion(int x, int y, SchachPosition position, String neueRochade, boolean promotion){
+		LinkedList<String> moeglichkeiten = new LinkedList<String>();
+		neuesBrett = schachBrett.bewegeFigur(x, y ,position);
+		
+		if(promotion){
+			neuesBrett.promotionQueen(x, y);
+			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
+			neuesBrett = neuesBrett.copy();
+			neuesBrett.promotionKnight(x, y);
+			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
+			neuesBrett = neuesBrett.copy();
+			neuesBrett.promotionBishop(x, y);
+			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
+			neuesBrett = neuesBrett.copy();
+			neuesBrett.promotionRook(x, y);
+			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
+		}else{
+			moeglichkeiten.push(decoder.codiererNeuenZug(neuesBrett, neueRochade));
+		}
+		return moeglichkeiten;
+	}
 
 	
 	/**
