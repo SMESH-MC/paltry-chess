@@ -41,12 +41,12 @@ implements MoveGeneratorInterface, Definitions {
 		//nimmt sich die von FenDecode in ein Array umgewandelte aktuelle Stellung
 		schachbrett  = fd.getSchachbrett();
 
-		/* neue Version der Rochade 
+		/* neue Version der Rochade */ 
 		Rochade0x88 r1 = new Rochade0x88();
 		r1.setSchachbrett(schachbrett);
-		r1.getZuege();
-													funzt noch nicht
-		*/
+		outgoingFEN.addAll(r1.getZuege());
+		
+		//berechne normale Zuege
 		zuegeBerechnen(schachbrett);
     }
     
@@ -112,6 +112,8 @@ implements MoveGeneratorInterface, Definitions {
 		case 7	: neuesBoard[121] = 0;	break;
 		case 112: neuesBoard[124] = 0;	break;
 		case 119: neuesBoard[123] = 0;	break;
+		//Wenn der Turm bereits gezogen wurde, mache nichts
+		default: break;
 		}
 		return neuesBoard;
 	}
@@ -389,25 +391,4 @@ implements MoveGeneratorInterface, Definitions {
 		fe.setBoard(board);
 		outgoingFEN.add(fe.getFEN());
 	}
-
-
-	/*	
-	private void whiteTurn() {
-	}
-	
-	private void blackTurn() {
-		increaseFullmoveNumber();
-	}
-
-	
-	private String increaseHalfmoveClock() {
-		int newHalfmoveInt = Integer.parseInt(splittedFEN[11]) + 1;
-		return String.valueOf(newHalfmoveInt);
-		}
-	
-	private String increaseFullmoveNumber() {
-		int newFullmoveInt = Integer.parseInt(splittedFEN[12]) + 1;
-		return String.valueOf(newFullmoveInt);
-		}
-*/	
 }
