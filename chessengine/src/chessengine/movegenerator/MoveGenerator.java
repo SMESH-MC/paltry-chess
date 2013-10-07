@@ -51,7 +51,7 @@ implements MoveGeneratorInterface, Definitions {
 		zuegeBerechnen(schachbrett);
     }
     
-    
+
 	/**
 	 * 
 	 * @param	board	Die aktuelle Stellung, aus der alle normalen Zuege (ohne Sonderzuege) berechnet werden sollen
@@ -67,7 +67,7 @@ implements MoveGeneratorInterface, Definitions {
 						switch (board[startfeld]) {
 						case pawn_w :	berechneZugBauer(	board, startfeld, true, pawn_moves_w);
 										berechne2ZugBauer(	board, startfeld, true, pawn_moves_w2);
-										berechneSchlagBauer(board, startfeld, true, pawn_attack_moves_w);	break;
+										berechneSchlagBauer(board, startfeld, true, pawn_attack_moves_w); break;
 						case rook_w :	berechneSlidingZug(	keineRochadeMehr(board, startfeld), startfeld, true, rook_moves);	break;
 						case knight_w : berechneZug(		board, startfeld, true, knight_moves);	break;
 						case bishop_w :	berechneSlidingZug(	board, startfeld, true, bishop_moves);	break;
@@ -86,7 +86,7 @@ implements MoveGeneratorInterface, Definitions {
 					switch (board[startfeld]) {
 					case pawn_b :	berechneZugBauer(	board, startfeld, false, pawn_moves_b);
 									berechne2ZugBauer(	board, startfeld, false, pawn_moves_b2);
-									berechneSchlagBauer(board, startfeld, false, pawn_attack_moves_b);	break;
+									berechneSchlagBauer(board, startfeld, false, pawn_attack_moves_b); break;
 					case rook_b :	berechneSlidingZug(	keineRochadeMehr(board, startfeld), startfeld, false, rook_moves);			break;
 					case knight_b : berechneZug(		board, startfeld, false, knight_moves);	break;
 					case bishop_b : berechneSlidingZug(	board, startfeld, false, bishop_moves);	break;
@@ -98,6 +98,19 @@ implements MoveGeneratorInterface, Definitions {
 		}
 	}
 	
+	/**
+	 * Diese Methode berechnet einen En-Passant-Schlag 
+	 * 
+	 * @param board
+	 * @param startfeld
+	 * @param weissAmZug
+	 * @param erlaubteZuege
+	 */
+	private void enPassantSchlag(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
+		for (byte b : erlaubteZuege) {
+			
+		}
+	}
 
 	/** 
 	 * Diese Hilfsmethode setzt die Rochadenmoeglichkeit vor dem Zug eines Turms zurueck
@@ -277,11 +290,11 @@ implements MoveGeneratorInterface, Definitions {
 		
 		//fuer die erlaubten Schrittweiten bei einem Bauernschlag
 		for (byte b : erlaubteZuege) {
-			byte[] neuesBoard = board.clone();
 			//berechne das Zielfeld
 			int zielfeld = startfeld + b;
 			//Wenn die gegnerische Farbe auf dem Zielfeld steht 
-			if ((weissAmZug && neuesBoard[zielfeld] < 0) || (!weissAmZug && neuesBoard[zielfeld] > 0)) {
+			if ((weissAmZug && board[zielfeld] < 0) || (!weissAmZug && board[zielfeld] > 0)) {
+				byte[] neuesBoard = board.clone();
 				//ziehe eigene figur = schlage Gegner
 				neuesBoard[zielfeld] = neuesBoard[startfeld];
 				//Startfeld leeren
@@ -291,6 +304,43 @@ implements MoveGeneratorInterface, Definitions {
 				//Zug hinzufuegen
 				zugHinzufuegen(neuesBoard);
 			} 
+			
+			/* en passant-Schlaege berechnen */
+			
+			//wenn en Passant-Schlag fuer weiss moeglich ist && weiss am Zug ist 
+			if (board[125] > 70	&& weissAmZug) {
+				//wenn das moegliche Zielfeld des Bauern das EnPassant-Feld ist
+				if (board[125] == zielfeld) {
+					byte[] neuesBoard = board.clone();
+					//entferne den en-passant-geschlagenen Bauer
+					neuesBoard[zielfeld - 16] = 0;
+					//ziehe den Bauern auf das En-Passant-Zielfeld
+					neuesBoard[zielfeld] = neuesBoard[startfeld];
+					//Startfeld leeren
+					neuesBoard[startfeld] = 0;
+					//setze en passant zurueck
+					neuesBoard[125] = -1;
+					//Zug hinzufuegen
+					zugHinzufuegen(neuesBoard);
+				}
+			}
+			//wenn en Passant-Schlag moeglich ist && fuer schwarz moeglich ist && schwarz am Zug ist
+			if (board[125] > 0	&& board[125] < 40	&& !weissAmZug) {
+				//wenn das moegliche Zielfeld des Bauern das EnPassant-Feld ist
+				if (board[125] == zielfeld) {
+					byte[] neuesBoard = board.clone();
+					//entferne den en-passant-geschlagenen Bauer
+					neuesBoard[zielfeld + 16] = 0;
+					//ziehe den Bauern auf das En-Passant-Zielfeld
+					neuesBoard[zielfeld] = neuesBoard[startfeld];
+					//Startfeld leeren
+					neuesBoard[startfeld] = 0;
+					//setze en passant zurueck
+					neuesBoard[125] = -1;
+					//Zug hinzufuegen
+					zugHinzufuegen(neuesBoard);
+				}
+			}
 		}
 	}
 
@@ -372,6 +422,7 @@ implements MoveGeneratorInterface, Definitions {
 		
 	}
 
+	
 	
 	/**
 	 * getter der Klasse, der die moeglichen Zuege ausgibt
