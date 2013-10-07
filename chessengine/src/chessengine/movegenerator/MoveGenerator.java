@@ -43,6 +43,7 @@ implements MoveGeneratorInterface, Definitions {
 
 		/* neue Version der Rochade */ 
 		Rochade0x88 r1 = new Rochade0x88();
+		//byte[] boardZuRochieren = schachbrett.clone();
 		r1.setSchachbrett(schachbrett);
 		outgoingFEN.addAll(r1.getZuege());
 		

@@ -13,6 +13,13 @@ implements Definitions {
 	private LinkedList<String> 	moeglicheRochaden;
 	
 	/**
+     * Konstruktor, der die auszugebende Liste aller moeglichen Zuege initialisiert
+     */
+    public Rochade0x88() {
+    	moeglicheRochaden = new LinkedList<String>();
+    }
+    
+	/**
 	 * Dieser Setter initialisiert die aktuelle Stellung und prueft dann, welche Rochaden noch durchgefuehrt
 	 * werden duerfen mit anschliessender Uebergabe an die jeweilige Methode zur Durchfuehrung
 	 * 
@@ -31,10 +38,11 @@ implements Definitions {
 		 * Methode auf uebergib das zurueckgegebene rochierte Board an den FEN-Encoder. Schreibe die ermittelte FEN
 		 * abschliessend in die Liste der moeglichen Rochaden.
 		 */
-		if (board[121] == 1) {rochiereKurzWeiss(board);};
-		if (board[122] == 1) {rochiereLangWeiss(board);};
-		if (board[123] == 1) {rochiereKurzSchwarz(board);};
-		if (board[124] == 1) {rochiereLangSchwarz(board);};
+		//Wenn Rochade noch moeglich && der Koenig auf seinem EroeffnungsFeld steht && der jeweilige Turm ebenfalls
+		if (board[121] == 1 && board[4] == king_w && board[7] == rook_w) {rochiereKurzWeiss(board);}
+		if (board[122] == 1 && board[4] == king_w && board[0] == rook_w) {rochiereLangWeiss(board);}
+		if (board[123] == 1 && board[116] == king_b && board[119] == rook_b) {rochiereKurzSchwarz(board);}
+		if (board[124] == 1 && board[116] == king_b && board[112] == rook_b) {rochiereLangSchwarz(board);}
 	}
 
 
@@ -45,7 +53,7 @@ implements Definitions {
 	 */
 	private void rochiereKurzWeiss(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (F1 und G1) frei ist
-				((boardZuRochieren[5] | boardZuRochieren[6]) == 0) &&
+				(boardZuRochieren[5] == 0 && boardZuRochieren[6] == 0) &&
 				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
 				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
@@ -76,7 +84,7 @@ implements Definitions {
 	 */
 	private void rochiereLangWeiss(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (B1, C1, D1) frei ist
-				((boardZuRochieren[1] | boardZuRochieren[2] | boardZuRochieren[3]) == 0) &&
+				(boardZuRochieren[1] == 0 && boardZuRochieren[2] == 0 && boardZuRochieren[3] == 0) &&
 				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
 				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
@@ -108,7 +116,7 @@ implements Definitions {
 
 	private void rochiereKurzSchwarz(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (F8 und G8) frei ist
-				((boardZuRochieren[117] | boardZuRochieren[118]) == 0) &&
+				(boardZuRochieren[117] == 0 && boardZuRochieren[118] == 0) &&
 				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
 				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
@@ -140,7 +148,7 @@ implements Definitions {
 
 	private void rochiereLangSchwarz(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (B8, C8, D8) frei ist
-				((boardZuRochieren[113] | boardZuRochieren[114] | boardZuRochieren[115]) == 0) &&
+				(boardZuRochieren[113] == 0 && boardZuRochieren[114] == 0 && boardZuRochieren[115] == 0) &&
 				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
 				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
 				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
@@ -324,10 +332,10 @@ implements Definitions {
 		//setze en passant zurueck
 		boardNachRochade[125] = -1;
 		//erstelle einen neuen Board-nach-FEN-Encoder und uebergib ihm das Board, wie es nach erfolgter Rochade aussieht 
-		FenEncode fe = new FenEncode();
-		fe.setBoard(boardNachRochade);
+		FenEncode fr = new FenEncode();
+		fr.setBoard(boardNachRochade);
 		//Nimm das zu einem FEN-String encodierte Board und fuege es der Liste der moeglichen Rochaden hinzu
-		moeglicheRochaden.add(fe.getFEN());
+		moeglicheRochaden.add(fr.getFEN());
 	}
 
 	
