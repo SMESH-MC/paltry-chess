@@ -25,6 +25,7 @@ public class ZuggeneratorTest {
 	
 	public void testlauf(){
 		StringBuffer bericht = new StringBuffer();
+		errorLog = new StringBuffer();
 		bericht.append("Testlauf Bauer Weis:\t ");
 		bericht.append( pawnWhiteTestLauf(1,'b') );
 		bericht.append("\nTestlauf Knight black:\t ");
@@ -32,11 +33,300 @@ public class ZuggeneratorTest {
 		bericht.append("\nTestlauf Knight Weis:\t ");
 		bericht.append( knightWhiteTestLauf(1,'b') );
 		
+		bericht.append("\nTestlauf Bishop Weis:\t ");
+		bericht.append( bishopWhiteTestLauf(1,'b') );
+		
+		bericht.append("\nTestlauf Bishop black:\t ");
+		bericht.append( bishopBlackTestLauf(1,'w') );
+		
+		
 		
 		System.out.println(bericht);
 		System.out.println(errorLog);
 	}
 	
+	public boolean test(int zahl ,char farbe){
+		String fen  =  "n7/8/2B1K3/1Q3R2/3n4/1P3B2/2N1P3/7n b KQkq f6 1 1";
+		int nr = 1+ zahl;
+		String restFEN =  " "+farbe+" KQkq - "+nr+" "+nr;
+		generator.setFEN(fen);
+		LinkedList<String> ergebnis = generator.getZuege();
+		boolean testErgebnis = true;
+		
+		if(!  ergebnis.remove((""+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		
+		
+		
+		if(!ergebnis.isEmpty()){
+			testErgebnis = false;
+		}
+		if(!testErgebnis){
+			errorLog.append(ergebnis.toString());
+		}
+		return testErgebnis;
+	}
+	
+	public boolean bishopBlackTestLauf(int zahl ,char farbe){
+		String fen  =  "p6K/1b4p1/6P1/1R3P2/2Bb4/3b4/2K1Q3/pB3Np1 b KQkq f6 6 6";
+		int nr = 6+ zahl;
+		String restFEN =  " "+farbe+" KQkq - "+nr+" "+nr;
+		generator.setFEN(fen);
+		LinkedList<String> ergebnis = generator.getZuege();
+		boolean testErgebnis = true;
+		
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3b2/2Bb4/8/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2Bbb3/8/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2Bb4/8/2K1b3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2bb4/8/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2Bb4/8/2b1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/5bP1/1R3P2/2B5/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R2bP2/2B5/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2B5/3b4/2K1Qb2/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2B5/3bb3/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/bb4p1/6P1/1R3P2/2B5/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/1b4P1/1R3P2/2B5/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1Rb2P2/2B5/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2B5/3b4/1bK1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/1b4p1/6P1/1R3P2/2B5/2bb4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p1b4K/6p1/6P1/1R3P2/2Bb4/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/6p1/6P1/1R3P2/2Bb4/3b4/2K1Q3/pB3Npb"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/6p1/6P1/1R3P2/2Bb4/3b4/2K1Q1b1/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/6p1/6P1/1R3P2/2Bb4/3b1b2/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/6p1/6P1/1R3P2/2Bbb3/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/6p1/6P1/1R1b1P2/2Bb4/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/6p1/2b3P1/1R3P2/2Bb4/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("p6K/6p1/b5P1/1R3P2/2Bb4/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("7K/pb4p1/6P1/1R3P2/2Bb4/3b4/2K1Q3/pB3Np1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		
+		
+		if(!ergebnis.isEmpty()){
+			testErgebnis = false;
+		}
+		if(!testErgebnis){
+			errorLog.append(ergebnis.toString());
+		}
+		return testErgebnis;
+	}
+	public boolean bishopWhiteTestLauf(int zahl ,char farbe){
+		String fen  =  "P6k/1B4P1/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1 w KQkq f6 6 3";
+		int nr = 6+ zahl;
+		String restFEN =  " "+farbe+" KQkq - "+nr+" 3";
+		generator.setFEN(fen);
+		LinkedList<String> ergebnis = generator.getZuege();
+		boolean testErgebnis = true;
+		
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2bB4/3B4/P1k1q3/1b3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2bB4/3B4/2k1q1P1/Pb3n2"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3B2/2bB4/8/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2bBB3/8/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2bB4/8/2k1B3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2BB4/8/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2bB4/8/2B1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/5Bp1/1r3p2/2b5/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r2Bp2/2b5/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2b5/3B4/2k1qB2/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2b5/3BB3/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/BB4P1/6p1/1r3p2/2b5/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/1B4p1/1r3p2/2b5/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1rB2p2/2b5/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2b5/3B4/1Bk1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/1B4P1/6p1/1r3p2/2b5/2BB4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P1B4k/6P1/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/6P1/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nPB"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/6P1/6p1/1r3p2/2bB4/3B4/2k1q1B1/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/6P1/6p1/1r3p2/2bB4/3B1B2/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/6P1/6p1/1r3p2/2bBB3/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/6P1/6p1/1r1B1p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/6P1/2B3p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6k/6P1/B5p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P5Rk/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P5Bk/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P5Nk/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P5Qk/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6R/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6B/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6N/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+		if(!  ergebnis.remove(("P6Q/1B6/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1"+restFEN) ) ){
+			testErgebnis = false;
+			errorLog.append("Fehler:   \n");
+		}
+
+		
+		
+		
+		if(!ergebnis.isEmpty()){
+			testErgebnis = false;
+		}
+		if(!testErgebnis){
+			errorLog.append(ergebnis.toString());
+		}
+		return testErgebnis;
+	}		
 	
 	public boolean knightBlackTestLauf(int zahl ,char farbe){
 		String fen  =  "n7/8/2B1K3/1Q3R2/3n4/1P3B2/2N1P3/7n b KQkq f6 1 1";

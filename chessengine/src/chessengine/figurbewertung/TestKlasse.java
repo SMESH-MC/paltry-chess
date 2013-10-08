@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 import chessengine.tools.*;
 public class TestKlasse {
-/*
+
 
 	public static void main (String[] args){
 			String fen;
@@ -32,7 +32,7 @@ public class TestKlasse {
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/8/p7/PPPP4/3pp3/4pppp/8/RNBQKBNR w KQkq - 0 1";
-			fen = "N6N/8/2b1b3/1b3b2/3N4/1b3b2/2b1b3/N6N w KQkq f6 0 1";
+			fen = "P6k/1B4P1/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1 w KQkq f6 6 3";
 			//enPassannt
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 1";
@@ -71,7 +71,8 @@ public class TestKlasse {
 	
 	public static void fenAusgabe(String ausgabeFen, FenDecoder decoder){
 		Brett ausgabe = decoder.decodiere(ausgabeFen);
-		if(ausgabe != null){
+		
+		  if(ausgabe != null){
 			System.out.println("X||0|1|2|3|4|5|6|7");
 			System.out.println("-------------------");
 			for(int i = 7; i >= 0 ;i--){
@@ -93,8 +94,9 @@ public class TestKlasse {
 			}
 			System.out.println("-------------------");
 		}
+		
 		System.out.println(decoder.toString());
 		System.out.println();
 	}
-	*/
+	
 }
