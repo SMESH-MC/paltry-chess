@@ -16,8 +16,8 @@ public class ZuggeneratorTest {
 	private StringBuffer errorLog = new StringBuffer();
 
 	public static void main (String[] args){
-		 //generator = new MoveGenerator();
-		 generator = new ZugGeneratorPhilip();
+		 generator = new MoveGenerator();
+	   // generator = new ZugGeneratorPhilip();
 		 
 		 ZuggeneratorTest test = new ZuggeneratorTest();
 		 test.testlauf();
@@ -26,18 +26,22 @@ public class ZuggeneratorTest {
 	public void testlauf(){
 		StringBuffer bericht = new StringBuffer();
 		errorLog = new StringBuffer();
+		int hochzeahlen = 0;
+		char w = 'w';
+		char b = 'b';
+		
 		bericht.append("Testlauf Bauer Weis:\t ");
-		bericht.append( pawnWhiteTestLauf(1,'b') );
+		bericht.append( pawnWhiteTestLauf(hochzeahlen,'b') );
 		bericht.append("\nTestlauf Knight black:\t ");
-		bericht.append( knightBlackTestLauf(1,'w') );
+		bericht.append( knightBlackTestLauf(hochzeahlen,b) );
 		bericht.append("\nTestlauf Knight Weis:\t ");
-		bericht.append( knightWhiteTestLauf(1,'b') );
+		bericht.append( knightWhiteTestLauf(hochzeahlen,w) );
 		
 		bericht.append("\nTestlauf Bishop Weis:\t ");
-		bericht.append( bishopWhiteTestLauf(1,'b') );
+		bericht.append( bishopWhiteTestLauf(hochzeahlen,w) );
 		
 		bericht.append("\nTestlauf Bishop black:\t ");
-		bericht.append( bishopBlackTestLauf(1,'w') );
+		bericht.append( bishopBlackTestLauf(hochzeahlen,b) );
 		
 		
 		
