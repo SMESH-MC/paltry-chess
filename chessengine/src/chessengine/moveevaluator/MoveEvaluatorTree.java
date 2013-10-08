@@ -9,8 +9,8 @@ import chessengine.movegenerator.MoveGenerator;
 import chessengine.Board;
 
 /**
+ * Klasse repraesentiert einen Zugbaum.
  * @author Dominik A. Erb
- *
  */
 public class MoveEvaluatorTree {
 
@@ -19,12 +19,20 @@ public class MoveEvaluatorTree {
 	private MoveGenerator movegen;
 	
 	
+        /**
+         * Konstruktor mit aktuellem Board als Parameter.
+         * @param board 
+         */
 	public MoveEvaluatorTree(Board board) {
 		this.root = new MoveEvaluatorTreeNode(board);
 		this.movegen = new MoveGenerator();
 		generateTree();
 	}
 	
+        /**
+         * Getter-Methode fuer die Wurzel des Bauemes.
+         * @return root
+         */
 	public MoveEvaluatorTreeNode getTree() {
 		return root;
 	}
@@ -56,10 +64,18 @@ public class MoveEvaluatorTree {
 		}
 	}
 
+        /**
+         * Getter-Methode fuer die Liste der Kind-Knoten.
+         * @return childList
+         */
 	public LinkedList<MoveEvaluatorTreeNode> getChildList() {
 		return childList;
 	}
 	
+        /**
+         * Methode ermittelt den besten Zug und liefert diesen zurueck.
+         * @return 
+         */
 	public MoveEvaluatorTreeNode getBestMove() {
 		MoveEvaluatorTreeNode parrentNode;
 		MoveEvaluatorTreeNode currentNode;
