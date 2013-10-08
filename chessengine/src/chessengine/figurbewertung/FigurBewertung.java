@@ -10,7 +10,7 @@ import java.util.Stack;
 
 public class FigurBewertung implements FigurBewertungInterface  {
 	
-	private final static int KING_DEFAULT 	=110000;// ITS OVER 9000!!!
+	private final static int KING_DEFAULT 	=110000;
 	private final static int QUEEN_DEFAULT 	=900;
 	private final static int BISHOP_DEFAULT =300;
 	private final static int KNIGHT_DEFAULT =300;

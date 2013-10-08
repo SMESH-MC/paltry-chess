@@ -13,6 +13,13 @@ implements Definitions {
 	private LinkedList<String> 	moeglicheRochaden;
 	
 	/**
+     * Konstruktor, der die auszugebende Liste aller moeglichen Zuege initialisiert
+     */
+    public Rochade0x88() {
+    	moeglicheRochaden = new LinkedList<String>();
+    }
+    
+	/**
 	 * Dieser Setter initialisiert die aktuelle Stellung und prueft dann, welche Rochaden noch durchgefuehrt
 	 * werden duerfen mit anschliessender Uebergabe an die jeweilige Methode zur Durchfuehrung
 	 * 
@@ -24,61 +31,49 @@ implements Definitions {
 	 * board[121, 122, 123, 124] = Bitmarker ( 0 | 1) fuer Rochademoeglichkeiten: K Q k q 
 	 * board[125] =  En-Passant-Feld des letzten Zuges in 0x88-Darstellung (z.B.: 83 = board[83] = D6)
 	 * board[126] = Anzahl der Halbzuege
-	 * board[127] = Zugnummer 
+	 * board[127] = Zugnummer
 	 */
 	public void setSchachbrett(byte[] board) {
-		//Erstelle ein Objekt der Klasse FenEncode
-		FenEncode f1 = new FenEncode();
-		/* Wenn die jeweiligen Rochaden moeglich sind, rufe die dazugehoerige Methode auf und
-		 * uebergib das zurueckgegebene rochierte Board an den FEN-Encoder. Schreibe die ermittelte FEN
-		 * anhschliessend in die Liste der moeglichen Rochaden.
+		/* Wenn die jeweiligen Rochade noch moeglich ist, rufe die der Rochade zugehoerige
+		 * Methode auf uebergib das zurueckgegebene rochierte Board an den FEN-Encoder. Schreibe die ermittelte FEN
+		 * abschliessend in die Liste der moeglichen Rochaden.
 		 */
-		if (board[121] == 1) {f1.setBoard(rochiereKurzWeiss(board)); moeglicheRochaden.addLast(f1.getFEN());}
-		if (board[122] == 1) {f1.setBoard(rochiereLangWeiss(board)); moeglicheRochaden.addLast(f1.getFEN());}
-		if (board[123] == 1) {f1.setBoard(rochiereKurzSchwarz(board)); moeglicheRochaden.addLast(f1.getFEN());}
-		if (board[124] == 1) {f1.setBoard(rochiereLangSchwarz(board)); moeglicheRochaden.addLast(f1.getFEN());}
+		//Wenn Rochade noch moeglich && der Koenig auf seinem EroeffnungsFeld steht && der jeweilige Turm ebenfalls
+		if (board[121] == 1 && board[4] == king_w && board[7] == rook_w) {rochiereKurzWeiss(board);}
+		if (board[122] == 1 && board[4] == king_w && board[0] == rook_w) {rochiereLangWeiss(board);}
+		if (board[123] == 1 && board[116] == king_b && board[119] == rook_b) {rochiereKurzSchwarz(board);}
+		if (board[124] == 1 && board[116] == king_b && board[112] == rook_b) {rochiereLangSchwarz(board);}
 	}
+
 
 	/**
 	 * Diese Methode fuehrt eine kurze Rochade von Weiss durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
 	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
 	 */
-	private byte[] rochiereKurzWeiss(byte[] boardZuRochieren) {
+	private void rochiereKurzWeiss(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (F1 und G1) frei ist
-				((boardZuRochieren[5] | boardZuRochieren[6]) == 0) &&
-				//ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
-				
-				//ueberpruefen, ob das Zielfeld des Turms nicht bedroht wird
-				
-				//ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
-			
-				//legaler Rochaden-Zug (die letzten 3 Punkte zusammengefasst):
+				(boardZuRochieren[5] == 0 && boardZuRochieren[6] == 0) &&
+				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
+				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
+				 */
+				//pruefen, ob ein Rochaden-Zug nach den obigen 3 Punkten erlaubt ist
 				!istRochadeIllegal(boardZuRochieren, true, true) //board, kurze Rochade, weiss am Zug
 				) {
-			byte[] boardNachRochade 
-			
-			
-			/* alte FEN_Rochade
-			
-					String[] newSplittedFEN = splittedFEN.clone();
-					newSplittedFEN[7].replace("K2R", "1RK1");
-					newSplittedFEN[7].replace("11", "2");
-					newSplittedFEN[7].replace("21", "3");
-					newSplittedFEN[7].replace("31", "4");
-					newSplittedFEN[7].replace("41", "5");
-					//Zug ist erledigt
-					//Rochademoeglichkeit entfernen
-					newSplittedFEN[9].replace("K", "");
-					//pruefen ob alle Rochademoeglichkeiten nicht mehr vorhanden sind
-					if (newSplittedFEN[9].equals("")) {
-						newSplittedFEN[9] = "-";
-					}
-					//Uebergabe, um aus fertigem Zug den FEN-String zu basteln
-					String newFEN = setFEN(newSplittedFEN);
-					//fuegt diese berechnete Rochade der Liste der gueltigen Zuege hinzu 
-					outgoingFEN.addLast(newFEN);
-			*/
+			//kopiere das aktuelle Board
+			byte[] boardNachRochade =  boardZuRochieren.clone();
+			//Setze Koenig auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[6] = king_w;
+			boardNachRochade[4] = 0;
+			//Setze Turm auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[5] = rook_w;
+			boardNachRochade[7] = 0;
+			//Moeglichkeiten der weissen Rochade entfernen
+			boardNachRochade[121] = 0;
+			boardNachRochade[122] = 0;
+			//fuege mit allgemeinr Hilfsmethode den Rochaden-Zug zur Liste der moeglichen Rochaden
+			rochadeHinzufuegen(boardNachRochade);
 		}
 	}	
 	
@@ -87,20 +82,95 @@ implements Definitions {
 	 * 
 	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
 	 */
-	private byte[] rochiereLangWeiss(byte[] boardZuRochieren) {
-		if ( //uberpruefen, ob Zwischenraum (F1 und G1) frei ist
-				((boardZuRochieren[1] | boardZuRochieren[2] | boardZuRochieren[3]) == 0)
-				//ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
-				
-				//ueberpruefen, ob das Zielfeld des Turms nicht bedroht wird
-				
-				//ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird
-			
-				) {
-			//rochieren Q
-			
+	private void rochiereLangWeiss(byte[] boardZuRochieren) {
+		if ( //uberpruefen, ob Zwischenraum (B1, C1, D1) frei ist
+				(boardZuRochieren[1] == 0 && boardZuRochieren[2] == 0 && boardZuRochieren[3] == 0) &&
+				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
+				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
+				 */
+				//pruefen, ob ein Rochaden-Zug nach den obigen 3 Punkten erlaubt ist
+				!istRochadeIllegal(boardZuRochieren, false, true) //board, lange Rochade, weiss am Zug
+			) {
+			//kopiere das aktuelle Board
+			byte[] boardNachRochade =  boardZuRochieren.clone();
+			//Setze Koenig auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[2] = king_w;
+			boardNachRochade[4] = 0;
+			//Setze Turm auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[3] = rook_w;
+			boardNachRochade[0] = 0;
+			//Moeglichkeiten der weissen Rochade entfernen
+			boardNachRochade[121] = 0;
+			boardNachRochade[122] = 0;
+			//fuege mit allgemeinr Hilfsmethode den Rochaden-Zug zur Liste der moeglichen Rochaden
+			rochadeHinzufuegen(boardNachRochade);
 		}
-		
+	}
+
+	/**
+	 * Diese Methode fuehrt eine kurze Rochade von Schwarz durch und schreibt diesen Zug in die Liste der moeglichen Zuege
+	 * 
+	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
+	 */
+
+	private void rochiereKurzSchwarz(byte[] boardZuRochieren) {
+		if ( //uberpruefen, ob Zwischenraum (F8 und G8) frei ist
+				(boardZuRochieren[117] == 0 && boardZuRochieren[118] == 0) &&
+				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
+				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
+				 */
+				//pruefen, ob ein Rochaden-Zug nach den obigen 3 Punkten erlaubt ist
+				!istRochadeIllegal(boardZuRochieren, true, false) //board, kurze Rochade, schwarz am Zug
+				) {
+			//kopiere das aktuelle Board
+			byte[] boardNachRochade =  boardZuRochieren.clone();
+			//Setze Koenig auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[118] = king_b;
+			boardNachRochade[116] = 0;
+			//Setze Turm auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[117] = rook_b;
+			boardNachRochade[119] = 0;
+			//Moeglichkeiten der schwarzen Rochade entfernen
+			boardNachRochade[123] = 0;
+			boardNachRochade[124] = 0;
+			//fuege mit allgemeinr Hilfsmethode den Rochaden-Zug zur Liste der moeglichen Rochaden
+			rochadeHinzufuegen(boardNachRochade);
+		}
+	}
+
+	/**
+	 * Diese Methode fuehrt eine lange Rochade von Schwarz durch und schreibt diesen Zug in die Liste der moeglichen Zuege
+	 * 
+	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
+	 */
+
+	private void rochiereLangSchwarz(byte[] boardZuRochieren) {
+		if ( //uberpruefen, ob Zwischenraum (B8, C8, D8) frei ist
+				(boardZuRochieren[113] == 0 && boardZuRochieren[114] == 0 && boardZuRochieren[115] == 0) &&
+				/* ueberpruefen, ob das Startfeld des Koenigs nicht bedroht wird ("im Schach steht")
+				 * ueberpruefen, ob das Zielfeld des Turms (= das Feld, ueber das der Koenig ziehen muss) nicht bedroht wird 
+				 * ueberpruefen, ob das Zielfeld des Koenigs nicht bedroht wird 
+				 */
+				//pruefen, ob ein Rochaden-Zug nach den obigen 3 Punkten erlaubt ist
+				!istRochadeIllegal(boardZuRochieren, false, false) //board, lange Rochade, schwarz am Zug
+			) {
+			//kopiere das aktuelle Board
+			byte[] boardNachRochade =  boardZuRochieren.clone();
+			//Setze Koenig auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[114] = king_b;
+			boardNachRochade[116] = 0;
+			//Setze Turm auf sein Zielfeld und leere sein Startfeld
+			boardNachRochade[115] = rook_b;
+			boardNachRochade[112] = 0;
+			//Moeglichkeiten der schwarzen Rochade entfernen
+			boardNachRochade[123] = 0;
+			boardNachRochade[124] = 0;
+			//fuege mit allgemeinr Hilfsmethode den Rochaden-Zug zur Liste der moeglichen Rochaden
+			rochadeHinzufuegen(boardNachRochade);
+		}	}
+
 	/**
 	 * Diese Methode prueft, ob der Koenig im Schach steht, ins Schach rochieren wuerde oder
 	 * ueber ein bedrohtes Feld rochieren muesste
@@ -144,94 +214,135 @@ implements Definitions {
 	 * @return	true = Zielfeld wird bedroht
 	 */ 
 	private boolean wirdBedroht(byte[] board, byte zielFeld, boolean weissAmZug) {
-			if (weissAmZug) {
-				//fuer alle gueltigen Felder des Boards
-				for (int i=0; i<=119 ; i++) {
-					if ((i & 136) == 0) {
-						switch (board[i]) {
-						/*
-						 * Hinweis: fuer i-b kann der Wert negativ werden. Da jedoch mit dem stets positiven 
-						 * zielFeld verglichen wird, ist dies unerheblich, da das Vergleichsergebnis auch im 
-						 * negativen Fall dann ungleich zielFeld ist.
-						 */
-						//addiere das Feld, auf dem der Bauer steht, mit seinen moegliche Schlagzuegen und
-						//gib true aus, wenn er auf das Zielfeld schlagen kann
-						case pawn_b  :	for (byte b : pawn_attack_moves) {if (i - b == zielFeld){return true;} }
-							break;
-						//addiere das Feld, auf dem der Springer steht, mit seinen moegliche Schlagzuegen und
-						//gib true aus, wenn er auf das Zielfeld schlagen kann
-						case knight_b: 	for (byte b : knight_moves) {if (i - b == zielFeld){return true;} }
-							break;
-						case queen_b : 	slidingZug(queen_moves, (byte)i, board, zielFeld, true);
-							break;
-						case bishop_b: 	slidingZug(bishop_moves, (byte)i, board, zielFeld, true);
-							break;
-						case rook_b : 	slidingZug(rook_moves, (byte)i, board, zielFeld, true);
-							break;
-						//addiere das Feld, auf dem der Koenig steht, mit seinen moegliche Schlagzuegen und
-						//gib true aus, wenn er auf das Zielfeld schlagen kann
-						case king_b : 	for (byte b : king_moves) {if (i - b == zielFeld){return true;} }
-							break;
-						}//endswitch
-					}//endif
-				}//endfor
-				//wenn keine Bedrohung gefunden wurde, gibt false zurueck
-				return false;
-			} else { //Schwarz ist am Zug
-				//fuer alle gueltigen Felder des Boards
-				for (int i=0; i<=119; i++) {
+		if (weissAmZug) {
+			//fuer alle gueltigen Felder des Boards
+			for (int i=0; i<=119 ; i++) {
+				if ((i & 136) == 0) {
+					switch (board[i]) {
 					/*
-					 * Hinweis: fuer i+b kann der Wert über Byte.MAX steigen und wird daher negativ.
-					 * Da jedoch mit dem stets positiven zielFeld verglichen wird, ist dies unerheblich,
-					 * da das Vergleichsergebnis auch im negativen Fall dann ungleich zielFeld ist.
+					 * Hinweis: fuer i-b kann der Wert negativ werden. Da jedoch mit dem stets positiven 
+					 * zielFeld verglichen wird, ist dies unerheblich, da das Vergleichsergebnis auch im 
+					 * negativen Fall dann ungleich zielFeld ist.
 					 */
-					if  ((i & 136) == 0) {
-						switch (board[i]) {
-						case pawn_w 	: 
-							break;
-						case knight_w 	: 
-							break;
-						case queen_w 	: 
-							break;
-						case bishop_w 	: 
-							break;
-						case rook_w 	: 
-							break;
-						case king_w 	: 
-							break;
-						}
+					//addiere das Feld, auf dem ein schwarzer Bauer steht, mit seinen moegliche Schlagzuegen und
+					//gib true aus, wenn er auf das Zielfeld schlagen kann
+					case pawn_b  :	for (byte b : pawn_attack_moves_b) {if (i - b == zielFeld){return true;} }
+						break;
+					//addiere das Feld, auf dem ein schwarzer Springer steht, mit seinen moegliche Schlagzuegen und
+					//gib true aus, wenn er auf das Zielfeld schlagen kann
+					case knight_b: 	for (byte b : knight_moves) {if (i - b == zielFeld){return true;} }
+						break;
+					//berechne mit Hilfsmethode, ob schwarze Dame das Zielfeld schlagen koennte und gib, falls ja, true aus  
+					case queen_b : 	if (slidingZug(queen_moves, (byte)i, board, zielFeld)) {return true;};
+						break;
+					//berechne mit Hilfsmethode, ob schwarzer Laeufer das Zielfeld schlagen koennte und gib, falls ja, true aus
+					case bishop_b: 	if (slidingZug(bishop_moves, (byte)i, board, zielFeld)) {return true;};
+						break;
+					//berechne mit Hilfsmethode, ob schwarzer Turm das Zielfeld schlagen koennte und gib, falls ja, true aus						
+					case rook_b : 	if (slidingZug(rook_moves, (byte)i, board, zielFeld)) {return true;};
+						break;
+					//addiere das Feld, auf dem der schwarze Koenig steht, mit seinen moegliche Schlagzuegen und
+					//gib true aus, wenn er auf das Zielfeld schlagen kann
+					case king_b : 	for (byte b : king_moves) {if (i - b == zielFeld){return true;} }
+						break;
+					default : break; //mache in allen anderen Faellen nichts
+					}//endswitch
+				}//endif
+			}//endfor
+		} else { //Schwarz ist am Zug
+			//fuer alle gueltigen Felder des Boards
+			for (int i=0; i<=119; i++) {
+				if  ((i & 136) == 0) {
+				/*
+				 * Hinweis: fuer i+b kann der Wert über Byte.MAX steigen und wird daher negativ (Ueberlauf).
+				 * Da jedoch mit dem stets positiven zielFeld verglichen wird, ist dies unerheblich,
+				 * da das Vergleichsergebnis auch im negativen Fall dann ungleich zielFeld ist.
+				 */
+					switch (board[i]) {
+					//addiere das Feld, auf dem ein weisser Bauer steht, mit seinen moegliche Schlagzuegen und
+					//gib true aus, wenn er auf das Zielfeld schlagen kann
+					case pawn_w  :	for (byte b : pawn_attack_moves_w) {if (i + b == zielFeld){return true;} }
+						break;
+					//addiere das Feld, auf dem ein weisser Springer steht, mit seinen moegliche Schlagzuegen und
+					//gib true aus, wenn er auf das Zielfeld schlagen kann
+					case knight_w: 	for (byte b : knight_moves) {if (i + b == zielFeld){return true;} }
+						break;
+					//berechne mit Hilfsmethode, ob weisse Dame das Zielfeld schlagen koennte und gib, falls ja, true aus  
+					case queen_w : 	if (slidingZug(queen_moves, (byte)i, board, zielFeld)) {return true;};
+						break;
+					//berechne mit Hilfsmethode, ob weisser Laeufer das Zielfeld schlagen koennte und gib, falls ja, true aus
+					case bishop_w: 	if (slidingZug(bishop_moves, (byte)i, board, zielFeld)) {return true;};
+						break;
+					//berechne mit Hilfsmethode, ob weisser Turm das Zielfeld schlagen koennte und gib, falls ja, true aus						
+					case rook_w : 	if (slidingZug(rook_moves, (byte)i, board, zielFeld)) {return true;};
+						break;
+					//addiere das Feld, auf dem der weisse Koenig steht, mit seinen moegliche Schlagzuegen und
+					//gib true aus, wenn er auf das Zielfeld schlagen kann
+					case king_w : 	for (byte b : king_moves) {if (i + b == zielFeld){return true;} }
+						break;
+					default : break; //mache in allen anderen Faellen nichts
 					}
 				}
-				wirdBedroht = true;
+				
 			}
-			return wirdBedroht;
+			
 		}
+		//wenn keine Bedrohung gefunden wurde, gibt false zurueck
+		return false;
+	}
 
 		
 	/**
 	 * Hilfsmethode zur Schleifenberechnung von Figuren, die beliebig viele Felder ziehen duerfen
 	 * 
+	 * @return true = Figur vom Startfeld bedroht das Zielfeld
+	 */
+	private boolean slidingZug(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld) {
+		//Initialisierung der return-Variable (true = zielfeld kann mit erlaubteZuege von startfeld aus erreicht werden) 
+		boolean zielfeldSchlagbar = false;
+		
+		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
+		for (byte b : erlaubteZuege) {
+			//berechne das naechste moegliche Zielfeld von startfeld ausgehend
+			int nextFeld = startfeld + b; 
+			//wenn dieses naechste moegliche Zielfeld ein gueltiges Feld ist
+			if ((nextFeld & 136) == 0) {
+				if (nextFeld == zielfeld) { //wenn dieses naechste moegliche Zielfeld das uebergebene, zu ueberpruefende zielfeld ist 
+					return true;	//gib zurueck, dass zielfeld erreicht werden kann
+				} else { //wenn das naechste moegliche Zielfeld nicht das uebergebene, zu ueberpruefende zielfeld ist
+					//wenn dieses naechste moegliche Zielfeld frei ist
+					if (board[zielfeld] == 0) {
+						//setze die durchgefuehrte Schrittrichtung als einzigen erlaubten Zug in ein Array
+						byte[] zugrichtung = {b};																
+						//uebergib diese Zugrichtung nochmals der Methode mit dem neuen Startfeld, das jetzt eine Schrittweite weiter liegt
+						zielfeldSchlagbar = slidingZug(zugrichtung, (byte)nextFeld, board, (byte)zielfeld);											
+					}
+				}
+			}
+		}
+		return zielfeldSchlagbar;
+	}
+	
+	/**
+	 * Hilfsmethode, die einen Rochaden-Zug zu der Liste der moeglichen Rochaden-Zuege hinzufuegt
+	 * 
+	 * @param 
+	 */
+	private void rochadeHinzufuegen(byte[] boardNachRochade) {
+		//setze en passant zurueck
+		boardNachRochade[125] = -1;
+		//erstelle einen neuen Board-nach-FEN-Encoder und uebergib ihm das Board, wie es nach erfolgter Rochade aussieht 
+		FenEncode fr = new FenEncode();
+		fr.setBoard(boardNachRochade);
+		//Nimm das zu einem FEN-String encodierte Board und fuege es der Liste der moeglichen Rochaden hinzu
+		moeglicheRochaden.add(fr.getFEN());
+	}
+
+	
+	/**
+	 * 
 	 * @return
 	 */
-	private boolean slidingZug(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld, boolean weissAmZug) {
-		if (weissAmZug) {
-			for (byte b : erlaubteZuege) {
-				//gehe eine 1 Feld in die Schrittrichtung
-				int feldNachSchritt = startfeld + b;
-				do {//gebe true aus, wenn das erreichte Feld das zu ueberpruefende Zielfeld ist
-					if (feldNachSchritt == zielfeld) {return true;}
-					//gehe ansonsten 1 Feld in Schrittrichtung weiter
-					feldNachSchritt -= b;
-				} while (board[feldNachSchritt] == 0);	//solang das erreichte Schrittfeld leer ist,
-													//d.h. die Figur weiterziehen kann
-			}
-		} else { //schwarz am Zug 
-			
-		
-		}
-		return false;
-	}
-		
 	public LinkedList<String> getZuege() {
 		return moeglicheRochaden;
 	}

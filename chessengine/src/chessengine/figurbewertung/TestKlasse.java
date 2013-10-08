@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 import chessengine.tools.*;
 public class TestKlasse {
-
+/*
 
 	public static void main (String[] args){
 			String fen;
@@ -96,4 +96,5 @@ public class TestKlasse {
 		System.out.println(decoder.toString());
 		System.out.println();
 	}
+	*/
 }
