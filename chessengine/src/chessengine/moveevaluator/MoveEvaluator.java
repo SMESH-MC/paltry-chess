@@ -3,6 +3,10 @@ package chessengine.moveevaluator;
 import chessengine.movegenerator.MoveGenerator;
 import chessengine.Board;
 
+/**
+ * ToDo Kommentar ergaenzen
+ * @author 
+ */
 public class MoveEvaluator {
 	//Variablendefinitionen
 	private Board currentBoard;
@@ -19,11 +23,17 @@ public class MoveEvaluator {
 	public String IncomingFEN;
 	public String OutgoingFEN;
 	
+        /**
+         * Methode stoesst das aufbauen des Zugbaumes an.
+         */
 	public void getMove() {
 		moveTree = new MoveEvaluatorTree(currentBoard);
 		zugBewerten();
 	}
 	
+        /**
+         * ToDo Kommentar ergaenzen
+         */
 	private void zugBewerten() {
 		int max;
 		int min;
