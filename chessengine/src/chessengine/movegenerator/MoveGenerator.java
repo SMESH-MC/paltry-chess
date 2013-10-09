@@ -29,9 +29,9 @@ implements MoveGeneratorInterface, Definitions {
     }
     
     /**
+     * Hauptmethode der Klasse, die die Erstellung der Liste aller erlaubten Zuege anstoeﬂt
      * 
-     * 
-     * @param Die aktuelle Stellung des Schachbretts als FEN-String
+     * @param aktuelleFEN Die aktuelle Stellung des Schachbretts als FEN-String
      */
     public void setFEN(String aktuelleFEN) {
 		//Erstellt ein Objekt der Klasse FenDecode
@@ -53,6 +53,7 @@ implements MoveGeneratorInterface, Definitions {
     
 
 	/**
+	 * Diese Methode ruft fuer jede Figur die dazu passende Zug-Methode auf
 	 * 
 	 * @param	board	Die aktuelle Stellung, aus der alle normalen Zuege (ohne Sonderzuege) berechnet werden sollen
 	 */
@@ -102,8 +103,9 @@ implements MoveGeneratorInterface, Definitions {
 	/** 
 	 * Diese Hilfsmethode setzt die Rochadenmoeglichkeit vor dem Zug eines Turms zurueck
 	 * 
-	 * @param startfeld
-	 * @param weissAmZug
+	 * @param startfeld	Das uebergebene Startfeld des Turms
+	 * @param board	Die aktuelle Stellung als 0x88-Board
+	 * @return	das aktualisierte board mit eventuell deaktivierter Rochaden-Erlaubnis
 	 */
 
 	private byte[] keineRochadeMehr(byte[] board, byte startfeld) {
@@ -121,10 +123,10 @@ implements MoveGeneratorInterface, Definitions {
 	/**
 	 * Diese Methode berechnet Zuege fuer Sliding Pieces (Figuren, die eine beliebige Anzahl an Feldern ziehen duerfen)
 	 * 
-	 * @param board
-	 * @param startfeld
-	 * @param weissAmZug
-	 * @param erlaubteZuege
+	 * @param board	Die aktuelle Stellung als 0x88-Board
+	 * @param startfeld Das uebergebene Startfeld der zu berechnenden Figur
+	 * @param weissAmZug Die Farbe am Zug, true = weiss
+	 * @param erlaubteZuege Die erlaubten Schritt
 	 */
 	private void berechneSlidingZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
 		//setze en passant zurueck
@@ -196,10 +198,10 @@ implements MoveGeneratorInterface, Definitions {
 	/**
 	 * Bauernzug mit Schrittlaenge 1
 	 * 
-	 * @param board
-	 * @param startfeld
-	 * @param weissAmZug
-	 * @param erlaubteZuege	
+	 * @param board	Die aktuelle Stellung als 0x88-Board
+	 * @param startfeld Das uebergebene Startfeld der zu berechnenden Figur
+	 * @param weissAmZug Die Farbe am Zug, true = weiss
+	 * @param erlaubteZuege Die erlaubten Schritte der Figur
 	 */
 	private void berechneZugBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
 		byte[] neuesBoard = board.clone();
@@ -225,10 +227,10 @@ implements MoveGeneratorInterface, Definitions {
 	/**
 	 * Doppelzug Bauern hardcoded
 	 * 
-	 * @param board
-	 * @param startfeld
-	 * @param weissAmZug
-	 * @param erlaubteZuege	wird nicht benutzt
+	 * @param board	Die aktuelle Stellung als 0x88-Board
+	 * @param startfeld Das uebergebene Startfeld der zu berechnenden Figur
+	 * @param weissAmZug Die Farbe am Zug, true = weiss
+	 * @param erlaubteZuege Die erlaubten Schritte der Figur
 	 */
 	private void berechne2ZugBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
 		byte[] neuesBoard = board.clone();
@@ -268,10 +270,10 @@ implements MoveGeneratorInterface, Definitions {
 	/**
 	 * Schlagzug eines Bauern
 	 * 
-	 * @param board
-	 * @param startfeld
-	 * @param weissAmZug
-	 * @param erlaubteZuege
+	 * @param board	Die aktuelle Stellung als 0x88-Board
+	 * @param startfeld Das uebergebene Startfeld der zu berechnenden Figur
+	 * @param weissAmZug Die Farbe am Zug, true = weiss
+	 * @param erlaubteZuege Die erlaubten Schritte der Figur
 	 */
 	private void berechneSchlagBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
 		
@@ -388,10 +390,10 @@ implements MoveGeneratorInterface, Definitions {
 	/**
 	 * Diese Methode berechnet den Zug eines Koenigs
 	 * 
-	 * @param board
-	 * @param startfeld
-	 * @param weissAmZug
-	 * @param erlaubteZuege
+	 * @param board	Die aktuelle Stellung als 0x88-Board
+	 * @param startfeld Das uebergebene Startfeld der zu berechnenden Figur
+	 * @param weissAmZug Die Farbe am Zug, true = weiss
+	 * @param erlaubteZuege Die erlaubten Schritte der Figur
 	 */
 	private void berechneZugKing(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
 		byte[] neuesBoard = board.clone();
@@ -423,7 +425,7 @@ implements MoveGeneratorInterface, Definitions {
 	/**
 	 * Hilfsmethode, die einen Zug zu der Liste der Zuege hinzufuegt
 	 * 
-	 * @param 
+	 * @param board Das aktuelle Board in 0x88-Darstellung
 	 */
 	private void zugHinzufuegen(byte[] board) {
 		FenEncode fe = new FenEncode();

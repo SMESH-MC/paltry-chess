@@ -55,6 +55,7 @@ implements Definitions {
 	
 	/**
 	 * getter fuer die fertige FEN
+	 * 
 	 * @return	Der fertig zusammengesetzte FEN-String
 	 */
 	public String getFEN() {
@@ -107,7 +108,7 @@ implements Definitions {
 	/**
 	 * Hilfsmethode, die aus dem enPassantFeld in 0x88-Darstellung die EnPassant-Info in FEN ausgibt
 	 * 
-	 * @param enPassantFeld	Das Feld in 0x88-Darstellung (z.B. 86), das im letzten Zug von einem Bauer uebersprungen wurde
+	 * @param enPassant0x88	Das Feld in 0x88-Darstellung (z.B. 86), das im letzten Zug von einem Bauer uebersprungen wurde
 	 * @return	En Passant-Feld in FEN
 	 */
 	private String enPassant(byte enPassant0x88) {
