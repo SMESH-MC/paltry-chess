@@ -1,0 +1,23 @@
+r3k2r/p2P3p/8/8/8/8/P2p3P/R3K2R w Qq - 2 2 - ursprungFen
+r3k2r/p2P3p/8/8/8/8/P2p3P/3RK2R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2p3P/2R1K2R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2p3P/1R2K2R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2pK2P/R6R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2p3P/R4K1R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2p3P/R2K3R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2p1K1P/R6R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2K3P/R6R b q - 3 2
+r3k2r/p2P3p/8/8/8/8/P2p3P/R3KR2 b Qq - 3 2
+r3k2r/p2P3p/8/8/8/8/P2p3P/R3K1R1 b Qq - 3 2
+r3k2r/p2P3p/8/8/P7/8/3p3P/R3K2R b Qq a2 3 2
+r3k2r/p2P3p/8/8/8/P7/3p3P/R3K2R b Qq - 3 2
+r3k2r/p2P3p/8/8/7P/8/P2p4/R3K2R b Qq h2 3 2
+r3k2r/p2P3p/8/8/8/7P/P2p4/R3K2R b Qq - 3 2
+r2Rk2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2
+r2Bk2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2
+r2Nk2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2
+r2Qk2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2
+r3R2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2
+r3B2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2
+r3N2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2
+r3Q2r/p6p/8/8/8/8/P2p3P/R3K2R b Qq - 3 2

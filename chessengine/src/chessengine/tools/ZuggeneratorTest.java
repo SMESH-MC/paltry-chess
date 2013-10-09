@@ -18,6 +18,7 @@ public class ZuggeneratorTest {
 
 	private static MoveGeneratorInterface generator;
 	private StringBuffer errorLog = new StringBuffer();
+	private StringBuffer bericht = new StringBuffer();
 	private int hochzeahlen ;
 	private char w ;
 	private char b ;
@@ -25,60 +26,68 @@ public class ZuggeneratorTest {
 	private boolean ishochzeahlen;
 	
 	public static void main (String[] args){
-		generator = new MoveGenerator();
-	    //generator = new ZugGeneratorPhilip();
-		 
+
 		 ZuggeneratorTest test = new ZuggeneratorTest();
 		 test.testlauf();
 	}
 	
 	public void testlauf(){
-		StringBuffer bericht = new StringBuffer();
-		LinkedList<ProtokollSegment> protokoll;
+		bericht = new StringBuffer();
 		errorLog = new StringBuffer();
 
+		generator = new MoveGenerator();
+	    //generator = new ZugGeneratorPhilip();
 		farbwechsel = false;
 		ishochzeahlen = false;
+
+		teste("Testlauf Bauer Weis: ","pawnwhite.txt");
+		teste("Testlauf Bauer black:","pawnblack.txt");
+
+		teste("Testlauf Knight Weis:","knightwhite.txt");
 		
-		bericht.append("Testlauf Bauer Weis:\t ");
-		protokoll = testProtokollEinlesen("pawnwhite.txt");
-		bericht.append(testDurchlauf( protokoll ));
+		teste("Testlauf Knight Black:","knightblack.txt");
+		teste("Testlauf Bishop Weis:","bishopwhite.txt");
+		teste("Testlauf Bishop black:","bishopblack.txt");
+		teste("Testlauf Rook white:","rookwhite.txt");
+		teste("Testlauf Rook black:","rookblack.txt");
+		teste("Testlauf Queen white:","queenwhite.txt");
+		teste("Testlauf Queen black:","queenblack.txt");
 		
-		bericht.append("\nTestlauf Knight Weis:\t ");
-		protokoll = testProtokollEinlesen("knightwhite.txt");
-		bericht.append(testDurchlauf( protokoll ));
+		teste("Testlauf Rochade+Koenig b:","rochadeblack.txt");
+		teste("Testlauf Rochade+Koenig b1:","rochadeblack1.txt");
+		teste("Testlauf Rochade+Koenig b2:","rochadeblack2.txt");
+		teste("Testlauf Rochade+Koenig b3:","rochadeblack3.txt");
+		teste("Testlauf Rochade+Koenig b4:","rochadeblack4.txt");
+		teste("Testlauf Rochade+Koenig w:","rochadewhite.txt");
+		teste("Testlauf Rochade+Koenig w1:","rochadewhite1.txt");
+		teste("Testlauf Rochade+Koenig w2:","rochadewhite2.txt");
+		teste("Testlauf Rochade+Koenig w3:","rochadewhite3.txt");
+		teste("Testlauf Rochade+Koenig w4:","rochadewhite4.txt");
 		
-		bericht.append("\nTestlauf Knight Black:\t ");
-		protokoll = testProtokollEinlesen("knightblack.txt");
-		bericht.append(testDurchlauf( protokoll ));
-		
-		bericht.append("\nTestlauf Bishop Weis:\t ");
-		protokoll = testProtokollEinlesen("bishopwhite.txt");
-		bericht.append(testDurchlauf( protokoll ));
-		
-		bericht.append("\nTestlauf Bishop black:\t ");
-		protokoll = testProtokollEinlesen("bishopblack.txt");
-		bericht.append(testDurchlauf( protokoll ));
-		
-		bericht.append("\nTestlauf Rook white:\t ");
-		protokoll = testProtokollEinlesen("rookwhite.txt");
-		bericht.append(testDurchlauf( protokoll ));
-		
-		bericht.append("\nTestlauf Rook black:\t ");
-		protokoll = testProtokollEinlesen("rookblack.txt");
-		bericht.append(testDurchlauf( protokoll ));
-		
-		bericht.append("\nTestlauf Queen white:\t ");
-		protokoll = testProtokollEinlesen("queenwhite.txt");
-		bericht.append(testDurchlauf( protokoll ));
-		
-		bericht.append("\nTestlauf Queen black:\t ");
-		protokoll = testProtokollEinlesen("queenblack.txt");
-		bericht.append(testDurchlauf( protokoll ));
 		
 		System.out.println(bericht);
 		System.out.println(errorLog);
 	}
+	public void teste(String text,String pfad){
+		LinkedList<ProtokollSegment> protokoll;
+		
+		try
+		{
+			bericht.append("\n"+text+"\t ");
+			protokoll = testProtokollEinlesen(pfad);
+			bericht.append(testDurchlauf( protokoll ,text));
+		}
+		catch ( Exception e )
+		{
+		  bericht.append(" FEHLERHAFT ");
+		  bericht.append(":"+e);
+		  //System.err.printf(""+e+"\n");                 
+		}
+		
+
+		
+	}
+	
 	public LinkedList<ProtokollSegment> testProtokollEinlesen(String filename){
 			String zeile = null;
 			String ausgangsFen ;
@@ -140,7 +149,7 @@ public class ZuggeneratorTest {
 	}
 	
 	
-	public boolean testDurchlauf(LinkedList<ProtokollSegment> protokoll){
+	public boolean testDurchlauf(LinkedList<ProtokollSegment> protokoll, String text){
 		String fen="";
 		fen = protokoll.pop().getFen();
 		
@@ -156,7 +165,7 @@ public class ZuggeneratorTest {
 			meldung = protokoll.pop().getMeldung();
 			if(!  ergebnis.remove(suchFen  )){
 				testErgebnis = false;
-				errorLog.append("Fehler:  "+suchFen+":"+meldung+" \n");
+				errorLog.append("Fehler in "+text+":  "+suchFen+":"+meldung+" \n");
 			}
 		}
 		
