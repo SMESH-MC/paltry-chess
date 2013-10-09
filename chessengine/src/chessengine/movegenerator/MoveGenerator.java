@@ -98,19 +98,6 @@ implements MoveGeneratorInterface, Definitions {
 		}
 	}
 	
-	/**
-	 * Diese Methode berechnet einen En-Passant-Schlag 
-	 * 
-	 * @param board
-	 * @param startfeld
-	 * @param weissAmZug
-	 * @param erlaubteZuege
-	 */
-	private void enPassantSchlag(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
-		for (byte b : erlaubteZuege) {
-			
-		}
-	}
 
 	/** 
 	 * Diese Hilfsmethode setzt die Rochadenmoeglichkeit vor dem Zug eines Turms zurueck
