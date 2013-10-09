@@ -4,7 +4,7 @@ import chessengine.movegenerator.MoveGenerator;
 import chessengine.Board;
 
 /**
- * ToDo Kommentar ergaenzen
+ * TODO Kommentar ergaenzen
  * @author 
  */
 public class MoveEvaluator {
@@ -32,7 +32,7 @@ public class MoveEvaluator {
 	}
 	
         /**
-         * ToDo Kommentar ergaenzen
+         * TODO Kommentar ergaenzen
          */
 	private void zugBewerten() {
 		int max;
