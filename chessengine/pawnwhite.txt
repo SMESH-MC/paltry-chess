@@ -5,8 +5,8 @@
 2nRn3/P2P3P/8/4PpP1/5PP1/1nPp1P1B/P5P1/8 b KQkq - 1 1    - schlag links
 2nRn3/P2P3P/8/4PpP1/5PP1/1nnp1PPB/P2P4/8 b KQkq - 1 1    - 1vor
 2nRn3/P2P3P/8/4PPP1/5P2/1nnp1P1B/P2P2P1/8 b KQkq - 1 1   - schlag links
-2nRn3/P2P3P/5P2/6P1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - 1vor
-2nRn3/P2P3P/4P3/5pP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1 - enpassant  rechts
+2nRn3/P2P3P/5P2/6P1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - enpassant  rechts
+2nRn3/P2P3P/4P3/5pP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1 - 1vor 
 2nRn3/P2P3P/5P2/4P3/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - enpassant  links
 2nRn3/P2P3P/6P1/4Pp2/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1 - 1vor
 R1nRn3/3P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor r 
