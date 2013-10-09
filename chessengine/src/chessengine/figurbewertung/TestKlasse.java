@@ -32,7 +32,7 @@ public class TestKlasse {
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
 			//fen =  "rnbkqbnr/8/p7/PPPP4/3pp3/4pppp/8/RNBQKBNR w KQkq - 0 1";
-			fen = "P6k/1B4P1/6p1/1r3p2/2bB4/3B4/2k1q3/Pb3nP1 w KQkq f6 6 3";
+			fen = "2nRn3/P2P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 w KQkq f6 0 1";
 			//enPassannt
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 1";
@@ -49,6 +49,7 @@ public class TestKlasse {
 		for(int i = 0 ;i < durchlaeufe;i++){
 			
 			FigurBewertungInterface figuren= new FigurBewertung();
+			//MoverGeneratorInterface figuren= new MoveGenerator();
 			SchachPosition position = new SchachPosition(0,0);
 		
 			System.out.println("Alle Zuege fur farbe am Zug---------------------------------------");
@@ -57,6 +58,7 @@ public class TestKlasse {
 			while(liste2.isEmpty() == false){
 			
 				fenAusgabe(liste2.pop(),decoder );
+				
 			}
 			//System.out.print(".");
 		}
@@ -71,7 +73,8 @@ public class TestKlasse {
 	
 	public static void fenAusgabe(String ausgabeFen, FenDecoder decoder){
 		Brett ausgabe = decoder.decodiere(ausgabeFen);
-		
+		/*
+		  System.out.println();
 		  if(ausgabe != null){
 			System.out.println("X||0|1|2|3|4|5|6|7");
 			System.out.println("-------------------");
@@ -92,11 +95,12 @@ public class TestKlasse {
 				}
 				System.out.println();
 			}
+			
+			
 			System.out.println("-------------------");
 		}
-		
-		System.out.println(decoder.toString());
-		System.out.println();
+		*/
+	    System.out.println(decoder.toString());
 	}
 	
 }

@@ -1,0 +1,29 @@
+2nRn3/P2P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 w KQkq f6 0 1 - ursprungFen
+2nRn3/P2P3P/8/4PpP1/P4PP1/1nnp1P1B/3P2P1/8 b KQkq a2 1 1 - 2vor
+2nRn3/P2P3P/8/4PpP1/5PP1/Pnnp1P1B/3P2P1/8 b KQkq - 1 1   - 1vor
+2nRn3/P2P3P/8/4PpP1/5PP1/1Pnp1P1B/3P2P1/8 b KQkq - 1 1   - schlag rechts
+2nRn3/P2P3P/8/4PpP1/5PP1/1nPp1P1B/P5P1/8 b KQkq - 1 1    - schlag links
+2nRn3/P2P3P/8/4PpP1/5PP1/1nnp1PPB/P2P4/8 b KQkq - 1 1    - 1vor
+2nRn3/P2P3P/8/4PPP1/5P2/1nnp1P1B/P2P2P1/8 b KQkq - 1 1   - schlag links
+2nRn3/P2P3P/5P2/6P1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - 1vor
+2nRn3/P2P3P/4P3/5pP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1 - enpassant  rechts
+2nRn3/P2P3P/5P2/4P3/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - enpassant  links
+2nRn3/P2P3P/6P1/4Pp2/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1 - 1vor
+R1nRn3/3P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor r 
+B1nRn3/3P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor b 
+N1nRn3/3P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor n 
+Q1nRn3/3P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor q
+2nRR3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1    - promototion vor rechts r
+2nRB3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1    - promototion vor rechts b
+2nRN3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor rechts n	  
+2nRQ3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor rechts q
+2RRn3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor links r
+2BRn3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1 - promototion vor links b
+2NRn3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor links n
+2QRn3/P6P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor links q
+2nRn2R/P2P4/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor r
+2nRn2B/P2P4/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor b
+2nRn2N/P2P4/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor n
+2nRn2Q/P2P4/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - promototion vor q
+2n1R3/P2P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - rook rechts
+2R1n3/P2P3P/8/4PpP1/5PP1/1nnp1P1B/P2P2P1/8 b KQkq - 1 1  - rook links
