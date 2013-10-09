@@ -177,7 +177,8 @@ implements Definitions {
 	 * 
 	 * @param	board			Die Stellung, von der aus die Rochade ueberprueft werden soll
 	 * @param	kurzeRochade	true = kurze Rochade, false = lange Rochade
-	 * @return	weissAmZug		true = weiss am Zug, false = schwarz am Zug
+	 * @param	weissAmZug		true = weiss am Zug, false = schwarz am Zug
+	 * @return true = eines der drei Felder, die bei einer Rochade mit em Koenig zu tun haben, wird bedroht
 	 */
 	private boolean istRochadeIllegal(byte[] board, boolean kurzeRochade, boolean weissAmZug) {
 		boolean rochadeIstIllegal = false;
@@ -295,6 +296,10 @@ implements Definitions {
 	/**
 	 * Hilfsmethode zur Schleifenberechnung von Figuren, die beliebig viele Felder ziehen duerfen
 	 * 
+	 * @param	erlaubteZuege	Die moeglichen Schritte der Figur
+	 * @param	startfeld	Das Startfeld der Figur
+	 * @param	board	Die aktuelle Stellung als 0x88-Board
+	 * @param	zielfeld	Das zu ueberpruefende Zielfeld
 	 * @return true = Figur vom Startfeld bedroht das Zielfeld
 	 */
 	private boolean slidingZug(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld) {
@@ -326,7 +331,7 @@ implements Definitions {
 	/**
 	 * Hilfsmethode, die einen Rochaden-Zug zu der Liste der moeglichen Rochaden-Zuege hinzufuegt
 	 * 
-	 * @param 
+	 * @param boardNachRochade	Das uebergebene Board nach der Rochade in 0x88-Darstellung
 	 */
 	private void rochadeHinzufuegen(byte[] boardNachRochade) {
 		//setze en passant zurueck
@@ -340,8 +345,9 @@ implements Definitions {
 
 	
 	/**
+	 * Dieser getter gibt die Liste der moeglichen Zuege zurueck
 	 * 
-	 * @return
+	 * @return Die Liste aller moeglichen Zuege
 	 */
 	public LinkedList<String> getZuege() {
 		return moeglicheRochaden;
