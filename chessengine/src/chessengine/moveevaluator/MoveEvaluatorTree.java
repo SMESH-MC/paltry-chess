@@ -50,14 +50,11 @@ public class MoveEvaluatorTree {
 	 */
 	private void generateTree() {
 		MoveEvaluatorTreeNode currentNode;
-		MoveEvaluatorTreeNode parentNode;
 		int countOfRootLeaf = 0;
-		
 		//Tiefe 1
 		MoveGenerator mg1 = new MoveGenerator();
 		mg1.setFEN(ausgangsFen);
 		moveList=mg1.getZuege();
-		
 		root.setChildBoards( moveList, figurBewertung );
 		countOfRootLeaf = root.hasChild();
 		//Tiefe 2
@@ -67,16 +64,6 @@ public class MoveEvaluatorTree {
 			MoveGenerator mg2 = new MoveGenerator();
 			mg2.setFEN(currentNode.getBoardFen());
 			currentNode.setChildBoards( moveList=mg2.getZuege() , figurBewertung );
-		}
-		//Tiefe 3
-		for (int j = 0 ; j < countOfRootLeaf ; j++ ) {
-			parentNode = root.getChildAtPos(j);
-			for (int k = 0 ; j < parentNode.hasChild() ; k++) {
-				currentNode = parentNode.getChildAtPos(k);
-				MoveGenerator mg3 = new MoveGenerator();
-				mg3.setFEN(currentNode.getBoardFen());
-				currentNode.setChildBoards( moveList=mg3.getZuege() , figurBewertung );
-			}
 		}
 	}
 
