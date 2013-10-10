@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +55,7 @@ public class UCI implements UCI_Interface, Runnable {
     private static final String KNIGHT = "Knight_Value";
     private static final String ROOK = "Rook_Value";
     private static final String SETOPTION = "setoption";
+    private static final File SETTINGS = new File("settings.txt");
     //********Variablen********
     private String fen;
     private boolean stop;
@@ -94,6 +96,11 @@ public class UCI implements UCI_Interface, Runnable {
         bishopValue = 300;
         knightValue = 300;
         rookValue = 500;
+        try {
+            readValues(SETTINGS);
+        } catch (IOException ex) {
+            Logger.getLogger(UCI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -122,6 +129,7 @@ public class UCI implements UCI_Interface, Runnable {
                     System.out.println(UCIOK);
                     break;
                 case ISREADY:
+                    writeValues(SETTINGS);
                     System.out.println(READYOK);
                     break;
                 case POSITION:
@@ -150,14 +158,14 @@ public class UCI implements UCI_Interface, Runnable {
     }
 
     private void options() {
-        System.out.println("option name " + QUEEN + " type spin default 900 "
-                + "min 100 max 1000\n");
-        System.out.println("option name " + ROOK + " type spin default 900 "
-                + "min 100 max 1000\n");
-        System.out.println("option name " + BISHOP + " type spin default 900 "
-                + "min 100 max 1000\n");
-        System.out.println("option name " + KNIGHT + " type spin default 900 "
-                + "min 100 max 1000\n");
+        System.out.println("option name " + QUEEN + " type spin default "
+                + queenValue + " min 100 max 1000\n");
+        System.out.println("option name " + ROOK + " type spin default "
+                + rookValue + " min 100 max 1000\n");
+        System.out.println("option name " + BISHOP + " type spin default "
+                + bishopValue + " min 100 max 1000\n");
+        System.out.println("option name " + KNIGHT + " type spin default "
+                + knightValue + " min 100 max 1000\n");
     }
 
     private void position(String cmdIN, String[] cmdArray) {
@@ -330,62 +338,80 @@ public class UCI implements UCI_Interface, Runnable {
     public String getMovesList() {
         return movesList;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert der Dame.
+     *
      * @return queenValue
      */
     public int getQueenValue() {
         return queenValue;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert des Turms.
+     *
      * @return rookValue
      */
     public int getRookValue() {
         return rookValue;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert des Springers.
+     *
      * @return knightValue
      */
     public int getKnightValue() {
         return knightValue;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert des Laeufers.
+     *
      * @return bishopValue
      */
     public int getBishopValue() {
         return bishopValue;
     }
 
-    private void writeValues(File datei) throws IOException{
-        FileWriter ausgabe = null;
-        try {
-            ausgabe = new FileWriter(datei);
-            ausgabe.write(queenValue + "\n" + rookValue + "\n" + knightValue +
-                            "\n" + bishopValue);
+    private void writeValues(File datei) throws IOException {
+        try (FileWriter ausgabe = new FileWriter(datei)) {
+            ausgabe.write(queenValue + "\n" + rookValue + "\n" + knightValue
+                    + "\n" + bishopValue);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UCI.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            ausgabe.close();
         }
     }
-    
-    private void readValues(File datei) throws IOException{
-        FileReader eingabe = null;
-        try {
-            eingabe = new FileReader(datei);
+
+    private void readValues(File datei) throws IOException {
+        //FileReader eingabe = null;
+
+        try (LineNumberReader eingabe =
+                        new LineNumberReader(
+                        new FileReader(datei));) {
+            String zeile = null;
+            while ((zeile = eingabe.readLine()) != null) {
+                switch (eingabe.getLineNumber()) {
+                    case 1:
+                        queenValue = Integer.parseInt(zeile);
+                        break;
+                    case 2:
+                        rookValue = Integer.parseInt(zeile);
+                        break;
+                    case 3:
+                        knightValue = Integer.parseInt(zeile);
+                        break;
+                    case 4:
+                        bishopValue = Integer.parseInt(zeile);
+                        break;
+                }
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UCI.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            eingabe.close();
         }
     }
+
     /**
      * Threadstart fuer das Einlesen der Kommandos.
      */
