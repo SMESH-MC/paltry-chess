@@ -220,7 +220,7 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[125] = -1;
 					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(boardNachPromotionTest);
 				}
 			}
 		}
@@ -295,7 +295,7 @@ implements MoveGeneratorInterface, Definitions {
 				neuesBoard[125] = -1;
 				byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 				//Zug hinzufuegen
-				zugHinzufuegen(neuesBoard);
+				zugHinzufuegen(boardNachPromotionTest);
 			} 
 			
 			/* en passant-Schlaege berechnen */
