@@ -3,11 +3,6 @@ package chessengine;
 public interface BoardInterface {
 
         /**
-         * Methode initialisiert das Board mit der Standardbelegung.
-         */
-	public abstract void InitBoard();
-
-        /**
          * Methode inizialisiert das Board mit uebergebener Stellung.
          * @param fen Stellung als FEN-String
          */
