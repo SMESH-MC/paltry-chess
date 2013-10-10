@@ -43,7 +43,7 @@ public class UCI implements UCI_Interface, Runnable {
     private static final String INFINITE = "infinite";
     private static final String QUEEN = "Queen_Value";
     private static final String BISHOP = "Bishop_Value";
-    private static final String NIGHT = "Night_Value";
+    private static final String KNIGHT = "Knight_Value";
     private static final String ROOK = "Rook_Value";
     private static final String SETOPTION = "setoption";
     //********Variablen********
@@ -60,7 +60,7 @@ public class UCI implements UCI_Interface, Runnable {
     private String movesList;
     private int queenValue;
     private int bishopValue;
-    private int nightValue;
+    private int knightValue;
     private int rookValue;
 
     /**
@@ -84,7 +84,7 @@ public class UCI implements UCI_Interface, Runnable {
         movesList = null;
         queenValue = 900;
         bishopValue = 300;
-        nightValue = 300;
+        knightValue = 300;
         rookValue = 500;
     }
 
@@ -148,7 +148,7 @@ public class UCI implements UCI_Interface, Runnable {
                 + "min 100 max 1000\n");
         System.out.println("option name " + BISHOP + " type spin default 900 "
                 + "min 100 max 1000\n");
-        System.out.println("option name " + NIGHT + " type spin default 900 "
+        System.out.println("option name " + KNIGHT + " type spin default 900 "
                 + "min 100 max 1000\n");
     }
 
@@ -193,8 +193,8 @@ public class UCI implements UCI_Interface, Runnable {
             case BISHOP:
                 bishopValue = Integer.parseInt(cmdArray[4]);
                 break;
-            case NIGHT:
-                nightValue = Integer.parseInt(cmdArray[4]);
+            case KNIGHT:
+                knightValue = Integer.parseInt(cmdArray[4]);
                 break;
             case ROOK:
                 rookValue = Integer.parseInt(cmdArray[4]);
@@ -323,18 +323,34 @@ public class UCI implements UCI_Interface, Runnable {
         return movesList;
     }
     
+    /**
+     * Getter-Methode fuer den Wert der Dame.
+     * @return queenValue
+     */
     public int getQueenValue() {
         return queenValue;
     }
     
+    /**
+     * Getter-Methode fuer den Wert des Turms.
+     * @return rookValue
+     */
     public int getRookValue() {
         return rookValue;
     }
     
-    public int getNightValue() {
-        return nightValue;
+    /**
+     * Getter-Methode fuer den Wert des Springers.
+     * @return knightValue
+     */
+    public int getKnightValue() {
+        return knightValue;
     }
     
+    /**
+     * Getter-Methode fuer den Wert des Laeufers.
+     * @return bishopValue
+     */
     public int getBishopValue() {
         return bishopValue;
     }
