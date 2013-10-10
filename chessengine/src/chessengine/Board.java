@@ -184,8 +184,10 @@ public class Board implements  BoardInterface  {
 		int i = 0; //pos im Feld
 		Character fenPart;
 		int pos = 0; //pos in FenString
-	
-		while ( (s != " ") || (i < 128) ) {
+		
+		fenPart = s.charAt(pos);
+		
+		while ( (fenPart != ' ') || (i < 128) ) {
 			
 			fenPart = s.charAt(pos);
 			
