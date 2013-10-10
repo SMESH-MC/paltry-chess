@@ -245,6 +245,9 @@ public class Board implements  BoardInterface  {
 				break;
 			}
 			i++;
+			if (i == 128) {
+				break;
+			}
 			pos++;
 		} //endWhile
 		fenRemainingParts(s, pos);
