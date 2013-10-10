@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -330,62 +331,84 @@ public class UCI implements UCI_Interface, Runnable {
     public String getMovesList() {
         return movesList;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert der Dame.
+     *
      * @return queenValue
      */
     public int getQueenValue() {
         return queenValue;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert des Turms.
+     *
      * @return rookValue
      */
     public int getRookValue() {
         return rookValue;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert des Springers.
+     *
      * @return knightValue
      */
     public int getKnightValue() {
         return knightValue;
     }
-    
+
     /**
      * Getter-Methode fuer den Wert des Laeufers.
+     *
      * @return bishopValue
      */
     public int getBishopValue() {
         return bishopValue;
     }
 
-    private void writeValues(File datei) throws IOException{
+    private void writeValues(File datei) throws IOException {
         FileWriter ausgabe = null;
         try {
             ausgabe = new FileWriter(datei);
-            ausgabe.write(queenValue + "\n" + rookValue + "\n" + knightValue +
-                            "\n" + bishopValue);
+            ausgabe.write(queenValue + "\n" + rookValue + "\n" + knightValue
+                    + "\n" + bishopValue);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UCI.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             ausgabe.close();
         }
     }
-    
-    private void readValues(File datei) throws IOException{
-        FileReader eingabe = null;
-        try {
-            eingabe = new FileReader(datei);
+
+    private void readValues(File datei) throws IOException {
+        //FileReader eingabe = null;
+
+        try (LineNumberReader eingabe =
+                        new LineNumberReader(
+                        new FileReader(datei));) {
+            String zeile = null;
+            while ((zeile = eingabe.readLine()) != null) {
+                switch (eingabe.getLineNumber()) {
+                    case 1:
+                        queenValue = Integer.parseInt(zeile);
+                        break;
+                    case 2:
+                        rookValue = Integer.parseInt(zeile);
+                        break;
+                    case 3:
+                        knightValue = Integer.parseInt(zeile);
+                        break;
+                    case 4:
+                        bishopValue = Integer.parseInt(zeile);
+                        break;
+                }
+            }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UCI.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            eingabe.close();
         }
     }
+
     /**
      * Threadstart fuer das Einlesen der Kommandos.
      */
