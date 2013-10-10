@@ -379,6 +379,18 @@ public class MoveEvaluatorTree {
 			}
 		}
 		
+		//schauen ob rochade getan ist
+		if (lineStart.equals("")) {
+			//lange rochade
+			if ( moveFen_a.charAt(2) == 'K' || moveFen_h.charAt(2) == 'k' ) {
+				return "0-0-0";
+			}
+			//kurze rochade
+			if ( moveFen_a.charAt(6) == 'K' || moveFen_h.charAt(6) == 'k' ) {
+				return "0-0";
+			}
+		}
+		
 		//baue Ausgabe
 		ausgabe = lineStart + (new Integer(posStart).toString()) + lineZiel + (new Integer(posZiel).toString());
 		
