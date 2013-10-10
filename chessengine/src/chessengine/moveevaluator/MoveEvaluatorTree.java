@@ -121,12 +121,17 @@ public class MoveEvaluatorTree {
 	
 	public String getBestMove(){
 		int positionOfMove = findBestMove();
-		String temp; 
+		String temp;
+		String ausgabe = "";
 		int posOfBreak;
+		String lineStart = "";
+		String lineZiel = "";
+		int posStart = 0;
+		int posZiel = 0;
 		
 		moveFen = moveList.get(positionOfMove);
 		String moveFen_a, moveFen_b, moveFen_c, moveFen_d, moveFen_e, moveFen_f, moveFen_g, moveFen_h;
-		String zielFen_a, zielFen_b, zielFen_c, zielFen_d, zielFen_e, zielFen_f, zielFen_g, zielFen_h;
+		String ausgangsFen_a, ausgangsFen_b, ausgangsFen_c, ausgangsFen_d, ausgangsFen_e, ausgangsFen_f, ausgangsFen_g, ausgangsFen_h;
 		
 		//aufsplitten in lines
 		posOfBreak = moveFen.indexOf('/');
@@ -162,43 +167,241 @@ public class MoveEvaluatorTree {
 		moveFen_a = moveFen.substring(0, posOfBreak);
 		moveFen = temp;
 		
-		// zielFen in Lines
+		// ausgangsFen in Lines
 		posOfBreak = ausgangsFen.indexOf('/');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_h = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_h = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		posOfBreak = ausgangsFen.indexOf('/');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_g = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_g = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		posOfBreak = ausgangsFen.indexOf('/');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_f = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_f = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		posOfBreak = ausgangsFen.indexOf('/');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_e = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_e = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		posOfBreak = ausgangsFen.indexOf('/');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_d = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_d = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		posOfBreak = ausgangsFen.indexOf('/');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_c = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_c = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		posOfBreak = ausgangsFen.indexOf('/');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_b = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_b = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		posOfBreak = ausgangsFen.indexOf(' ');
 		temp = ausgangsFen.substring(posOfBreak);
-		zielFen_a = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen_a = ausgangsFen.substring(0, posOfBreak);
 		ausgangsFen = temp;
 		
 		
-		return null;
+		//reihe a
+		if( !ausgangsFen_a.equals(moveFen_a) ) {
+			if ( ausgangsFen_a.length() > moveFen_a.length() ) {
+				lineStart = "a";
+				String ausgang = homologizeFen(ausgangsFen_a);
+				String nachZug = homologizeFen(moveFen_a);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "a";
+				String ausgang = homologizeFen(ausgangsFen_a);
+				String nachZug = homologizeFen(moveFen_a);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		//rheie b
+		if( !ausgangsFen_b.equals(moveFen_b) ) {
+			if ( ausgangsFen_b.length() > moveFen_b.length() ) {
+				lineStart = "b";
+				String ausgang = homologizeFen(ausgangsFen_b);
+				String nachZug = homologizeFen(moveFen_b);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "b";
+				String ausgang = homologizeFen(ausgangsFen_b);
+				String nachZug = homologizeFen(moveFen_b);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		//rheie c
+		if( !ausgangsFen_c.equals(moveFen_c) ) {
+			if ( ausgangsFen_c.length() > moveFen_c.length() ) {
+				lineStart = "c";
+				String ausgang = homologizeFen(ausgangsFen_c);
+				String nachZug = homologizeFen(moveFen_c);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "c";
+				String ausgang = homologizeFen(ausgangsFen_c);
+				String nachZug = homologizeFen(moveFen_c);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		//rheie d
+		if( !ausgangsFen_d.equals(moveFen_d) ) {
+			if ( ausgangsFen_d.length() > moveFen_d.length() ) {
+				lineStart = "d";
+				String ausgang = homologizeFen(ausgangsFen_d);
+				String nachZug = homologizeFen(moveFen_d);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "d";
+				String ausgang = homologizeFen(ausgangsFen_d);
+				String nachZug = homologizeFen(moveFen_d);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		//rheie e
+		if( !ausgangsFen_e.equals(moveFen_e) ) {
+			if ( ausgangsFen_e.length() > moveFen_e.length() ) {
+				lineStart = "e";
+				String ausgang = homologizeFen(ausgangsFen_e);
+				String nachZug = homologizeFen(moveFen_e);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "e";
+				String ausgang = homologizeFen(ausgangsFen_e);
+				String nachZug = homologizeFen(moveFen_e);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		//rheie f
+		if( !ausgangsFen_f.equals(moveFen_f) ) {
+			if ( ausgangsFen_f.length() > moveFen_f.length() ) {
+				lineStart = "f";
+				String ausgang = homologizeFen(ausgangsFen_f);
+				String nachZug = homologizeFen(moveFen_f);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "f";
+				String ausgang = homologizeFen(ausgangsFen_f);
+				String nachZug = homologizeFen(moveFen_f);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		//rheie g
+		if( !ausgangsFen_g.equals(moveFen_g) ) {
+			if ( ausgangsFen_g.length() > moveFen_g.length() ) {
+				lineStart = "g";
+				String ausgang = homologizeFen(ausgangsFen_g);
+				String nachZug = homologizeFen(moveFen_g);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "g";
+				String ausgang = homologizeFen(ausgangsFen_g);
+				String nachZug = homologizeFen(moveFen_g);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		//rheie h
+		if( !ausgangsFen_h.equals(moveFen_h) ) {
+			if ( ausgangsFen_h.length() > moveFen_h.length() ) {
+				lineStart = "h";
+				String ausgang = homologizeFen(ausgangsFen_h);
+				String nachZug = homologizeFen(moveFen_h);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posStart = i + 1;
+					}
+				}
+			} else {
+				lineZiel = "h";
+				String ausgang = homologizeFen(ausgangsFen_h);
+				String nachZug = homologizeFen(moveFen_h);  
+				for (int i = 0; i < 8; i++) {
+					if ( !ausgang.equals(nachZug) ) {
+						posZiel = i + 1;
+					}
+				}
+			}
+		}
+		
+		//baue Ausgabe
+		ausgabe = lineStart + (new Integer(posStart).toString()) + lineZiel + (new Integer(posZiel).toString());
+		
+		return ausgabe;
 	}
+	
+	private String homologizeFen(String s) {
+		String temp = "";
+		for (int i = 0; i < s.length(); i++) {
+			if (s.substring(i, i+ 1).matches("[1-8]") ) {
+				int leerFelder = Integer.parseInt(s.substring(i, i+ 1)); 
+				for (int j = 0; j < leerFelder; j++) {
+					temp= temp + "0";
+				}
+			} else {
+				temp= temp + s.substring(i, i+ 1);
+			}
+		}
+		return temp;
+	}
+	
+	
+	
 	
 	public MoveEvaluatorTreeNode getRoot() {
 		return root;
