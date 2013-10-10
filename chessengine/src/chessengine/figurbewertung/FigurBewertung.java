@@ -10,7 +10,7 @@ import java.util.Stack;
 
 public class FigurBewertung implements FigurBewertungInterface  {
 	
-	private final static int KING_DEFAULT 	=110000;
+	private final static int KING_DEFAULT 	=100000;
 	private final static int QUEEN_DEFAULT 	=900;
 	private final static int BISHOP_DEFAULT =300;
 	private final static int KNIGHT_DEFAULT =300;
@@ -36,8 +36,10 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	private FenDecoder decoder;
 	
 
-	
 	public FigurBewertung(){
+		this(  QUEEN_DEFAULT, BISHOP_DEFAULT , KNIGHT_DEFAULT, ROOK_DEFAULT, PAWN_DEFAULT);
+	}
+	public FigurBewertung( int bewertungQueen, int bewertungRook, int bewertungBishop, int bewertungKnight, int bewertungPawn){
 		
 		 //Brett brett = new Array2Dim();
 		 Brett brett = new X88();
@@ -46,11 +48,11 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		 linienLaeufer = new LinienLaeufer(); // Eine Klasse die Zugeneration von mehrenKlassen uebernimmt
 		 
 		 
-		 bishop = new Bishop( BISHOP_DEFAULT, linienLaeufer );
-		 knight = new Knight( KNIGHT_DEFAULT, linienLaeufer );
-		 rook = new Rook( ROOK_DEFAULT , linienLaeufer);
-		 pawn = new Pawn( PAWN_DEFAULT , linienLaeufer);
-		 queen = new Queen( QUEEN_DEFAULT,  bishop, rook);
+		 bishop = new Bishop( bewertungBishop, linienLaeufer );
+		 knight = new Knight( bewertungKnight, linienLaeufer );
+		 rook = new Rook( bewertungRook , linienLaeufer);
+		 pawn = new Pawn( bewertungPawn , linienLaeufer);
+		 queen = new Queen( bewertungQueen,  bishop, rook);
 		 king = new King( KING_DEFAULT, linienLaeufer, knight.getMuster(), rook.getMuster(), bishop.getMuster() );
 	}
 
@@ -187,20 +189,11 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		return koenig;
 	}
 
-	/**
-	 * q b n r p 
-	 */
-	public void setBewertung(int q, int b, int n, int r, int p){
-		queen.setBewertung(q);
-		bishop.setBewertung(b);
-		knight.setBewertung(n);
-		rook.setBewertung(r);
-		pawn.setBewertung(p);
-	}
+
 	/* (non-Javadoc)
 	 * @see figurbewertung.FigurBewewertung#getBewertung(char)
 	 */
-	public int getBewertung (char typ){
+	/*public static int getBewertung (char typ){
 		int bewertung = 0;
 		switch ( typ )
 	    {
@@ -226,7 +219,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		}//switch
 		return bewertung;
 		
-	} // getBewertung
+	} // getBewertung*/
 	/**
 	 * liefert die Bewegungsmuster  fuer einfache Bewegungen
 	 * KEINE SPEZIAL FAELLER

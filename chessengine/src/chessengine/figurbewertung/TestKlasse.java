@@ -43,15 +43,16 @@ public class TestKlasse {
 		schachBrett = decoder.decodiere(fen);
 		//arrayAusgabe( schachBrett);
 		
-		//MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
-		MoveGeneratorInterface figuren= new MoveGenerator();
+		MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
+		//MoveGeneratorInterface figuren= new MoveGenerator();
+		
 		long zeit = 0;
 		int durchlaeufe = 64000;
 		//int durchlaeufe = 1;
 		Long time = System.currentTimeMillis();	
 		
 		for(int i = 0 ;i < durchlaeufe;i++){
-			
+
 
 			//SchachPosition position = new SchachPosition(0,0);
 		

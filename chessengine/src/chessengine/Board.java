@@ -1,7 +1,8 @@
 
 package chessengine;
 
-import chessengine.figurbewertung.FigurBewertung;
+
+import chessengine.figurbewertung.*;
 
 /**
  * Klasse Board, repraesentiert das Spielbrett.
@@ -293,48 +294,47 @@ public class Board implements  BoardInterface  {
 	 */
 	@Override
 	public int getBoardValue() {
-		FigurBewertung bewertung = new FigurBewertung(); // philip dieses Object muss vom Manager aus weitergeleitet oder veraendert werden 
-		//und ist erstmal nur ein notloesung. Sonst werden immer nur default werden verwendet.
+
 		int figur;
 		int value = 0;
 		for(int i = 0; i < 128; i++ ){
 			figur = boardArray[i];
 			switch (figur) {
 			case 1:
-				value -= bewertung.getPawnBewertung();
+				value -= Pawn.getBewertung();
 				break;
 			case 11:
-				value += bewertung.getPawnBewertung();
+				value += Pawn.getBewertung();
 				break;
 			case 2:
-				value -= bewertung.getRookBewertung();
+				value -= Rook.getBewertung();
 				break;
 			case 12:
-				value += bewertung.getRookBewertung();
+				value += Rook.getBewertung();
 				break;
 			case 3:
-				value -= bewertung.getKnightBewertung();
+				value -= Knight.getBewertung();
 				break;
 			case 13:
-				value += bewertung.getKnightBewertung();
+				value += Knight.getBewertung();
 				break;
 			case 4:
-				value -= bewertung.getBishopBewertung();
+				value -= Bishop.getBewertung();
 				break;
 			case 14:
-				value += bewertung.getBishopBewertung();
+				value += Bishop.getBewertung();
 				break;
 			case 5:
-				value -= bewertung.getQueenBewertung();
+				value -= Queen.getBewertung();
 				break;
 			case 15:
-				value += bewertung.getQueenBewertung();
+				value += Queen.getBewertung();
 				break;
 			case 6:
-				value -= 100000; //koenig ueberpruefung auf ungueltige zeuge
+				value -= King.getBewertung(); //koenig ueberpruefung auf ungueltige zeuge 100000
 				break;
 			case 16:
-				value += 100000;
+				value += King.getBewertung();
 				break;
 			default:
 				break;
