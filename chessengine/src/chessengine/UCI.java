@@ -421,7 +421,7 @@ public class UCI implements UCI_Interface, Runnable {
         try {
             input();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }

@@ -151,7 +151,7 @@ public class Board implements  BoardInterface  {
 		 * und aus dem String gezogen
 		 * nicht mit case da werte von 1 bis 50 ohne weiteres entstehen
 		 */
-		while ( s.charAt(pos) != ' ') { 
+		while ( !Character.isSpaceChar(s.charAt(pos))) { 
 			numberOfMoves.append(s.charAt(pos));
 			pos++;
 		} 
@@ -163,7 +163,7 @@ public class Board implements  BoardInterface  {
 		 * und aus dem String gezogen
 		 * nicht mit case da werte von 1 bis 50 ohne weiteres entstehen
 		 */
-		while ( pos <= laengeString) {
+		while ( pos < laengeString) {
 			numberOfMoves.append(s.charAt(pos));
 			pos++;
 		}
@@ -187,7 +187,7 @@ public class Board implements  BoardInterface  {
 		
 		fenPart = s.charAt(pos);
 		
-		while ( (!fenPart.equals(' ')) || (i < 128) ) {
+		while ( (!Character.isSpaceChar(fenPart))  ) {
 			
 			fenPart = s.charAt(pos);
 			
