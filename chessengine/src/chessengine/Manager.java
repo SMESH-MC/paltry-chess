@@ -152,8 +152,7 @@ public class Manager implements Runnable {
     @Override
     public void run() {
         getAll();
-        MoveEvaluatorTree tree = new MoveEvaluatorTree(fen, 
-                                                    figurBewertung, this);
+        MoveEvaluatorTree tree = new MoveEvaluatorTree(fen , figurBewertung, this);
         bestZug = tree.getBestMove();
         newUCI.bestmove(bestZug);
     }
