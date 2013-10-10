@@ -167,7 +167,7 @@ public class Board implements  BoardInterface  {
 			numberOfMoves.append(s.charAt(pos));
 			pos++;
 		}
-		zugnummer = Integer.parseInt(numberOfMoves.toString());
+		zugnummer = Integer.parseInt(numberOfMoves.toString().trim());
 		/**zuruecksetzen des numberOfMoves damit keine falschen Zugzahlen entstehen
 		 * bei einer erneuten ausfuehrung des Fen-decodes
 		 */
