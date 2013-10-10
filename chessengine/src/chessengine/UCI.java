@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 
 /**
  * UCI-Klasse, dient zur Kommunikation zwischen Engine und der GUI.
+ *
  * @author Alexander Kessler, Thorsten Jakobs
  */
 public class UCI implements UCI_Interface, Runnable {
@@ -40,6 +41,11 @@ public class UCI implements UCI_Interface, Runnable {
     private static final String BINC = "binc";
     private static final String MOVETIME = "movetime";
     private static final String INFINITE = "infinite";
+    private static final String QUEEN = "Queen_Value";
+    private static final String BISHOP = "Bishop_Value";
+    private static final String NIGHT = "Night_Value";
+    private static final String ROOK = "Rook_Value";
+    private static final String SETOPTION = "setoption";
     //********Variablen********
     private String fen;
     private boolean stop;
@@ -52,9 +58,14 @@ public class UCI implements UCI_Interface, Runnable {
     private boolean go;
     private Manager manager;
     private String movesList;
+    private int queenValue;
+    private int bishopValue;
+    private int nightValue;
+    private int rookValue;
 
     /**
      * Konstruktor der UCI-Klasse.
+     *
      * @param manager Referenz auf den zustaendigen Manager.
      */
     public UCI(Manager manager) {
@@ -71,10 +82,15 @@ public class UCI implements UCI_Interface, Runnable {
         go = false;
         this.manager = manager;
         movesList = null;
+        queenValue = 900;
+        bishopValue = 300;
+        nightValue = 300;
+        rookValue = 500;
     }
 
     /**
      * input-Methode, liest Eingaben aud stdin ein und wertet diese aus.
+     *
      * @throws IOException
      */
     @Override
@@ -94,6 +110,7 @@ public class UCI implements UCI_Interface, Runnable {
             switch (cmd) {
                 case UCI:
                     id();
+                    options();
                     System.out.println(UCIOK);
                     break;
                 case ISREADY:
@@ -109,9 +126,9 @@ public class UCI implements UCI_Interface, Runnable {
                     go = true;
                     go(cmdArray);
                     break;
-                case "setoption":
-                    throw new UnsupportedOperationException("not yet "
-                            + "implemented");
+                case SETOPTION:
+                    setoption(cmdArray);
+                    break;
             }
         } while (!cmdIN.equals(QUIT));
         System.exit(0);
@@ -124,9 +141,20 @@ public class UCI implements UCI_Interface, Runnable {
         System.out.println("id name " + NAME + "\nid author " + AUTHOR);
     }
 
+    private void options() {
+        System.out.println("option name" + QUEEN + "type spin default 900 "
+                + "min 100 max 1000\n");
+        System.out.println("option name" + ROOK + "type spin default 900 "
+                + "min 100 max 1000\n");
+        System.out.println("option name" + BISHOP + "type spin default 900 "
+                + "min 100 max 1000\n");
+        System.out.println("option name" + NIGHT + "type spin default 900 "
+                + "min 100 max 1000\n");
+    }
+
     private void position(String cmdIN, String[] cmdArray) {
         int movesIndex = cmdIN.indexOf(MOVES);
-        
+
         if (cmdArray[1].equalsIgnoreCase("fen")) {
             String newFen = null;
             if (movesIndex == -1) {
@@ -154,10 +182,30 @@ public class UCI implements UCI_Interface, Runnable {
         }
     }
 
+    private void setoption(String[] cmdArray) {
+        /**
+         * Queen_Value Bishop_Value Night_Value Rook_Value
+         */
+        switch (cmdArray[2]) {
+            case QUEEN:
+                queenValue = Integer.parseInt(cmdArray[4]);
+                break;
+            case BISHOP:
+                bishopValue = Integer.parseInt(cmdArray[4]);
+                break;
+            case NIGHT:
+                nightValue = Integer.parseInt(cmdArray[4]);
+                break;
+            case ROOK:
+                rookValue = Integer.parseInt(cmdArray[4]);
+        }
+    }
+
     /**
-     * go-Methode, empfaengt die Einstellungen fuer das go-Kommando und 
-     * leitet den aufruf an die Engine weiter.
-     * @param cmdArray 
+     * go-Methode, empfaengt die Einstellungen fuer das go-Kommando und leitet
+     * den aufruf an die Engine weiter.
+     *
+     * @param cmdArray
      */
     private void go(String[] cmdArray) {
         for (int i = 1; i < cmdArray.length; i++) {
@@ -192,8 +240,9 @@ public class UCI implements UCI_Interface, Runnable {
     }
 
     /**
-     * bestmove-Methode, gibt den von der Engine errechneten Zug in die 
-     * stdout aus und setzt die go- und stop-variable wieder auf false zurueck.
+     * bestmove-Methode, gibt den von der Engine errechneten Zug in die stdout
+     * aus und setzt die go- und stop-variable wieder auf false zurueck.
+     *
      * @param move - der beste Zug, der durch die Engine gefunden wurde
      */
     @Override
@@ -216,6 +265,7 @@ public class UCI implements UCI_Interface, Runnable {
 
     /**
      * Getter fuer wtime.
+     *
      * @return wtime
      */
     @Override
@@ -225,6 +275,7 @@ public class UCI implements UCI_Interface, Runnable {
 
     /**
      * Getter fuer btime
+     *
      * @return btime
      */
     @Override
@@ -234,6 +285,7 @@ public class UCI implements UCI_Interface, Runnable {
 
     /**
      * Getter fuer winc
+     *
      * @return winc
      */
     @Override
@@ -243,6 +295,7 @@ public class UCI implements UCI_Interface, Runnable {
 
     /**
      * Getter fuer binc
+     *
      * @return binc
      */
     @Override
@@ -252,19 +305,37 @@ public class UCI implements UCI_Interface, Runnable {
 
     /**
      * Getter fuer movetime
+     *
      * @return movetime
      */
     @Override
     public int getMovetime() {
         return movetime;
     }
-    
+
     /**
      * Getter fuer moveList
+     *
      * @return moveList
      */
     public String getMovesList() {
         return movesList;
+    }
+    
+    public int getQueenValue() {
+        return queenValue;
+    }
+    
+    public int getRookValue() {
+        return rookValue;
+    }
+    
+    public int getNightValue() {
+        return nightValue;
+    }
+    
+    public int getBishopValue() {
+        return bishopValue;
     }
 
     /**
