@@ -206,10 +206,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "a";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					} else if (ausgang.equals("1")) {
 						lineZiel = "a";
 						posZiel = i + 1;	
+					}
 				}
 			}
 		}
@@ -222,10 +222,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "b";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					} else if (ausgang.equals("1")) {
 						lineZiel = "b";
-						posZiel = i + 1;	
+						posZiel = i + 1;
+					}
 				}
 			}
 		}
@@ -238,10 +238,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "c";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					} else if (ausgang.equals("1")) {
 						lineZiel = "c";
-						posZiel = i + 1;	
+						posZiel = i + 1;
+					}
 				}
 			}
 		}	
@@ -254,10 +254,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "d";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					} else if (ausgang.equals("1")) {
 						lineZiel = "d";
 						posZiel = i + 1;	
+					}
 				}
 			}
 		}
@@ -270,10 +270,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "e";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					} else if (ausgang.equals("1")) {
 						lineZiel = "e";
 						posZiel = i + 1;	
+					}
 				}
 			}
 		}
@@ -286,10 +286,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "f";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					} else if (ausgang.equals("1")) {
 						lineZiel = "f";
 						posZiel = i + 1;	
+					}
 				}
 			}
 		}
@@ -302,10 +302,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "g";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					} else if (ausgang.equals("1")) {
 						lineZiel = "g";
 						posZiel = i + 1;	
+					}
 				}
 			}
 		}
@@ -318,10 +318,10 @@ public class MoveEvaluatorTree {
 					if (!ausgang.equals("1")) {
 						lineStart = "h";
 						posStart = i + 1;
-					}
-				} else if (ausgang.equals("1")) {
+					}  else if (ausgang.equals("1")) {
 						lineZiel = "h";
-						posZiel = i + 1;	
+						posZiel = i + 1;
+					}
 				}
 			}
 		}
