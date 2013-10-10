@@ -302,5 +302,24 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	public  int getPawnBewertung() {
 		return pawn.getBewertung();
 	}
+
+
+	public  void getQueenBewertung(int bewertung) {
+		queen.setBewertung(bewertung);
+	}
+
+	public  void setBishopBewertung(int bewertung) {
+		 bishop.setBewertung(bewertung);
+	}
+
+	public  void setKnightBewertung(int bewertung) {
+		 knight.setBewertung(bewertung);
+	}
+
+	public  void setRookBewertung(int bewertung) {
+		 rook.setBewertung(bewertung);
+	}
+
+
 	
 }

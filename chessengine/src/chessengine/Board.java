@@ -24,13 +24,14 @@ public class Board implements  BoardInterface  {
 	private int zugnummer;
 	private int halbzuege;
 	private String itsFen;
+	private FigurBewertung bewertung;
 	
 	//Ende Variablendeklaration
 	
         /**
          * Standartkonstruktor der Klasse Board
          */
-	public Board() {
+	public Board(FigurBewertung bewertung) {
 		boardArray = new int[128];	//Boardarray
 		color = true;				//Farbe am Zug, true = weiss; false = schwarz
 		enPassent = false;			//En Passents Verfuegbarkeit, true = ja; false= nein
@@ -38,14 +39,14 @@ public class Board implements  BoardInterface  {
 		rochade_klein = 0;			//0 keiner,	1 weiss, 2 schwarz, 3 beide
 		zugnummer = 0;				
 		halbzuege = 0;				
-			
+		this.bewertung = bewertung;
 	}
 	
         /**
          * Konstruktor der Klasse Board mit FEN-String als Parameter.
          * @param fen FEN-String, der beim erzeugen als Startwert verwendet wird.
          */
-	public Board(String fen) {
+	public Board(String fen, FigurBewertung bewertung) {
 		boardArray = new int[128];	//Boardarray
 		color = true;				//Farbe am Zug, true = weiss; false = schwarz
 		enPassent = false;			//En Passents Verfuegbarkeit, true = ja; false= nein
@@ -55,7 +56,7 @@ public class Board implements  BoardInterface  {
 		halbzuege = 0;		
 		InitBoard(fen);
 		this.boardFen = fen;
-			
+		this.bewertung = bewertung;	
 	}
 	
 	
@@ -85,7 +86,7 @@ public class Board implements  BoardInterface  {
 	 */
 	@Override
 	public BoardInterface getBoard() {
-		BoardInterface currentBoard = new Board();
+		BoardInterface currentBoard = new Board(bewertung);
 		return currentBoard;
 	}
 	
@@ -295,7 +296,7 @@ public class Board implements  BoardInterface  {
 	 * @see chessengine.BoardInterface#getBoardValue()
 	 */
 	@Override
-	public int getBoardValue(FigurBewertung bewertung) {
+	public int getBoardValue() {
 
 		int figur;
 		int value = 0;

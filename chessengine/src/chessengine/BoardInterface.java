@@ -51,7 +51,7 @@ public interface BoardInterface {
 	 * negativer wert ist ein vorteil fuer Schwarz
 	 * positiver wert ist ein vorteil fuer Weiss
 	 */
-	public abstract int getBoardValue(FigurBewertung bewertung);
+	public abstract int getBoardValue();
 
         /**
          * Methode gibt zurueck ob eine grosse Rochade moeglich ist.
