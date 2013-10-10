@@ -8,22 +8,8 @@ package chessengine;
  * @author Christopher Schuetz
  */
 public class ToFen implements ToFenInterface {
-	
-	// TODO (von chschuetz)
-	// aktuelles Board abgreifen (muss am Board geaendert werden)								ERLEDIGT
-	// BOOLs fuer Rochade abgreifen																ERLEDIGT
-	// alle moves abgreifen																		ERLEDIGT
-	// letzten move des spielers abgreifen														ERLEDIGT
-	// Figuren ändern																			ERLEDIGT
-	// +- Rochade 	 																			ERLEDIGT
-	// +- normaler Zug 																			ERLEDIGT
-	// +- En passant?!?!																		ERLEDIGT
-	// +- PROMOTION																				ERLEDIGT
-	// neues Board in ein FEN umwandeln															ERLEDIGT
-	
-	// Fragen:
-	// wie registriere ich einen enpassant zug?
 
+	// ATTRIBUTE
 	private String allMoves;		// String aller Moves bis dato
 	private String[] allMovesSplit;	// alle Moves gesplittet
 	private String lastMove;		// String des letzten Zuges des Spielers
