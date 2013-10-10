@@ -22,6 +22,7 @@ public class Board implements  BoardInterface  {
 	private int rochade_klein;
 	private int zugnummer;
 	private int halbzuege;
+	private String itsFen;
 	
 	//Ende Variablendeklaration
 	
@@ -52,6 +53,7 @@ public class Board implements  BoardInterface  {
 		zugnummer = 0;				
 		halbzuege = 0;		
 		InitBoard(fen);
+		this.boardFen = fen;
 			
 	}
 	
@@ -389,6 +391,9 @@ public class Board implements  BoardInterface  {
 		zugnummer++;
 	}
 	
+	public String getBoardFen() {
+		return itsFen;
+	}
 	
 	
 }
