@@ -129,12 +129,13 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege Die erlaubten Schritt
 	 */
 	private void berechneSlidingZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
-		//setze en passant zurueck
-		board[125] = -1;
-
 		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
 		for (byte b : erlaubteZuege) {
 			byte[] neuesBoard = board.clone();
+
+			//setze en passant zurueck
+			neuesBoard[125] = -1;
+
 				
 			//Merker, ob das Zielfeld vor dem Zug frei ist, und das Sliding Piece die Schleife nochmals durchlaufen kann 	//<-sliding-Zusatz
 			boolean zielfeldFrei = false; //Initialisierung																	//<-sliding-Zusatz
@@ -367,11 +368,11 @@ implements MoveGeneratorInterface, Definitions {
 	 * @param erlaubteZuege	erlaubte Schrittweiten der Figur
 	 */
 	private void berechneZug(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
-		//setze en passant zurueck
-		board[125] = -1;
 		//fuer alle Schrittweiten der uebergebenen erlaubten Zuege
 		for (byte b : erlaubteZuege) {
 			byte[] neuesBoard = board.clone();
+			//setze en passant zurueck
+			neuesBoard[125] = -1;
 			//berechne moegliche Zielfelder
 			int zielfeld = b + startfeld;
 			//wenn das Zielfeld ein gueltiges Feld ist
