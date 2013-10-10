@@ -183,7 +183,7 @@ public class Board implements  BoardInterface  {
 		int[] ausgabe = new int[128];
 		int i = 0; //pos im Feld
 		Character fenPart;
-		int pos = 1; //pos in FenString
+		int pos = 0; //pos in FenString
 	
 		while ( (s != " ") || (i < 128) ) {
 			
@@ -228,6 +228,7 @@ public class Board implements  BoardInterface  {
 				break;
 			case ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'):
 				int leerFelder = Integer.parseInt( fenPart.toString() );
+				i++;
 				for (int j = 0; j < leerFelder; j++) {
 					ausgabe[i] = 0;
 					i++;
