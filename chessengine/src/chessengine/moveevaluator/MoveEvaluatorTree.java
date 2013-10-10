@@ -18,6 +18,8 @@ public class MoveEvaluatorTree {
 	private LinkedList<MoveEvaluatorTreeNode> childList; 
 	private MoveGenerator movegen;
 	private LinkedList<String> moveList;
+	private String ausgangsFen;
+	private String moveFen;
 	
 	
         /**
@@ -25,6 +27,7 @@ public class MoveEvaluatorTree {
          * @param board 
          */
 	public MoveEvaluatorTree(Board board) {
+		this.ausgangsFen = board.getBoardFen();
 		this.root = new MoveEvaluatorTreeNode(board);
 		this.movegen = new MoveGenerator();
 		generateTree();
@@ -118,7 +121,83 @@ public class MoveEvaluatorTree {
 	
 	public String getBestMove(){
 		int positionOfMove = findBestMove();
-		return moveList.get(positionOfMove);
+		String temp; 
+		int posOfBreak;
+		
+		moveFen = moveList.get(positionOfMove);
+		String moveFen_a, moveFen_b, moveFen_c, moveFen_d, moveFen_e, moveFen_f, moveFen_g, moveFen_h;
+		String zielFen_a, zielFen_b, zielFen_c, zielFen_d, zielFen_e, zielFen_f, zielFen_g, zielFen_h;
+		
+		//aufsplitten in lines
+		posOfBreak = moveFen.indexOf('/');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_h = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		posOfBreak = moveFen.indexOf('/');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_g = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		posOfBreak = moveFen.indexOf('/');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_f = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		posOfBreak = moveFen.indexOf('/');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_e = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		posOfBreak = moveFen.indexOf('/');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_d = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		posOfBreak = moveFen.indexOf('/');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_c = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		posOfBreak = moveFen.indexOf('/');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_b = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		posOfBreak = moveFen.indexOf(' ');
+		temp = moveFen.substring(posOfBreak);
+		moveFen_a = moveFen.substring(0, posOfBreak);
+		moveFen = temp;
+		
+		// zielFen in Lines
+		posOfBreak = ausgangsFen.indexOf('/');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_h = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		posOfBreak = ausgangsFen.indexOf('/');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_g = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		posOfBreak = ausgangsFen.indexOf('/');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_f = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		posOfBreak = ausgangsFen.indexOf('/');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_e = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		posOfBreak = ausgangsFen.indexOf('/');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_d = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		posOfBreak = ausgangsFen.indexOf('/');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_c = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		posOfBreak = ausgangsFen.indexOf('/');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_b = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		posOfBreak = ausgangsFen.indexOf(' ');
+		temp = ausgangsFen.substring(posOfBreak);
+		zielFen_a = ausgangsFen.substring(0, posOfBreak);
+		ausgangsFen = temp;
+		
+		
+		return null;
 	}
 	
 	public MoveEvaluatorTreeNode getRoot() {
