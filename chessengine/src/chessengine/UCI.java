@@ -55,6 +55,7 @@ public class UCI implements UCI_Interface, Runnable {
     private static final String KNIGHT = "Knight_Value";
     private static final String ROOK = "Rook_Value";
     private static final String SETOPTION = "setoption";
+    private static final File SETTINGS = new File("settings.txt");
     //********Variablen********
     private String fen;
     private boolean stop;
@@ -95,6 +96,11 @@ public class UCI implements UCI_Interface, Runnable {
         bishopValue = 300;
         knightValue = 300;
         rookValue = 500;
+        try {
+            readValues(SETTINGS);
+        } catch (IOException ex) {
+            Logger.getLogger(UCI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -123,6 +129,7 @@ public class UCI implements UCI_Interface, Runnable {
                     System.out.println(UCIOK);
                     break;
                 case ISREADY:
+                    writeValues(SETTINGS);
                     System.out.println(READYOK);
                     break;
                 case POSITION:
