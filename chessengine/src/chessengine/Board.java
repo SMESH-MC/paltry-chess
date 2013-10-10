@@ -234,7 +234,7 @@ public class Board implements  BoardInterface  {
 				}
 				break;
 			case '/':
-				i = i + 7;
+				i = i + 8;
 				break;
 			default:
 				break;
