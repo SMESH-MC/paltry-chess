@@ -185,15 +185,16 @@ public class Board implements  BoardInterface  {
 	@Override
 	public int[] FenDecode(String s) {
 		int[] ausgabe = new int[128];
+		int i = 0; //pos im Feld
 		Character fenPart;
 		int pos = 0; //pos in FenString
 		
 		if (s.equals(boardStart) ) {
 			InitBoard();
 		}
-		
-		while (s != " ") {
-			int i = 0; //pos im Feld
+	
+		while ( (s != " ") || (i < 128) ) {
+			
 			fenPart = s.charAt(pos);
 			
 			switch (fenPart) {
@@ -245,15 +246,10 @@ public class Board implements  BoardInterface  {
 				break;
 			}
 			i++;
-			if (i == 128) {
-				break;
-			}
 			pos++;
 		} //endWhile
 		fenRemainingParts(s, pos);
-		
 		return ausgabe;
-		
 	}
 	
 	/* (non-Javadoc)
