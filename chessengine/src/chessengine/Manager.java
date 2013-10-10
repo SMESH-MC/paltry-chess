@@ -1,5 +1,7 @@
 package chessengine;
 
+import chessengine.figurbewertung.FigurBewertung;
+
 /**
  * Manager-Klassen, dient zum inizialisieren der anderen Module und deren 
  * Kommunikation untereinander.
@@ -10,7 +12,7 @@ public class Manager implements Runnable {
 
     //---------------------------Objektvariablen
     private UCI_Interface newUCI;
-    private BoardInterface Board;
+    private FigurBewertung figurBewertung;
     private String fen;
     private boolean stop;
     private boolean go;
@@ -44,6 +46,7 @@ public class Manager implements Runnable {
     public void initialize() {
         try {
             newUCI = new UCI(this);
+            figurBewertung = new FigurBewertung();
             newUCI.run();
         } catch (Exception e) {
             System.out.println(e);
@@ -125,6 +128,21 @@ public class Manager implements Runnable {
      */
     public int getBishopValue() {
         return newUCI.getBishopValue();
+    }
+    
+    /**
+     * Setter-Methode um benutzerdefinierte Werte in die Figurbewertung zu 
+     * uebernehmen.
+     * @param queen
+     * @param rook
+     * @param knight
+     * @param bishop
+     */
+    public void setWerte(int queen, int rook, int knight, int bishop){
+        figurBewertung.setQueenBewertung(queen);
+        figurBewertung.setRookBewertung(rook);
+        figurBewertung.setKnightBewertung(knight);
+        figurBewertung.setBishopBewertung(bishop);
     }
     
     /**

@@ -130,6 +130,7 @@ public class UCI implements UCI_Interface, Runnable {
                     break;
                 case ISREADY:
                     writeValues(SETTINGS);
+                    manager.setWerte(queenValue, rookValue, knightValue, bishopValue);
                     System.out.println(READYOK);
                     break;
                 case POSITION:
