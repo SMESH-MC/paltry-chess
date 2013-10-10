@@ -218,6 +218,7 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
+					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard);
 				}
@@ -292,6 +293,7 @@ implements MoveGeneratorInterface, Definitions {
 				neuesBoard[startfeld] = 0;
 				//setze en passant zurueck
 				neuesBoard[125] = -1;
+				byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 				//Zug hinzufuegen
 				zugHinzufuegen(neuesBoard);
 			} 
@@ -335,6 +337,27 @@ implements MoveGeneratorInterface, Definitions {
 		}
 	}
 
+	/**
+	 * Diese Methode prueft, ob das Zielfeld auf der gegnerischen Grundlinie liegt.
+	 * Da nur das Zielfeld nach einem Bauernzug ubergeben wird, wird hiermit die Promotion geprueft 
+	 * 
+	 * @param zielfeld Das Feld, auf dem die Figur (Bauer) gelandet ist
+	 * @return Das board nach eventueller Umwandlung
+	 */
+	
+	private byte[] umwandlung(byte[] board, int zielfeld, boolean weissAmZug) {
+		if (weissAmZug) {	//wenn weiss am Zug ist
+			if (112 <= zielfeld && zielfeld <= 119) { //wenn das Zielfeld auf der schwarzen Grundlinie liegt
+				board[zielfeld] = 7;
+			}
+		} else { //wenn schwarz am Zug ist
+			if (0 <= zielfeld && zielfeld <= 7) { //wenn das Zielfeld auf der weissen Grundlinie liegt
+				board[zielfeld] = -7;
+			}
+		}
+		return board;
+	}				
+	
 	/**
 	 * Diese Methode berechnet einen einfachen Zug (Springer)
 	 * 
