@@ -96,6 +96,38 @@ public class Manager implements Runnable {
     }
 
     /**
+     * Getter-Methode fuer den Wert der Dame.
+     * @return queenValue
+     */
+    public int getQueenValue() {
+        return newUCI.getQueenValue();
+    }
+    
+    /**
+     * Getter-Methode fuer den Wert des Turms.
+     * @return rookValue
+     */
+    public int getRookValue() {
+        return newUCI.getRookValue();
+    }
+    
+    /**
+     * Getter-Methode fuer den Wert des Springers.
+     * @return knightValue
+     */
+    public int getKnightValue() {
+        return newUCI.getKnightValue();
+    }
+    
+    /**
+     * Getter-Methode fuer den Wert des Laeufers.
+     * @return bishopValue
+     */
+    public int getBishopValue() {
+        return newUCI.getBishopValue();
+    }
+    
+    /**
      * Startpunkt eines Threads. Dieser dient zur Zugberechnung.
      */
     @Override

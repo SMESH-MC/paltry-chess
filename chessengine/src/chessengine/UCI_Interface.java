@@ -41,5 +41,13 @@ public interface UCI_Interface {
      */
     void input() throws Exception;
 
+    public int getQueenValue();
+    
+    public int getRookValue();
+    
+    public int getKnightValue();
+  
+    public int getBishopValue();
+    
     void run();
 }
