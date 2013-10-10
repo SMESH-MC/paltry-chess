@@ -127,7 +127,7 @@ public class King extends OberFigur{
 	}
 	private boolean istLangeWeiseRochade(boolean istWeis){
 		return (schachBrett.getIsEmpty(1,0) && schachBrett.getIsEmpty(2,0) && schachBrett.getIsEmpty(3,0)
-				&& !istBedroht(1,0,istWeis) && !istBedroht(2,0,istWeis) && !istBedroht(3,0,istWeis) && !istBedroht(4,0,istWeis));
+				 && !istBedroht(2,0,istWeis) && !istBedroht(3,0,istWeis) && !istBedroht(4,0,istWeis));
 	}
 	private boolean istKurzeSchwarzeRochade(boolean istWeis){
 		return (schachBrett.getIsEmpty(5,7) && schachBrett.getIsEmpty(6,7)
@@ -135,7 +135,7 @@ public class King extends OberFigur{
 	}
 	private boolean istLangeSchwarzeRochade(boolean istWeis){
 		return (schachBrett.getIsEmpty(1,7)  && schachBrett.getIsEmpty(2,7) && schachBrett.getIsEmpty(3,7)
-				&& !istBedroht(1,7,istWeis) && !istBedroht(2,7,istWeis) && !istBedroht(3,7,istWeis) && !istBedroht(4,7,istWeis));
+				 && !istBedroht(2,7,istWeis) && !istBedroht(3,7,istWeis) && !istBedroht(4,7,istWeis));
 	}
 	/**
 	 * loesch alle eigenen Rochade moeglich raus und speicher die rochade moeglichkeiten des gegespieler

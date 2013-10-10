@@ -1,13 +1,11 @@
 package chessengine.tools;
 import java.util.LinkedList;
-import java.util.Stack;
-import java.awt.List;
+
 import java.io.*;
 
 import chessengine.movegenerator.MoveGeneratorInterface;
 import chessengine.movegenerator.MoveGenerator;
 import chessengine.figurbewertung.ZugGeneratorPhilip;
-import chessengine.*;
 /**
  * 
  * @author Philip Hunsicker
@@ -19,10 +17,14 @@ public class ZuggeneratorTest {
 	private static MoveGeneratorInterface generator;
 	private StringBuffer errorLog = new StringBuffer();
 	private StringBuffer bericht = new StringBuffer();
-	private boolean farbwechsel ;
-	private boolean ishochzeahlen;
-	//private String ordner;
-	private boolean onlyFenAusgabe;
+	
+	private boolean farbwechsel = false ;
+	private boolean ishochzeahlen = false;
+	private boolean onlyFenAusgabe = true;
+	
+//	private String dropboxPfad = "E:\Programme\Dropbox\schachengine\Tests\";
+	private String dropboxPfad = "E:/Programme/Dropbox/schachengine/Tests/";
+	//private String dropboxPfad = "";
 	public static void main (String[] args){
 
 		 ZuggeneratorTest test = new ZuggeneratorTest();
@@ -35,15 +37,14 @@ public class ZuggeneratorTest {
 
 		generator = new MoveGenerator();
 	    //generator = new ZugGeneratorPhilip();
-		farbwechsel = false;
-		ishochzeahlen = false;
-		onlyFenAusgabe = true;
-		
-		teste("Testlauf Bauer Weis: ","pawnwhite.txt");
-		//teste("Testlauf Bauer black:","pawnblack.txt");
 
-		teste("Testlauf Knight Weis:","knightwhite.txt");
+		//teste("Testlauf Bauer Weis: ","pawnwhite.txt");  //zuviel bauer zuwenig koenig??
+		teste("Testlauf Bauer Weis: ","pawnwhite2.txt");
+
+		//teste("Testlauf Bauer black:","pawnblack.txt"); // a 2 problem und der absturz ruiniert meinen test
+		teste("Testlauf Bauer black2:","pawnblack2.txt");
 		
+		teste("Testlauf Knight Weis:","knightwhite.txt");
 		teste("Testlauf Knight Black:","knightblack.txt");
 		teste("Testlauf Bishop Weis:","bishopwhite.txt");
 		teste("Testlauf Bishop black:","bishopblack.txt");
@@ -52,30 +53,32 @@ public class ZuggeneratorTest {
 		teste("Testlauf Queen white:","queenwhite.txt");
 		teste("Testlauf Queen black:","queenblack.txt");
 		
-		teste("Testlauf Rochade+Koenig b:","rochadeblack.txt");
-		teste("Testlauf Rochade+Koenig b1:","rochadeblack1.txt");
-		teste("Testlauf Rochade+Koenig b2:","rochadeblack2.txt");
-		teste("Testlauf Rochade+Koenig b3:","rochadeblack3.txt");
-		teste("Testlauf Rochade+Koenig b4:","rochadeblack4.txt");
-		teste("Testlauf Rochade+Koenig b5:","rochadeblack5.txt");
-		teste("Testlauf Rochade+Koenig w:","rochadewhite.txt");
-		teste("Testlauf Rochade+Koenig w1:","rochadewhite1.txt");
-		teste("Testlauf Rochade+Koenig w2:","rochadewhite2.txt");
-		teste("Testlauf Rochade+Koenig w3:","rochadewhite3.txt");
-		teste("Testlauf Rochade+Koenig w4:","rochadewhite4.txt");
-		teste("Testlauf Rochade+Koenig w5:","rochadewhite5.txt");
+		teste("Testlauf Rochade+Koenig <<b>>:","rochadeblack.txt");
+		teste("Testlauf Rochade+Koenig <<b1>>:","rochadeblack1.txt");
+		teste("Testlauf Rochade+Koenig <<b2>>:","rochadeblack2.txt");
+		teste("Testlauf Rochade+Koenig <<b3>>:","rochadeblack3.txt");
+		teste("Testlauf Rochade+Koenig <<b4>>:","rochadeblack4.txt");
+		teste("Testlauf Rochade+Koenig <<b5>>:","rochadeblack5.txt");
+		teste("Testlauf Rochade+Koenig <<w>>:","rochadewhite.txt");
+		teste("Testlauf Rochade+Koenig <<w1>>:","rochadewhite1.txt");
+		teste("Testlauf Rochade+Koenig <<w2>>:","rochadewhite2.txt");
+		teste("Testlauf Rochade+Koenig <<w3>>:","rochadewhite3.txt");
+		teste("Testlauf Rochade+Koenig <<w4>>:","rochadewhite4.txt");
+		teste("Testlauf Rochade+Koenig <<w5>>:","rochadewhite5.txt");
 		
 		System.out.println(bericht);
 		System.out.println(errorLog);
 	}
 	public void teste(String text,String pfad){
 		LinkedList<ProtokollSegment> protokoll;
-		
 		try
 		{
 			bericht.append("\n"+text+"\t ");
 			protokoll = testProtokollEinlesen(pfad);
+			
+			
 			bericht.append(testDurchlauf( protokoll ,text));
+			
 		}
 		catch ( Exception e )
 		{
@@ -99,7 +102,7 @@ public class ZuggeneratorTest {
 			LinkedList<ProtokollSegment> protokolle = new LinkedList<ProtokollSegment>();
 		      try {
 		            BufferedReader bIn = new BufferedReader(
-                            new FileReader(filename));
+                            new FileReader((dropboxPfad+filename)));
 		            ausgangsFen= bIn.readLine();
 		            while (( zeile = bIn.readLine()) != null){
 		            	///////////////////////System.out.println(zeile);
@@ -153,10 +156,10 @@ public class ZuggeneratorTest {
 		String fen="";
 		fen = protokoll.pop().getFen();
 		if(onlyFenAusgabe){
-			errorLog.append("--------------" +text+" :"+fen+"     ---------------------------------\n");
+			errorLog.append("--------------------------" +text+" :"+fen+"     ---------------------------------\n");
 			
 		}else{
-			errorLog.append("-------------------" +text+" -----------------------------------  \n"+fenAusgabe(fen));
+			errorLog.append("-------------------------" +text+" -----------------------------------  \n"+fenAusgabe(fen));
 		}
 		generator.setFEN(fen);
 		LinkedList<String> ergebnis = generator.getZuege();
@@ -229,8 +232,6 @@ public class ZuggeneratorTest {
 			}else{
 				buffer.append(fenAusgabe(ergebnis.pop()));
 			}
-			
-			
 		}
 		
 		return buffer.toString();
