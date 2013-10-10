@@ -237,13 +237,14 @@ implements Definitions {
 					case knight_b: 	for (byte b : knight_moves) {if (i - b == zielFeld){return true;} }
 						break;
 					//berechne mit Hilfsmethode, ob schwarze Dame das Zielfeld schlagen koennte und gib, falls ja, true aus  
-					case queen_b : 	if (slidingZug(queen_moves, (byte)i, board, zielFeld)) {return true;};
+					case queen_b : 	if (slidingPieceMove(queen_moves, (byte)i, board, zielFeld)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob schwarzer Laeufer das Zielfeld schlagen koennte und gib, falls ja, true aus
-					case bishop_b: 	if (slidingZug(bishop_moves, (byte)i, board, zielFeld)) {return true;};
+					case bishop_b: 	if (slidingPieceMove(bishop_moves, (byte)i, board, zielFeld)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob schwarzer Turm das Zielfeld schlagen koennte und gib, falls ja, true aus						
-					case rook_b : 	if (slidingZug(rook_moves, (byte)i, board, zielFeld)) {return true;};
+					case rook_b : 	if (slidingPieceMove(rook_moves, (byte)i, board, zielFeld)) {return true;};
+						//if (slidingZug(rook_moves, (byte)i, board, zielFeld)) {return true;};
 						break;
 					//addiere das Feld, auf dem der schwarze Koenig steht, mit seinen moegliche Schlagzuegen und
 					//gib true aus, wenn er auf das Zielfeld schlagen kann
@@ -272,13 +273,13 @@ implements Definitions {
 					case knight_w: 	for (byte b : knight_moves) {if (i + b == zielFeld){return true;} }
 						break;
 					//berechne mit Hilfsmethode, ob weisse Dame das Zielfeld schlagen koennte und gib, falls ja, true aus  
-					case queen_w : 	if (slidingZug(queen_moves, (byte)i, board, zielFeld)) {return true;};
+					case queen_w : 	if (slidingPieceMove(queen_moves, (byte)i, board, zielFeld)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob weisser Laeufer das Zielfeld schlagen koennte und gib, falls ja, true aus
-					case bishop_w: 	if (slidingZug(bishop_moves, (byte)i, board, zielFeld)) {return true;};
+					case bishop_w: 	if (slidingPieceMove(bishop_moves, (byte)i, board, zielFeld)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob weisser Turm das Zielfeld schlagen koennte und gib, falls ja, true aus						
-					case rook_w : 	if (slidingZug(rook_moves, (byte)i, board, zielFeld)) {return true;};
+					case rook_w : 	if (slidingPieceMove(rook_moves, (byte)i, board, zielFeld)) {return true;};
 						break;
 					//addiere das Feld, auf dem der weisse Koenig steht, mit seinen moegliche Schlagzuegen und
 					//gib true aus, wenn er auf das Zielfeld schlagen kann
@@ -295,7 +296,6 @@ implements Definitions {
 		return false;
 	}
 
-		
 	/**
 	 * Hilfsmethode zur Schleifenberechnung von Figuren, die beliebig viele Felder ziehen duerfen
 	 * 
@@ -305,6 +305,37 @@ implements Definitions {
 	 * @param	zielfeld	Das zu ueberpruefende Zielfeld
 	 * @return true = Figur vom Startfeld bedroht das Zielfeld
 	 */
+	private boolean slidingPieceMove(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld) {
+		//fuer jede Schrittrichtung
+		outer:
+			for (byte b : erlaubteZuege) {
+				//gehe ersten Schritt und breche ab, wenn der Schritt auﬂerhalb des Bretts endet. Zaehle nach jedem Durchlauf einen Schritt weiter
+				for (int nextFeld = startfeld+b; (nextFeld & 136) == 0; nextFeld+=b) {
+					if (nextFeld == zielfeld) {return true;} //gib true aus, wenn der Schritt auf dem zu ueberpruefenden Feld gelandet ist
+					if (board[nextFeld] != 0) {	//wenn auf dem Feld keine Figur steht, gehe zur Schleife, die einen Schritt weiter macht
+						if (board[nextFeld] == king_w) { //wenn auf dem Feld der Koenig steht, gib true aus
+							return true;
+						} else {
+							continue outer;
+						}
+					}
+				}
+			}
+		//wenn keine Bedrohung gefunden wurde, gibt false zurueck
+		return false;
+	}
+		
+
+	/**
+	 * Hilfsmethode zur Schleifenberechnung von Figuren, die beliebig viele Felder ziehen duerfen
+	 * 
+	 * @param	erlaubteZuege	Die moeglichen Schritte der Figur
+	 * @param	startfeld	Das Startfeld der Figur
+	 * @param	board	Die aktuelle Stellung als 0x88-Board
+	 * @param	zielfeld	Das zu ueberpruefende Zielfeld
+	 * @return true = Figur vom Startfeld bedroht das Zielfeld
+	 */
+/*
 	private boolean slidingZug(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld) {
 		//Initialisierung der return-Variable (true = zielfeld kann mit erlaubteZuege von startfeld aus erreicht werden) 
 		boolean zielfeldSchlagbar = false;
@@ -317,7 +348,7 @@ implements Definitions {
 			if ((nextFeld & 136) == 0) {
 				if (nextFeld == zielfeld) { //wenn dieses naechste moegliche Zielfeld das uebergebene, zu ueberpruefende zielfeld ist 
 					return true;	//gib zurueck, dass zielfeld erreicht werden kann
-				}/* else { //wenn das naechste moegliche Zielfeld nicht das uebergebene, zu ueberpruefende zielfeld ist
+				} else { //wenn das naechste moegliche Zielfeld nicht das uebergebene, zu ueberpruefende zielfeld ist
 					//wenn dieses naechste moegliche Zielfeld frei ist
 					if (board[zielfeld] == 0) {
 						//setze die durchgefuehrte Schrittrichtung als einzigen erlaubten Zug in ein Array
@@ -325,12 +356,12 @@ implements Definitions {
 						//uebergib diese Zugrichtung nochmals der Methode mit dem neuen Startfeld, das jetzt eine Schrittweite weiter liegt
 						zielfeldSchlagbar = slidingZug(zugrichtung, (byte)nextFeld, board, (byte)zielfeld);											
 					}
-				}*/
+				}
 			}
 		}
 		return zielfeldSchlagbar;
 	}
-	
+*/
 	/**
 	 * Hilfsmethode, die einen Rochaden-Zug zu der Liste der moeglichen Rochaden-Zuege hinzufuegt
 	 * 
