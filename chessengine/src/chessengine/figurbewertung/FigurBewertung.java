@@ -37,9 +37,9 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	
 
 	public FigurBewertung(){
-		this(  QUEEN_DEFAULT, BISHOP_DEFAULT , KNIGHT_DEFAULT, ROOK_DEFAULT, PAWN_DEFAULT);
+		this(  QUEEN_DEFAULT, BISHOP_DEFAULT , KNIGHT_DEFAULT, ROOK_DEFAULT);
 	}
-	public FigurBewertung( int bewertungQueen, int bewertungRook, int bewertungBishop, int bewertungKnight, int bewertungPawn){
+	public FigurBewertung( int bewertungQueen, int bewertungRook, int bewertungBishop, int bewertungKnight){
 		
 		 //Brett brett = new Array2Dim();
 		 Brett brett = new X88();
@@ -51,7 +51,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		 bishop = new Bishop( bewertungBishop, linienLaeufer );
 		 knight = new Knight( bewertungKnight, linienLaeufer );
 		 rook = new Rook( bewertungRook , linienLaeufer);
-		 pawn = new Pawn( bewertungPawn , linienLaeufer);
+		 pawn = new Pawn( PAWN_DEFAULT , linienLaeufer);
 		 queen = new Queen( bewertungQueen,  bishop, rook);
 		 king = new King( KING_DEFAULT, linienLaeufer, knight.getMuster(), rook.getMuster(), bishop.getMuster() );
 	}

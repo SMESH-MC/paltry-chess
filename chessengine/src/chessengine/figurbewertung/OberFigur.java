@@ -11,26 +11,26 @@ public abstract class OberFigur{
 
 
 
-	protected static int bewertung;
+	protected  int bewertung;
 	//boolean istWeis;
 	//Position position;
 	
 	public OberFigur(int bewertung) {
 			super();
-			//this.bewertung = bewertung;
+			this.bewertung = bewertung;
 	}
 		
 	public abstract LinkedList<String> ermittleZuege(SchachPosition position, boolean istWeis) ;
 
 
-	public static int getBewertung() {
+	public int getBewertung() {
 		return bewertung;
 	}
 
 
-	/*public static void setBewertung(int bewertung) {
+	public void setBewertung(int bewertung) {
 		this.bewertung = bewertung;
-	}*/
+	}
 
 
 
