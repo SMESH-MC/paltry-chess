@@ -1,7 +1,9 @@
 package chessengine.moveevaluator;
 
 import java.util.LinkedList;
+
 import chessengine.Board;
+import chessengine.figurbewertung.FigurBewertung;
 
 /**
  * Klasse beschreibt einen Knoten im Zugbaum.
@@ -33,19 +35,20 @@ public class MoveEvaluatorTreeNode {
          * @param board
          * @param BoardFens 
          */
-	public MoveEvaluatorTreeNode(Board board, LinkedList<String> BoardFens){
+	public MoveEvaluatorTreeNode(Board board, LinkedList<String> BoardFens, FigurBewertung figurBewertung){
 		this.Board = board;
 		this.BoardValue = board.getBoardValue();
-		setChildBoards(BoardFens);
+		setChildBoards(BoardFens, figurBewertung);
 		}
 	
         /**
          * Setter-Methode fuer Childboards
          * @param BoardFens 
+         * @param figurBewertung 
          */
-	public void setChildBoards(LinkedList<String> BoardFens) {
+	public void setChildBoards(LinkedList<String> BoardFens, FigurBewertung figurBewertung) {
 		for (int i = 0; i < BoardFens.size(); i++){
-			this.ChildBoards.addLast(new MoveEvaluatorTreeNode(new Board (BoardFens.get(i))));
+			this.ChildBoards.addLast(new MoveEvaluatorTreeNode(new Board (BoardFens.get(i), figurBewertung)));
 		} 
 		this.hasChild = BoardFens.size();
 	}

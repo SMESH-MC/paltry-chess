@@ -22,6 +22,7 @@ public class MoveEvaluatorTree {
 	private LinkedList<String> moveList;
 	private String ausgangsFen;
 	private String moveFen;
+	private FigurBewertung figurBewertung;
 	
 	
         /**
@@ -29,6 +30,7 @@ public class MoveEvaluatorTree {
          * @param board 
          */
 	public MoveEvaluatorTree(String fen, FigurBewertung figurBewertung, Manager manager) {
+		this.figurBewertung = figurBewertung;
 		this.ausgangsFen = fen;
 		this.root = new MoveEvaluatorTreeNode( new Board(fen, figurBewertung));
 		this.movegen = new MoveGenerator();
@@ -53,20 +55,20 @@ public class MoveEvaluatorTree {
 		
 		//Tiefe 1
 		moveList = movegen.getZuege();
-		root.setChildBoards( moveList );
+		root.setChildBoards( moveList, figurBewertung );
 		countOfRootLeaf = root.hasChild();
 		//Tiefe 2
 		countOfRootLeaf = root.hasChild();
 		for (int i = 0 ; i < countOfRootLeaf ; i++) {
 			currentNode = root.getChildAtPos(i);
-			currentNode.setChildBoards( movegen.getZuege() );
+			currentNode.setChildBoards( movegen.getZuege() , figurBewertung );
 		}
 		//Tiefe 3
 		for (int j = 0 ; j < countOfRootLeaf ; j++ ) {
 			parentNode = root.getChildAtPos(j);
 			for (int k = 0 ; j < parentNode.hasChild() ; k++) {
 				currentNode = parentNode.getChildAtPos(k);
-				currentNode.setChildBoards( movegen.getZuege() );
+				currentNode.setChildBoards( movegen.getZuege() , figurBewertung );
 			}
 		}
 	}
