@@ -198,6 +198,7 @@ public class UCI implements UCI_Interface, Runnable {
                 break;
             case ROOK:
                 rookValue = Integer.parseInt(cmdArray[4]);
+                break;
         }
     }
 
