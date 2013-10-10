@@ -95,5 +95,9 @@ public class MoveEvaluatorTreeNode {
 	public int getBoardValue() {
 		return this.BoardValue;
 	}
+	
+	public String getBoardFen() {
+		return this.getBoardFen();
+	}
 }
 
