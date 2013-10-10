@@ -12,11 +12,8 @@ public abstract class OberFigur{
 
 
 	protected  int bewertung;
-	//boolean istWeis;
-	//Position position;
 	
 	public OberFigur(int bewertung) {
-			super();
 			this.bewertung = bewertung;
 	}
 		

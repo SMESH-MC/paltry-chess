@@ -10,7 +10,7 @@ import chessengine.tools.SchachPosition;
 
 
 /**
- *  erzeugt zugmöglichkeiten für klassische linieneinheiten wie Läufer und Turm und König
+ *  erzeugt zugmoeglichkeiten für klassische linieneinheiten wie Laeufer und Turm und Koenig
  *  und generiet Fen mithilfe des FendDecoder
  * @author Philip Hunsicker
  * Stand : 25.09.2013
@@ -21,10 +21,7 @@ public class LinienLaeufer {
 	protected Brett neuesBrett;
 	protected FenDecoder decoder;
 	
-	public LinienLaeufer() {
 
-		// TODO Auto-generated constructor stub
-	}
 /**
  * 
  * @param position

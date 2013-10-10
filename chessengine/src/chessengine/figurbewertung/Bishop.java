@@ -15,7 +15,6 @@ public class Bishop extends OberFigur{
 	public Bishop(int bewertung, LinienLaeufer linienlaeufer) {
 		super(bewertung);
 		this.linienlaeufer =  linienlaeufer;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
