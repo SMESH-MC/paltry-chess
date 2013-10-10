@@ -16,9 +16,10 @@ public class MoveEvaluator {
 	private MoveEvaluatorTree moveTree;
 	
 	private MoveEvaluatorTreeNode root;
-	private LinkedList fenlist;
+	private LinkedList fenList;
 	
 	public String currentFen;
+	public String ausgabeFEN;
 	
         /**
          * Methode stoesst das aufbauen des Zugbaumes an.
@@ -34,7 +35,7 @@ public class MoveEvaluator {
 	private void Movelist() {
 		MoveGenerator mg1 = new MoveGenerator();
 		mg1.setFEN(currentFen);
-		fenlist=mg1.getZuege();
+		fenList=mg1.getZuege();
 	}
 	
 	
@@ -47,6 +48,13 @@ public class MoveEvaluator {
 	
 	public void setRoot(MoveEvaluatorTreeNode root) {
 		this.root = root;
+	}
+
+
+	public String getAusgabeFEN() {
+		Movelist();
+		fakeBestMove(fenList);
+		return ausgabeFEN;
 	}
 	
 }
