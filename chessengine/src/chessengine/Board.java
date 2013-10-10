@@ -188,10 +188,6 @@ public class Board implements  BoardInterface  {
 		int i = 0; //pos im Feld
 		Character fenPart;
 		int pos = 0; //pos in FenString
-		
-		if (s.equals(boardStart) ) {
-			InitBoard();
-		}
 	
 		while ( (s != " ") || (i < 128) ) {
 			
@@ -243,6 +239,8 @@ public class Board implements  BoardInterface  {
 				break;
 			case '/':
 				i = i + 7;
+				break;
+			default:
 				break;
 			}
 			i++;
