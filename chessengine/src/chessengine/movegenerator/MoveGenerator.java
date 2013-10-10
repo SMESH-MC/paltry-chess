@@ -209,7 +209,6 @@ implements MoveGeneratorInterface, Definitions {
 		int zielfeld = startfeld + erlaubteZuege[0];
 		//wenn der Zug noch auf dem Brett enden wuerde
 		if ((zielfeld & 136) == 0) {
-			if ((zielfeld & 136) == 0) {
 				//Wenn Zielfeld vor dem Bauern leer ist, fuehre Schritt durch 
 				if (neuesBoard[zielfeld] == 0) {
 					//ruecke Figur
@@ -218,10 +217,11 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
+					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(boardNachPromotionTest);
 				}
-			}
+			
 		}
 	}
 
@@ -283,19 +283,21 @@ implements MoveGeneratorInterface, Definitions {
 		for (byte b : erlaubteZuege) {
 			//berechne das Zielfeld
 			int zielfeld = startfeld + b;
-			//Wenn die gegnerische Farbe auf dem Zielfeld steht 
-			if ((weissAmZug && board[zielfeld] < 0) || (!weissAmZug && board[zielfeld] > 0)) {
-				byte[] neuesBoard = board.clone();
-				//ziehe eigene figur = schlage Gegner
-				neuesBoard[zielfeld] = neuesBoard[startfeld];
-				//Startfeld leeren
-				neuesBoard[startfeld] = 0;
-				//setze en passant zurueck
-				neuesBoard[125] = -1;
-				//Zug hinzufuegen
-				zugHinzufuegen(neuesBoard);
-			} 
-			
+			if ((zielfeld & 136) == 0) {
+				//Wenn die gegnerische Farbe auf dem Zielfeld steht
+				if ((weissAmZug && board[zielfeld] < 0) || (!weissAmZug && board[zielfeld] > 0)) {
+					byte[] neuesBoard = board.clone();
+					//ziehe eigene figur = schlage Gegner
+					neuesBoard[zielfeld] = neuesBoard[startfeld];
+					//Startfeld leeren
+					neuesBoard[startfeld] = 0;
+					//setze en passant zurueck
+					neuesBoard[125] = -1;
+					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
+					//Zug hinzufuegen
+					zugHinzufuegen(boardNachPromotionTest);
+				} 
+			}
 			/* en passant-Schlaege berechnen */
 			
 			//wenn en Passant-Schlag fuer weiss moeglich ist && weiss am Zug ist 
@@ -335,6 +337,27 @@ implements MoveGeneratorInterface, Definitions {
 		}
 	}
 
+	/**
+	 * Diese Methode prueft, ob das Zielfeld auf der gegnerischen Grundlinie liegt.
+	 * Da nur das Zielfeld nach einem Bauernzug ubergeben wird, wird hiermit die Promotion geprueft 
+	 * 
+	 * @param zielfeld Das Feld, auf dem die Figur (Bauer) gelandet ist
+	 * @return Das board nach eventueller Umwandlung
+	 */
+	
+	private byte[] umwandlung(byte[] board, int zielfeld, boolean weissAmZug) {
+		if (weissAmZug) {	//wenn weiss am Zug ist
+			if (112 <= zielfeld && zielfeld <= 119) { //wenn das Zielfeld auf der schwarzen Grundlinie liegt
+				board[zielfeld] = 7;
+			}
+		} else { //wenn schwarz am Zug ist
+			if (0 <= zielfeld && zielfeld <= 7) { //wenn das Zielfeld auf der weissen Grundlinie liegt
+				board[zielfeld] = -7;
+			}
+		}
+		return board;
+	}				
+	
 	/**
 	 * Diese Methode berechnet einen einfachen Zug (Springer)
 	 * 
