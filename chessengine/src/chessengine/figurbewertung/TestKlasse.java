@@ -32,14 +32,14 @@ public class TestKlasse {
 			//fen =  "8/P7/8/8/8/8/8/8 w KQkq - 0 1";
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
-			fen =  "r3k2r/p6p/8/8/8/8/Pk5P/R3K2R w KQkq - 2 2";
+			fen =  "r3k2r/p6p/8/2r5/3R4/8/P6P/R3K2R w KQkq - 2 2";
 			////////////fen = "k7/3P3P/8/4PpP1/5PP1/5P1B/6P1/K7 w - f6 0 1";
 			//enPassannt
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR w KQkq e6 0 1";
-			
-		fenAusgabe(fen,decoder);
-		System.out.println(fen);	
+	    Brett ausgabe = decoder.decodiere(fen);
+		fenAusgabe(ausgabe);
+		System.out.println("Alle Zuege fur farbe am Zug---------------------------------------"+fen);	
 
 		
 		//MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
@@ -55,17 +55,16 @@ public class TestKlasse {
 
 			//SchachPosition position = new SchachPosition(0,0);
 		
-			//System.out.println("Alle Zuege fur farbe am Zug---------------------------------------");
+			//System.out.println();
 			figuren.setFEN(fen);
 			LinkedList<String> liste2 = figuren.getZuege();
 			
 			
 			while(liste2.isEmpty() == false){
 			
+				ausgabe = decoder.decodiere(liste2.pop());
 				
-				
-				
-				fenAusgabe(liste2.pop(),decoder );
+				fenAusgabe( ausgabe );
 				
 				System.out.println(decoder.toString());
 			}
@@ -80,8 +79,8 @@ public class TestKlasse {
 	
 	
 	
-	public static void fenAusgabe(String ausgabeFen, FenDecoder decoder){
-		Brett ausgabe = decoder.decodiere(ausgabeFen);
+	public static void fenAusgabe(Brett ausgabe){
+		
 		
 		  System.out.println();
 		  if(ausgabe != null){
