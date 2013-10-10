@@ -369,15 +369,11 @@ public class UCI implements UCI_Interface, Runnable {
     }
 
     private void writeValues(File datei) throws IOException {
-        FileWriter ausgabe = null;
-        try {
-            ausgabe = new FileWriter(datei);
+        try (FileWriter ausgabe = new FileWriter(datei)) {
             ausgabe.write(queenValue + "\n" + rookValue + "\n" + knightValue
                     + "\n" + bishopValue);
         } catch (FileNotFoundException ex) {
             Logger.getLogger(UCI.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            ausgabe.close();
         }
     }
 
