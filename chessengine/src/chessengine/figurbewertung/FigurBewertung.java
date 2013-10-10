@@ -154,9 +154,10 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		while(!liste.isEmpty()){
 			lokalerFen = liste.pop();
 			inizialisiereBrett(lokalerFen); 
-			if(!king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ // Wenn koenig nach Zug nicht bedroht
+			/*if(!king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ // Wenn koenig nach Zug nicht bedroht
 				modifierteListe.add(lokalerFen);
-			}
+			}*/
+			///loesch bedrohte zuege 
 		}
 		return modifierteListe;
 	}

@@ -37,7 +37,7 @@ public class Pawn extends OberFigur {
 			if (istAufStartPosition(position, istWeis)
 					&& schachBrett.getIsEmpty(x, 3) && schachBrett.getIsEmpty(x,2) ) { // wenn auf Start Position
 													// und 2 vor ist Frei
-				moeglichkeiten.push( linienlaeufer.generiereEnPassantFenZiehe( x, 3, position, new SchachPosition( x, 2) ) ) ;
+				moeglichkeiten.push( linienlaeufer.generiereEnPassantFenZiehe( x, 3, position, new SchachPosition( x, 3) ) ) ;
 			}
 
 			if (y < 7) { // ist eins vorm Bauer ueberhaupt ein Feld
@@ -67,7 +67,7 @@ public class Pawn extends OberFigur {
 							moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(zielX, zielY, position , null, promotion));
 						}
 					}
-					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 5)   { // vorne rechts schlag per enPassant
+					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 6)   { // vorne rechts schlag per enPassant
 						moeglichkeiten.push( linienlaeufer.generiereEnPassantFenSchlage(zielX, zielY, position, new SchachPosition(zielX,y) ) );
 					}
 				}
@@ -80,7 +80,7 @@ public class Pawn extends OberFigur {
 			if (istAufStartPosition(position, istWeis)//2 felder regel
 					&& schachBrett.getIsEmpty(x,4) && schachBrett.getIsEmpty(x,5)) { // wenn auf Start Position
 													// und 2 vor ist Frei
-				moeglichkeiten.push( linienlaeufer.generiereEnPassantFenZiehe(x, 4, position ,new SchachPosition( x, 5)));
+				moeglichkeiten.push( linienlaeufer.generiereEnPassantFenZiehe(x, 4, position ,new SchachPosition( x, 6)));
 			}
 
 			if (y > 0) { // ist eins vorm Bauer ueberhaupt ein Feld

@@ -19,12 +19,10 @@ public class ZuggeneratorTest {
 	private static MoveGeneratorInterface generator;
 	private StringBuffer errorLog = new StringBuffer();
 	private StringBuffer bericht = new StringBuffer();
-	private int hochzeahlen ;
-	private char w ;
-	private char b ;
 	private boolean farbwechsel ;
 	private boolean ishochzeahlen;
-	
+	//private String ordner;
+	private boolean onlyFenAusgabe;
 	public static void main (String[] args){
 
 		 ZuggeneratorTest test = new ZuggeneratorTest();
@@ -39,9 +37,10 @@ public class ZuggeneratorTest {
 	    //generator = new ZugGeneratorPhilip();
 		farbwechsel = false;
 		ishochzeahlen = false;
-
+		onlyFenAusgabe = true;
+		
 		teste("Testlauf Bauer Weis: ","pawnwhite.txt");
-		teste("Testlauf Bauer black:","pawnblack.txt");
+		//teste("Testlauf Bauer black:","pawnblack.txt");
 
 		teste("Testlauf Knight Weis:","knightwhite.txt");
 		
@@ -58,12 +57,13 @@ public class ZuggeneratorTest {
 		teste("Testlauf Rochade+Koenig b2:","rochadeblack2.txt");
 		teste("Testlauf Rochade+Koenig b3:","rochadeblack3.txt");
 		teste("Testlauf Rochade+Koenig b4:","rochadeblack4.txt");
+		teste("Testlauf Rochade+Koenig b5:","rochadeblack5.txt");
 		teste("Testlauf Rochade+Koenig w:","rochadewhite.txt");
 		teste("Testlauf Rochade+Koenig w1:","rochadewhite1.txt");
 		teste("Testlauf Rochade+Koenig w2:","rochadewhite2.txt");
 		teste("Testlauf Rochade+Koenig w3:","rochadewhite3.txt");
 		teste("Testlauf Rochade+Koenig w4:","rochadewhite4.txt");
-		
+		teste("Testlauf Rochade+Koenig w5:","rochadewhite5.txt");
 		
 		System.out.println(bericht);
 		System.out.println(errorLog);
@@ -79,10 +79,10 @@ public class ZuggeneratorTest {
 		}
 		catch ( Exception e )
 		{
-		  bericht.append(" FEHLERHAFT ");
-		  bericht.append(":"+e);
-		  //System.err.printf(""+e+"\n");                 
-		}
+		 bericht.append(" FEHLERHAFT ");
+		 bericht.append(":"+e);
+		  System.err.printf(""+e+"\n");                 
+	 }
 		
 
 		
@@ -140,7 +140,7 @@ public class ZuggeneratorTest {
 		            protokolle.push( new  ProtokollSegment( ausgangsFen , ""));
 		      }
 		      catch ( IOException e ) {
-		        System.err.println( "cat: Fehler beim Verarbeiten von " + filename );
+		        System.err.println( "cat: Fehler beim Verarbeiten von " + filename +e);
 		        System.exit( 1 );
 		      }
 
@@ -152,7 +152,12 @@ public class ZuggeneratorTest {
 	public boolean testDurchlauf(LinkedList<ProtokollSegment> protokoll, String text){
 		String fen="";
 		fen = protokoll.pop().getFen();
-		
+		if(onlyFenAusgabe){
+			errorLog.append("--------------" +text+" :"+fen+"     ---------------------------------\n");
+			
+		}else{
+			errorLog.append("-------------------" +text+" -----------------------------------  \n"+fenAusgabe(fen));
+		}
 		generator.setFEN(fen);
 		LinkedList<String> ergebnis = generator.getZuege();
 		String suchFen;
@@ -165,7 +170,13 @@ public class ZuggeneratorTest {
 			meldung = protokoll.pop().getMeldung();
 			if(!  ergebnis.remove(suchFen  )){
 				testErgebnis = false;
-				errorLog.append("Fehler in "+text+":  "+suchFen+":"+meldung+" \n");
+				
+				if(onlyFenAusgabe){
+					errorLog.append("   Fehlende Zug:  ("+meldung+") :"+suchFen+" \n");
+				}else{
+					errorLog.append("   Fehlende Zug:  ("+meldung+") :  \n"+ fenAusgabe(suchFen));
+				}
+				
 			}
 		}
 		
@@ -173,12 +184,55 @@ public class ZuggeneratorTest {
 			testErgebnis = false;
 		}
 		if(!testErgebnis){
-			//errorLog.append("zuviele moeglichkeiten:"+ergebnis.toString());
+			errorLog.append("nicht aufgeloesete faelle:\n"+ aufloesen(ergebnis) );
 		}
 		
 		return testErgebnis;
 	}
 	
 	
-	
+
+
+	private String fenAusgabe(String fen){
+		StringBuffer buffer = new StringBuffer();
+		FenDecoder decoder = new FenDecoder(new X88());
+		Brett ausgabe = decoder.decodiere(fen);
+		buffer.append("\nX||0|1|2|3|4|5|6|7\n");
+		buffer.append("-------------------\n");
+		for(int i = 7; i >= 0 ;i--){
+			buffer.append(i+"||");
+			for(int k = 0 ; k < 8; k++){
+				
+				if(ausgabe.getIsEmpty(k, i) == false ){
+				
+				
+					buffer.append( ausgabe.getInhalt(k, i) + "|");//\t
+				}else{
+				
+					buffer.append(" |");
+				
+				}
+			
+			}
+			buffer.append("\n");
+		}
+		
+		
+		buffer.append("-------------------\n");
+		return buffer.toString();
+	}
+	private String aufloesen(LinkedList<String> ergebnis) {
+		StringBuffer buffer = new StringBuffer();
+		while(!ergebnis.isEmpty()){
+			if(onlyFenAusgabe){
+				buffer.append("        "+ergebnis.pop()+"\n");
+			}else{
+				buffer.append(fenAusgabe(ergebnis.pop()));
+			}
+			
+			
+		}
+		
+		return buffer.toString();
+	}
 }

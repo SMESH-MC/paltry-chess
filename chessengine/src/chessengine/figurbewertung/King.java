@@ -172,7 +172,9 @@ public class King extends OberFigur{
 				zeiger ++; // damit der zeiger gleichzeit mit dem i ingrementiert wird (++ halt) erspart eine schleifendurchlauf
 			}//for 
 		}//wenn mindest 1 rochade moeglich
-		
+		if(neueRochade.toString().equals("")){
+			neueRochade.append("-");
+		}
 
 		
 		return neueRochade.toString();
