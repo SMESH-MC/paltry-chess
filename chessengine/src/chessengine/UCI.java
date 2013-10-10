@@ -142,13 +142,13 @@ public class UCI implements UCI_Interface, Runnable {
     }
 
     private void options() {
-        System.out.println("option name" + QUEEN + "type spin default 900 "
+        System.out.println("option name " + QUEEN + " type spin default 900 "
                 + "min 100 max 1000\n");
-        System.out.println("option name" + ROOK + "type spin default 900 "
+        System.out.println("option name " + ROOK + " type spin default 900 "
                 + "min 100 max 1000\n");
-        System.out.println("option name" + BISHOP + "type spin default 900 "
+        System.out.println("option name " + BISHOP + " type spin default 900 "
                 + "min 100 max 1000\n");
-        System.out.println("option name" + NIGHT + "type spin default 900 "
+        System.out.println("option name " + NIGHT + " type spin default 900 "
                 + "min 100 max 1000\n");
     }
 
