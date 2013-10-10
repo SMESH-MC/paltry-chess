@@ -55,14 +55,6 @@ public class Board implements  BoardInterface  {
 			
 	}
 	
-	/* (non-Javadoc)
-	 * @see chessengine.BoardInterface#InitBoard()
-	 */
-	@Override
-	public void InitBoard() {
-		IncomingFen = boardStart;
-		FenDecode(IncomingFen);
-	}
 	
 	/* (non-Javadoc)
 	 * @see chessengine.BoardInterface#InitBoard(java.lang.String)
@@ -187,7 +179,7 @@ public class Board implements  BoardInterface  {
 		int[] ausgabe = new int[128];
 		int i = 0; //pos im Feld
 		Character fenPart;
-		int pos = 0; //pos in FenString
+		int pos = 1; //pos in FenString
 	
 		while ( (s != " ") || (i < 128) ) {
 			
