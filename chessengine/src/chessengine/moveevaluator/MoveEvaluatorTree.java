@@ -17,6 +17,7 @@ public class MoveEvaluatorTree {
 	private MoveEvaluatorTreeNode root;
 	private LinkedList<MoveEvaluatorTreeNode> childList; 
 	private MoveGenerator movegen;
+	private LinkedList<String> moveList;
 	
 	
         /**
@@ -46,7 +47,8 @@ public class MoveEvaluatorTree {
 		int countOfRootLeaf = 0;
 		
 		//Tiefe 1
-		root.setChildBoards( movegen.getZuege() );
+		moveList = movegen.getZuege();
+		root.setChildBoards( moveList );
 		countOfRootLeaf = root.hasChild();
 		//Tiefe 2
 		countOfRootLeaf = root.hasChild();
@@ -76,7 +78,7 @@ public class MoveEvaluatorTree {
          * Methode ermittelt den besten Zug und liefert diesen zurueck.
          * @return 
          */
-	public MoveEvaluatorTreeNode getBestMove() {
+	private int findBestMove() {
 		MoveEvaluatorTreeNode parrentNode;
 		MoveEvaluatorTreeNode currentNode;
 		int max = -10000;
@@ -106,14 +108,18 @@ public class MoveEvaluatorTree {
 		}
 		//Check nach bestem Zug
 		if (minPos == maxPosition) {
-			return root.getChildAtPos(maxPosition);	
+			return maxPosition;	
 		} else if ( (root.getChildAtPos(minPos).getBoardValue()) > (root.getChildAtPos(maxPosition).getBoardValue()+5)) {
-			return root.getChildAtPos(minPos);		
+			return minPos;		
 		} else {
-			return root.getChildAtPos(maxPosition);
+			return maxPosition;
 		}
 	}
 	
+	public String getBestMove(){
+		int positionOfMove = findBestMove();
+		return moveList.get(positionOfMove);
+	}
 	
 	public MoveEvaluatorTreeNode getRoot() {
 		return root;
