@@ -338,7 +338,7 @@ public class MoveEvaluatorTree {
 			if (s.substring(i, i+ 1).matches("[1-8]") ) {
 				int leerFelder = Integer.parseInt(s.substring(i, i+ 1)); 
 				for (int j = 0; j < leerFelder; j++) {
-					temp= temp + "0";
+					temp= temp + "1";
 				}
 			} else {
 				temp= temp + s.substring(i, i+ 1);
