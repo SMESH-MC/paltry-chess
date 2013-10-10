@@ -39,10 +39,13 @@ implements Definitions {
 		 * abschliessend in die Liste der moeglichen Rochaden.
 		 */
 		//Wenn Rochade noch moeglich && der Koenig auf seinem EroeffnungsFeld steht && der jeweilige Turm ebenfalls
-		if (board[121] == 1 && board[4] == king_w && board[7] == rook_w) {rochiereKurzWeiss(board);}
-		if (board[122] == 1 && board[4] == king_w && board[0] == rook_w) {rochiereLangWeiss(board);}
-		if (board[123] == 1 && board[116] == king_b && board[119] == rook_b) {rochiereKurzSchwarz(board);}
-		if (board[124] == 1 && board[116] == king_b && board[112] == rook_b) {rochiereLangSchwarz(board);}
+		if (board[120] == 1) { //wenn weiss am Zug ist
+			if (board[121] == 1 && board[4] == king_w && board[7] == rook_w) {rochiereKurzWeiss(board);}
+			if (board[122] == 1 && board[4] == king_w && board[0] == rook_w) {rochiereLangWeiss(board);}
+		} else {
+			if (board[123] == 1 && board[116] == king_b && board[119] == rook_b) {rochiereKurzSchwarz(board);}
+			if (board[124] == 1 && board[116] == king_b && board[112] == rook_b) {rochiereLangSchwarz(board);}
+		}
 	}
 
 
