@@ -1,8 +1,10 @@
 package chessengine.moveevaluator;
 
+import java.util.LinkedList;
+
+
 import chessengine.movegenerator.MoveGenerator;
 import chessengine.Board;
-
 /**
  * TODO Kommentar ergaenzen
  * @author 
@@ -10,36 +12,41 @@ import chessengine.Board;
 public class MoveEvaluator {
 	//Variablendefinitionen
 	private Board currentBoard;
-	private Board predictionBoard;
-	private int depth;
-	private int time;
-	private int timeRemaining;
-	private int userCancel;
-	
+
 	private MoveEvaluatorTree moveTree;
 	
 	private MoveEvaluatorTreeNode root;
+	private LinkedList fenlist;
 	
-	public String IncomingFEN;
-	public String OutgoingFEN;
+	public String currentFen;
 	
         /**
          * Methode stoesst das aufbauen des Zugbaumes an.
+         * @return 
          */
-	public void getMove() {
+	public MoveEvaluatorTreeNode getMove() {
+		root = null;
 		moveTree = new MoveEvaluatorTree(currentBoard);
-		zugBewerten();
+		return root;
 	}
 	
-        /**
-         * TODO Kommentar ergaenzen
-         */
-	private void zugBewerten() {
-		int max;
-		int min;
-		
+	
+	private void Movelist() {
+		MoveGenerator mg1 = new MoveGenerator();
+		mg1.setFEN(currentFen);
+		fenlist=mg1.getZuege();
 	}
 	
-
+	
+	private String fakeBestMove(LinkedList<String> fenList) { 
+		int randomWert = (int)Math.floor(Math.random() * fenList.size()); 
+		String ausgabeFEN = fenList.get(randomWert);
+		String currentFen = ausgabeFEN;
+		return ausgabeFEN; 
+	}
+	
+	public void setRoot(MoveEvaluatorTreeNode root) {
+		this.root = root;
+	}
 	
 }
