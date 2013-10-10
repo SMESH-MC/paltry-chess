@@ -295,7 +295,7 @@ public class Board implements  BoardInterface  {
 	 * @see chessengine.BoardInterface#getBoardValue()
 	 */
 	@Override
-	public int getBoardValue() {
+	public int getBoardValue(FigurBewertung bewertung) {
 
 		int figur;
 		int value = 0;
@@ -303,40 +303,40 @@ public class Board implements  BoardInterface  {
 			figur = boardArray[i];
 			switch (figur) {
 			case 1:
-				value -= Pawn.getBewertung();
+				value -= bewertung.getPawnBewertung();
 				break;
 			case 11:
-				value += Pawn.getBewertung();
+				value += bewertung.getPawnBewertung();
 				break;
 			case 2:
-				value -= Rook.getBewertung();
+				value -= bewertung.getRookBewertung();
 				break;
 			case 12:
-				value += Rook.getBewertung();
+				value += bewertung.getRookBewertung();
 				break;
 			case 3:
-				value -= Knight.getBewertung();
+				value -= bewertung.getKnightBewertung();
 				break;
 			case 13:
-				value += Knight.getBewertung();
+				value += bewertung.getKnightBewertung();
 				break;
 			case 4:
-				value -= Bishop.getBewertung();
+				value -= bewertung.getBishopBewertung();
 				break;
 			case 14:
-				value += Bishop.getBewertung();
+				value += bewertung.getBishopBewertung();
 				break;
 			case 5:
-				value -= Queen.getBewertung();
+				value -= bewertung.getQueenBewertung();
 				break;
 			case 15:
-				value += Queen.getBewertung();
+				value += bewertung.getQueenBewertung();
 				break;
 			case 6:
-				value -= King.getBewertung(); //koenig ueberpruefung auf ungueltige zeuge 100000
+				value -= bewertung.getKingBewertung(); //koenig ueberpruefung auf ungueltige zeuge 100000
 				break;
 			case 16:
-				value += King.getBewertung();
+				value += bewertung.getKingBewertung();
 				break;
 			default:
 				break;

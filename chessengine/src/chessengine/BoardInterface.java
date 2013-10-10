@@ -1,5 +1,7 @@
 package chessengine;
 
+import chessengine.figurbewertung.FigurBewertung;
+
 public interface BoardInterface {
 
         /**
@@ -49,7 +51,7 @@ public interface BoardInterface {
 	 * negativer wert ist ein vorteil fuer Schwarz
 	 * positiver wert ist ein vorteil fuer Weiss
 	 */
-	public abstract int getBoardValue();
+	public abstract int getBoardValue(FigurBewertung bewertung);
 
         /**
          * Methode gibt zurueck ob eine grosse Rochade moeglich ist.

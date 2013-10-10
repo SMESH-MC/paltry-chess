@@ -1,5 +1,7 @@
 package chessengine;
 
+import chessengine.figurbewertung.FigurBewertung;
+
 /**
  * Klasse zur Umschreibung des letzten Zug des Spielers in einen FEN String
  * Benutzung:
@@ -31,7 +33,7 @@ public class ToFen implements ToFenInterface {
 	private boolean rochadeKleinS;	// boolean fuer kleine schwarze Rochade
 	private char bewegteFigur;		// character der bewegten Figur
 	private byte aktuelleRochade;	// Gebrauch bei runRochade(), 0 = nix, 1 = grossW, 2 = kleinW, 3 = grossS, 4 = kleinS
-	
+	//private FigurBewertung bewertungKlasse; //TODO
 
 	/**
 	 * Konstruktor, benoetigt aktuelles Board + UCI Objektreferenz
@@ -39,6 +41,7 @@ public class ToFen implements ToFenInterface {
 	 * @param currentBoard aktuelles Board
 	 */
 	public ToFen(UCI uci, Board currentBoard) {
+		//this.bewertungKlasse = bewertungKlasse;//TODO
 		this.uci = uci;						// Initialisierung des UCI Objekts
 		this.currentBoard = currentBoard;	// Initialisierung des Board Objekts
 		initVariables();					// Initialisierung von allem anderen (ausgelagert)
@@ -63,7 +66,7 @@ public class ToFen implements ToFenInterface {
 		this.aktuelleRochade = 0;
 		this.rochadeGross = this.currentBoard.getRochadeGross();
 		this.rochadeKlein = this.currentBoard.getRochadeKlein();
-		this.boardValueOld = this.currentBoard.getBoardValue();
+		//this.boardValueOld = this.currentBoard.getBoardValue(bewertungKlasse); //TODO
 		initRochadeGross(rochadeGross);								// initiiert grosse Rochaden
 		initRochadeKlein(rochadeKlein);								// initiiert kleine Rochaden
 	}
@@ -88,7 +91,7 @@ public class ToFen implements ToFenInterface {
 		// und zuletzt dann zu dem richtigen char umgewandelt
 		this.bewegteFigur = figurNachFen(temp[getField(this.lastMove.substring(0, 2))]);	
 		this.currentBoard.boardArray = temp;
-		this.boardValueNew = this.currentBoard.getBoardValue();
+		//this.boardValueNew = this.currentBoard.getBoardValue(bewertungKlasse); //TODO
 	}
 	
 	/**
