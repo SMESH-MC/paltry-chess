@@ -187,7 +187,7 @@ public class Board implements  BoardInterface  {
 		
 		fenPart = s.charAt(pos);
 		
-		while ( (fenPart != ' ') || (i < 128) ) {
+		while ( (!fenPart.equals(' ')) || (i < 128) ) {
 			
 			fenPart = s.charAt(pos);
 			
@@ -234,6 +234,7 @@ public class Board implements  BoardInterface  {
 					ausgabe[i] = 0;
 					i++;
 				}
+				i--;
 				break;
 			case '/':
 				i = i + 8;
