@@ -213,7 +213,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else if ( ausgangsFen_a.length() < moveFen_a.length() ){
 				lineZiel = "a";
 				String ausgang = homologizeFen(ausgangsFen_a);
 				String nachZug = homologizeFen(moveFen_a);  
@@ -235,7 +235,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else if ( ausgangsFen_b.length() < moveFen_b.length() ) {
 				lineZiel = "b";
 				String ausgang = homologizeFen(ausgangsFen_b);
 				String nachZug = homologizeFen(moveFen_b);  
@@ -257,7 +257,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else if ( ausgangsFen_c.length() < moveFen_c.length() ) {
 				lineZiel = "c";
 				String ausgang = homologizeFen(ausgangsFen_c);
 				String nachZug = homologizeFen(moveFen_c);  
@@ -279,7 +279,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else if ( ausgangsFen_d.length() < moveFen_d.length() ) {
 				lineZiel = "d";
 				String ausgang = homologizeFen(ausgangsFen_d);
 				String nachZug = homologizeFen(moveFen_d);  
@@ -301,7 +301,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else if ( ausgangsFen_e.length() < moveFen_e.length() ) {
 				lineZiel = "e";
 				String ausgang = homologizeFen(ausgangsFen_e);
 				String nachZug = homologizeFen(moveFen_e);  
@@ -323,7 +323,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else if ( ausgangsFen_f.length() < moveFen_f.length() ) {
 				lineZiel = "f";
 				String ausgang = homologizeFen(ausgangsFen_f);
 				String nachZug = homologizeFen(moveFen_f);  
@@ -345,7 +345,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else  if ( ausgangsFen_g.length() < moveFen_g.length() ) {
 				lineZiel = "g";
 				String ausgang = homologizeFen(ausgangsFen_g);
 				String nachZug = homologizeFen(moveFen_g);  
@@ -367,7 +367,7 @@ public class MoveEvaluatorTree {
 						posStart = i + 1;
 					}
 				}
-			} else {
+			} else if ( ausgangsFen_h.length() < moveFen_h.length() ) {
 				lineZiel = "h";
 				String ausgang = homologizeFen(ausgangsFen_h);
 				String nachZug = homologizeFen(moveFen_h);  
