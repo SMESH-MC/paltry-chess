@@ -57,7 +57,7 @@ public interface FigurBewertungInterface {
 
 	public abstract int getPawnBewertung();
 
-	public  abstract void getQueenBewertung(int bewertung) ;
+	public  abstract void setQueenBewertung(int bewertung) ;
 
 	public  abstract void setBishopBewertung(int bewertung) ;
 

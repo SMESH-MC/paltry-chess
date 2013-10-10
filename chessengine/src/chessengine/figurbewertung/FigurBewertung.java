@@ -304,7 +304,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	}
 
 
-	public  void getQueenBewertung(int bewertung) {
+	public  void setQueenBewertung(int bewertung) {
 		queen.setBewertung(bewertung);
 	}
 
