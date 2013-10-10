@@ -27,6 +27,7 @@ public class MoveEvaluatorTreeNode {
 		this.Board = board;
 		this.BoardValue = board.getBoardValue();
 		this.hasChild = 0;
+                this.ChildBoards = new LinkedList<>();
 	}
 	
         /**
@@ -39,6 +40,7 @@ public class MoveEvaluatorTreeNode {
 		this.Board = board;
 		this.BoardValue = board.getBoardValue();
 		setChildBoards(BoardFens, figurBewertung);
+                this.ChildBoards = new LinkedList<>();
 		}
 	
         /**
@@ -48,7 +50,9 @@ public class MoveEvaluatorTreeNode {
          */
 	public void setChildBoards(LinkedList<String> BoardFens, FigurBewertung figurBewertung) {
 		for (int i = 0; i < BoardFens.size(); i++){
-			this.ChildBoards.addLast(new MoveEvaluatorTreeNode(new Board (BoardFens.get(i), figurBewertung)));
+                    Board board = new Board (BoardFens.get(i), figurBewertung);
+                    MoveEvaluatorTreeNode node = new MoveEvaluatorTreeNode( board);
+			this.ChildBoards.add(i,node);
 		} 
 		this.hasChild = BoardFens.size();
 	}
@@ -97,7 +101,7 @@ public class MoveEvaluatorTreeNode {
 	}
 	
 	public String getBoardFen() {
-		return this.getBoardFen();
+		return this.Board.getBoardFen();
 	}
 }
 
