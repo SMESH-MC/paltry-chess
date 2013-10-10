@@ -32,7 +32,7 @@ public class TestKlasse {
 			//fen =  "8/P7/8/8/8/8/8/8 w KQkq - 0 1";
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
-			fen =  "rnbkqbnr/8/p7/PPPP4/3pp3/4pppp/8/RNBQKBNR w KQkq - 0 1";
+			fen =  "r3k2r/p6p/8/8/8/8/Pk5P/R3K2R w KQkq - 2 2";
 			////////////fen = "k7/3P3P/8/4PpP1/5PP1/5P1B/6P1/K7 w - f6 0 1";
 			//enPassannt
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
@@ -43,12 +43,12 @@ public class TestKlasse {
 		schachBrett = decoder.decodiere(fen);
 		//arrayAusgabe( schachBrett);
 		
-		MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
-		//MoveGeneratorInterface figuren= new MoveGenerator();
+		//MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
+		MoveGeneratorInterface figuren= new MoveGenerator();
 		
 		long zeit = 0;
-		int durchlaeufe = 64000;
-		//int durchlaeufe = 1;
+		//int durchlaeufe = 64000;
+		int durchlaeufe = 1;
 		Long time = System.currentTimeMillis();	
 		
 		for(int i = 0 ;i < durchlaeufe;i++){
@@ -60,12 +60,12 @@ public class TestKlasse {
 			figuren.setFEN(fen);
 			LinkedList<String> liste2 = figuren.getZuege();
 			
-			/*
+			
 			while(liste2.isEmpty() == false){
 			
 				fenAusgabe(liste2.pop(),decoder );
 				
-			}*/
+			}
 			//System.out.print(".");
 		}
 		zeit = System.currentTimeMillis()-time;
@@ -79,7 +79,7 @@ public class TestKlasse {
 	
 	public static void fenAusgabe(String ausgabeFen, FenDecoder decoder){
 		Brett ausgabe = decoder.decodiere(ausgabeFen);
-		/*
+		
 		  System.out.println();
 		  if(ausgabe != null){
 			System.out.println("X||0|1|2|3|4|5|6|7");
@@ -105,7 +105,7 @@ public class TestKlasse {
 			
 			System.out.println("-------------------");
 		}
-		*/
+		
 	    System.out.println(decoder.toString());
 	}
 	

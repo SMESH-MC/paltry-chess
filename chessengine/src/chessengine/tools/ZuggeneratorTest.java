@@ -18,8 +18,8 @@ public class ZuggeneratorTest {
 	private StringBuffer errorLog = new StringBuffer();
 	private StringBuffer bericht = new StringBuffer();
 	
-	private boolean farbwechsel = false ;
-	private boolean ishochzeahlen = false;
+	private boolean farbwechsel = true ;
+	private boolean ishochzeahlen = true;
 	private boolean onlyFenAusgabe = true;
 	
 //	private String dropboxPfad = "E:\Programme\Dropbox\schachengine\Tests\";

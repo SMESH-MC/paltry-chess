@@ -193,7 +193,7 @@ public class FigurBewertung implements FigurBewertungInterface  {
 	/* (non-Javadoc)
 	 * @see figurbewertung.FigurBewewertung#getBewertung(char)
 	 */
-	/*public static int getBewertung (char typ){
+	public int getBewertung (char typ){
 		int bewertung = 0;
 		switch ( typ )
 	    {

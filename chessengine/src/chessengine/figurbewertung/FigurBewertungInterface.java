@@ -33,7 +33,7 @@ public interface FigurBewertungInterface {
 	/* (non-Javadoc)
 	 * @see figurbewertung.FigurBewewertung#getBewertung(char)
 	 */
-	/*public  abstract  int  getBewertung(char typ); // getBewertung
+	public  abstract  int  getBewertung(char typ); // getBewertung
 
 	/**
 	 * liefert die Bewegungsmuster  fuer einfache Bewegungen
@@ -43,7 +43,7 @@ public interface FigurBewertungInterface {
 	 * @param typ figur : qbrnpk
 	 * @return Stack mit Bewegungsmuster
 	 */
-	/*public abstract Stack<SchachPosition> getMuster(char typ); // getBewertung
+	public abstract Stack<SchachPosition> getMuster(char typ); // getBewertung
 
 	public abstract int getKingBewertung();
 
@@ -56,5 +56,5 @@ public interface FigurBewertungInterface {
 	public abstract int getRookBewertung();
 
 	public abstract int getPawnBewertung();
-*/
+
 }

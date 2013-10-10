@@ -317,7 +317,7 @@ implements Definitions {
 			if ((nextFeld & 136) == 0) {
 				if (nextFeld == zielfeld) { //wenn dieses naechste moegliche Zielfeld das uebergebene, zu ueberpruefende zielfeld ist 
 					return true;	//gib zurueck, dass zielfeld erreicht werden kann
-				} else { //wenn das naechste moegliche Zielfeld nicht das uebergebene, zu ueberpruefende zielfeld ist
+				}/* else { //wenn das naechste moegliche Zielfeld nicht das uebergebene, zu ueberpruefende zielfeld ist
 					//wenn dieses naechste moegliche Zielfeld frei ist
 					if (board[zielfeld] == 0) {
 						//setze die durchgefuehrte Schrittrichtung als einzigen erlaubten Zug in ein Array
@@ -325,7 +325,7 @@ implements Definitions {
 						//uebergib diese Zugrichtung nochmals der Methode mit dem neuen Startfeld, das jetzt eine Schrittweite weiter liegt
 						zielfeldSchlagbar = slidingZug(zugrichtung, (byte)nextFeld, board, (byte)zielfeld);											
 					}
-				}
+				}*/
 			}
 		}
 		return zielfeldSchlagbar;
