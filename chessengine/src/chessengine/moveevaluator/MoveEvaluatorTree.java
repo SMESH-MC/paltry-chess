@@ -99,7 +99,9 @@ public class MoveEvaluatorTree {
 	}
 	
 	
-	
+	public MoveEvaluatorTreeNode getRoot() {
+		return root;
+	}
 	
 	
 }
