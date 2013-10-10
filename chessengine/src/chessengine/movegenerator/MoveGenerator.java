@@ -205,20 +205,22 @@ implements MoveGeneratorInterface, Definitions {
 	 */
 	private void berechneZugBauer(byte[] board, byte startfeld, boolean weissAmZug, byte[] erlaubteZuege) {
 		byte[] neuesBoard = board.clone();
-		
+
 		int zielfeld = startfeld + erlaubteZuege[0];
 		//wenn der Zug noch auf dem Brett enden wuerde
 		if ((zielfeld & 136) == 0) {
-			//Wenn Zielfeld vor dem Bauern leer ist, fuehre Schritt durch 
-			if (neuesBoard[zielfeld] == 0) {
-				//ruecke Figur
-				neuesBoard[zielfeld] = neuesBoard[startfeld];
-				//Startfeld leeren
-				neuesBoard[startfeld] = 0;
-				//setze en passant zurueck
-				neuesBoard[125] = -1;
-				//Zug hinzufuegen
-				zugHinzufuegen(neuesBoard);
+			if ((zielfeld & 136) == 0) {
+				//Wenn Zielfeld vor dem Bauern leer ist, fuehre Schritt durch 
+				if (neuesBoard[zielfeld] == 0) {
+					//ruecke Figur
+					neuesBoard[zielfeld] = neuesBoard[startfeld];
+					//Startfeld leeren
+					neuesBoard[startfeld] = 0;
+					//setze en passant zurueck
+					neuesBoard[125] = -1;
+					//Zug hinzufuegen
+					zugHinzufuegen(neuesBoard);
+				}
 			}
 		}
 	}
