@@ -1,6 +1,7 @@
 package chessengine;
 
 import chessengine.figurbewertung.FigurBewertung;
+import chessengine.moveevaluator.MoveEvaluatorTree;
 
 /**
  * Manager-Klassen, dient zum inizialisieren der anderen Module und deren 
@@ -151,9 +152,8 @@ public class Manager implements Runnable {
     @Override
     public void run() {
         getAll();
-        //An dieser Stelle muesste das berechnende Objekt(MoveEvaluator?) 
-        //erzeugt werden
-        //bestZug = moveEvaluator.best_zug();
+        MoveEvaluatorTree tree = new MoveEvaluatorTree(fen, figurBewertung);
+        bestZug = tree.getBestMove();
         newUCI.bestmove(bestZug);
     }
 }
