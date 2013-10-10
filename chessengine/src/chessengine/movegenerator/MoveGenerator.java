@@ -209,7 +209,6 @@ implements MoveGeneratorInterface, Definitions {
 		int zielfeld = startfeld + erlaubteZuege[0];
 		//wenn der Zug noch auf dem Brett enden wuerde
 		if ((zielfeld & 136) == 0) {
-			if ((zielfeld & 136) == 0) {
 				//Wenn Zielfeld vor dem Bauern leer ist, fuehre Schritt durch 
 				if (neuesBoard[zielfeld] == 0) {
 					//ruecke Figur
@@ -222,7 +221,7 @@ implements MoveGeneratorInterface, Definitions {
 					//Zug hinzufuegen
 					zugHinzufuegen(boardNachPromotionTest);
 				}
-			}
+			
 		}
 	}
 
@@ -284,20 +283,21 @@ implements MoveGeneratorInterface, Definitions {
 		for (byte b : erlaubteZuege) {
 			//berechne das Zielfeld
 			int zielfeld = startfeld + b;
-			//Wenn die gegnerische Farbe auf dem Zielfeld steht 
-			if ((weissAmZug && board[zielfeld] < 0) || (!weissAmZug && board[zielfeld] > 0)) {
-				byte[] neuesBoard = board.clone();
-				//ziehe eigene figur = schlage Gegner
-				neuesBoard[zielfeld] = neuesBoard[startfeld];
-				//Startfeld leeren
-				neuesBoard[startfeld] = 0;
-				//setze en passant zurueck
-				neuesBoard[125] = -1;
-				byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
-				//Zug hinzufuegen
-				zugHinzufuegen(boardNachPromotionTest);
-			} 
-			
+			if ((zielfeld & 136) == 0) {
+				//Wenn die gegnerische Farbe auf dem Zielfeld steht
+				if ((weissAmZug && board[zielfeld] < 0) || (!weissAmZug && board[zielfeld] > 0)) {
+					byte[] neuesBoard = board.clone();
+					//ziehe eigene figur = schlage Gegner
+					neuesBoard[zielfeld] = neuesBoard[startfeld];
+					//Startfeld leeren
+					neuesBoard[startfeld] = 0;
+					//setze en passant zurueck
+					neuesBoard[125] = -1;
+					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
+					//Zug hinzufuegen
+					zugHinzufuegen(boardNachPromotionTest);
+				} 
+			}
 			/* en passant-Schlaege berechnen */
 			
 			//wenn en Passant-Schlag fuer weiss moeglich ist && weiss am Zug ist 
