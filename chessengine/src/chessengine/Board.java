@@ -106,7 +106,7 @@ public class Board implements  BoardInterface  {
 		int spaces = 0;
 		StringBuffer numberOfMoves = new StringBuffer();
 		int laengeString = s.length();
-		
+		pos--;
 		while (spaces < 4) {
 			fenPart = s.charAt(pos);
 			
