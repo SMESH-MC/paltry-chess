@@ -81,6 +81,8 @@ public class MoveEvaluatorTree {
 		MoveEvaluatorTreeNode currentNode;
 		int max = -10000;
 		int maxPosition =1;
+		int minValue = 10000;
+		int minPos = 1;
 		for (int i = 0; i < root.hasChild(); i++) {
 			parrentNode = root.getChildAtPos(i);
 			for (int j = 0; j < parrentNode.hasChild(); j++) {
@@ -95,7 +97,21 @@ public class MoveEvaluatorTree {
 				maxPosition = i;
 			}
 		}
-		return root.getChildAtPos(maxPosition);
+		for (int k = 0; k < root.hasChild(); k++) {
+			parrentNode = root.getChildAtPos(k);
+			if (parrentNode.minChild < minValue) {
+				minValue = parrentNode.minChild;
+				minPos = k;
+			}
+		}
+		//Check nach bestem Zug
+		if (minPos == maxPosition) {
+			return root.getChildAtPos(maxPosition);	
+		} else if ( (root.getChildAtPos(minPos).getBoardValue()) > (root.getChildAtPos(maxPosition).getBoardValue()+5)) {
+			return root.getChildAtPos(minPos);		
+		} else {
+			return root.getChildAtPos(maxPosition);
+		}
 	}
 	
 	

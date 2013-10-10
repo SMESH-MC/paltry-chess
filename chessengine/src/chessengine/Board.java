@@ -389,6 +389,11 @@ public class Board implements  BoardInterface  {
 		return halbzuege;
 	}
 	
+	public void setZuege()  {
+		halbzuege++;
+		zugnummer++;
+	}
+	
 	
 	
 }
