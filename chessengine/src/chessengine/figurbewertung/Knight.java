@@ -6,7 +6,6 @@ package chessengine.figurbewertung;
 import java.util.LinkedList;
 import java.util.Stack;
 
-import chessengine.tools.Figur;
 import chessengine.tools.SchachPosition;
 
 public class Knight extends OberFigur{
@@ -16,7 +15,6 @@ public class Knight extends OberFigur{
 	public Knight(int bewertung, LinienLaeufer linienlaeufer) {
 		super(bewertung);
 		this.linienlaeufer =  linienlaeufer;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -27,10 +25,7 @@ public class Knight extends OberFigur{
 		return linienlaeufer.ermittleZuege( position,  istWeis,   getMuster(),  1); //uebergebe das an ermittlezuege wo draus einen Bus baut
 	}
 
-	public void inizialisiere(Figur[][] schachBrett) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	public Stack<SchachPosition> getMuster() {
 		Stack<SchachPosition> bewegungsMuster = new Stack<SchachPosition>(); // erstelle eine Reihe an bewegungsmuster

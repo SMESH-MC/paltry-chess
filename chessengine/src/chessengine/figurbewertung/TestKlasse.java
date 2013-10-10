@@ -18,7 +18,7 @@ public class TestKlasse {
 			Brett brett = new X88();
 			//Brett brett = new Array2Dim();
 			 FenDecoder decoder = new FenDecoder(brett);
-			Brett schachBrett;
+			 
 			//startstellung
 			//Figur[][] "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 			// rochaden
@@ -40,8 +40,7 @@ public class TestKlasse {
 			
 		fenAusgabe(fen,decoder);
 		System.out.println(fen);	
-		schachBrett = decoder.decodiere(fen);
-		//arrayAusgabe( schachBrett);
+
 		
 		//MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
 		MoveGeneratorInterface figuren= new MoveGenerator();
@@ -63,8 +62,12 @@ public class TestKlasse {
 			
 			while(liste2.isEmpty() == false){
 			
+				
+				
+				
 				fenAusgabe(liste2.pop(),decoder );
 				
+				System.out.println(decoder.toString());
 			}
 			//System.out.print(".");
 		}
@@ -106,7 +109,7 @@ public class TestKlasse {
 			System.out.println("-------------------");
 		}
 		
-	    System.out.println(decoder.toString());
+	    
 	}
 	
 }

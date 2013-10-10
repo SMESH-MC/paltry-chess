@@ -19,7 +19,6 @@ public class Queen extends OberFigur{
 		this.rook = rook;
 		this.bishop = bishop;
 		
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

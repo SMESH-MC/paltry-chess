@@ -136,10 +136,12 @@ public class FigurBewertung implements FigurBewertungInterface  {
 				}//for spalten
 			}//for zeilen
 			
-			/*if(king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ //sucht den koenig und prueft ob er bedroht ist
+			/*
+			if(king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ //sucht den koenig und prueft ob er bedroht ist
 
 				rueckgabe = loescheBedrohteZuege(rueckgabe, istWeisAmZug); //Filtert zuege Raus die die Bedrohung nicht aufheben
-			}*/
+			}
+			*/
 			return rueckgabe;
 				
 			
@@ -156,9 +158,9 @@ public class FigurBewertung implements FigurBewertungInterface  {
 		while(!liste.isEmpty()){
 			lokalerFen = liste.pop();
 			inizialisiereBrett(lokalerFen); 
-			/*if(!king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ // Wenn koenig nach Zug nicht bedroht
+			if(!king.istBedroht(sucheKoenig(istWeisAmZug), istWeisAmZug)){ // Wenn koenig nach Zug nicht bedroht
 				modifierteListe.add(lokalerFen);
-			}*/
+			}
 			///loesch bedrohte zuege 
 		}
 		return modifierteListe;
