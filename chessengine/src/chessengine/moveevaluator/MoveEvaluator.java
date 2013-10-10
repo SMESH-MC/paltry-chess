@@ -27,7 +27,7 @@ public class MoveEvaluator {
          */
 	public MoveEvaluatorTreeNode getMove() {
 		root = null;
-		moveTree = new MoveEvaluatorTree(currentBoard);
+		//moveTree = MoveEvaluatorTree.getTree();
 		return root;
 	}
 	

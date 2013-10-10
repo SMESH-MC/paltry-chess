@@ -5,8 +5,10 @@ package chessengine.moveevaluator;
 
 import java.util.LinkedList;
 
+import chessengine.figurbewertung.FigurBewertung;
 import chessengine.movegenerator.MoveGenerator;
 import chessengine.Board;
+import chessengine.Manager;
 
 /**
  * Klasse repraesentiert einen Zugbaum.
@@ -26,9 +28,9 @@ public class MoveEvaluatorTree {
          * Konstruktor mit aktuellem Board als Parameter.
          * @param board 
          */
-	public MoveEvaluatorTree(Board board) {
-		this.ausgangsFen = board.getBoardFen();
-		this.root = new MoveEvaluatorTreeNode(board);
+	public MoveEvaluatorTree(String fen, FigurBewertung figurBewertung, Manager manager) {
+		this.ausgangsFen = fen;
+		this.root = new MoveEvaluatorTreeNode( new Board(fen, figurBewertung));
 		this.movegen = new MoveGenerator();
 		generateTree();
 	}
