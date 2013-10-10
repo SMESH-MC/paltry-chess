@@ -230,7 +230,7 @@ implements Definitions {
 					 */
 					//addiere das Feld, auf dem ein schwarzer Bauer steht, mit seinen moegliche Schlagzuegen und
 					//gib true aus, wenn er auf das Zielfeld schlagen kann
-					case pawn_b  :	for (byte b : pawn_attack_moves_b) {if (i - b == zielFeld){return true;} }
+					case pawn_b  :	for (byte b : pawn_attack_moves_b) {if (i + b == zielFeld){return true;} }
 						break;
 					//addiere das Feld, auf dem ein schwarzer Springer steht, mit seinen moegliche Schlagzuegen und
 					//gib true aus, wenn er auf das Zielfeld schlagen kann
