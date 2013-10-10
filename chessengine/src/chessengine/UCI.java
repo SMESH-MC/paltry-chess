@@ -55,7 +55,7 @@ public class UCI implements UCI_Interface, Runnable {
     private static final String KNIGHT = "Knight_Value";
     private static final String ROOK = "Rook_Value";
     private static final String SETOPTION = "setoption";
-    private static final File SETTINGS = new File("settings.txt");
+    private static final String SETTINGS = new File("settings.txt").getAbsolutePath();
     //********Variablen********
     private String fen;
     private boolean stop;
@@ -159,13 +159,13 @@ public class UCI implements UCI_Interface, Runnable {
 
     private void options() {
         System.out.println("option name " + QUEEN + " type spin default "
-                + queenValue + " min 100 max 1000\n");
+                + queenValue + " min 100 max 1000");
         System.out.println("option name " + ROOK + " type spin default "
-                + rookValue + " min 100 max 1000\n");
+                + rookValue + " min 100 max 1000");
         System.out.println("option name " + BISHOP + " type spin default "
-                + bishopValue + " min 100 max 1000\n");
+                + bishopValue + " min 100 max 1000");
         System.out.println("option name " + KNIGHT + " type spin default "
-                + knightValue + " min 100 max 1000\n");
+                + knightValue + " min 100 max 1000");
     }
 
     private void position(String cmdIN, String[] cmdArray) {
@@ -375,7 +375,7 @@ public class UCI implements UCI_Interface, Runnable {
         return bishopValue;
     }
 
-    private void writeValues(File datei) throws IOException {
+    private void writeValues(String datei) throws IOException {
         try (FileWriter ausgabe = new FileWriter(datei)) {
             ausgabe.write(queenValue + "\n" + rookValue + "\n" + knightValue
                     + "\n" + bishopValue);
@@ -384,12 +384,12 @@ public class UCI implements UCI_Interface, Runnable {
         }
     }
 
-    private void readValues(File datei) throws IOException {
+    private void readValues(String datei) throws IOException {
         //FileReader eingabe = null;
 
         try (LineNumberReader eingabe =
                         new LineNumberReader(
-                        new FileReader(datei));) {
+                        new FileReader(datei))) {
             String zeile = null;
             while ((zeile = eingabe.readLine()) != null) {
                 switch (eingabe.getLineNumber()) {
