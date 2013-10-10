@@ -228,7 +228,6 @@ public class Board implements  BoardInterface  {
 				break;
 			case ('1' | '2' | '3' | '4' | '5' | '6' | '7' | '8'):
 				int leerFelder = Integer.parseInt( fenPart.toString() );
-				i++;
 				for (int j = 0; j < leerFelder; j++) {
 					ausgabe[i] = 0;
 					i++;
