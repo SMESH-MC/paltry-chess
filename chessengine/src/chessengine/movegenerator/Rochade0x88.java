@@ -196,7 +196,7 @@ implements Definitions {
 		} else { //bei langer Rochade
 			if (weissAmZug) {
 				//prueft, ob eines der weissen Rochadenfelder bedroht wird
-				rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, d2, true) || wirdBedroht(board, c1, true));
+				rochadeIstIllegal = (wirdBedroht(board, e1, true) || wirdBedroht(board, d1, true) || wirdBedroht(board, c1, true));
 			} else { //Schwarz ist am Zug
 				//prueft, ob eines der schwarzen Rochadenfelder bedroht wird
 				rochadeIstIllegal = (wirdBedroht(board, e8, false) || wirdBedroht(board, d8, false) || wirdBedroht(board, c8, false));
