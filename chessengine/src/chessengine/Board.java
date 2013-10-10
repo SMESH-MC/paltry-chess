@@ -330,6 +330,12 @@ public class Board implements  BoardInterface  {
 			case 15:
 				value += bewertung.getQueenBewertung();
 				break;
+			case 6:
+				value -= 100000; //koenig ueberpruefung auf ungueltige zeuge
+				break;
+			case 16:
+				value += 100000;
+				break;
 			default:
 				break;
 			}
