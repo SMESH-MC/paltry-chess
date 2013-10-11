@@ -99,38 +99,6 @@ public class Manager implements Runnable {
     public boolean isWhite() {
         return engineIsWhite;
     }
-
-    /**
-     * Getter-Methode fuer den Wert der Dame.
-     * @return queenValue
-     */
-    public int getQueenValue() {
-        return newUCI.getQueenValue();
-    }
-    
-    /**
-     * Getter-Methode fuer den Wert des Turms.
-     * @return rookValue
-     */
-    public int getRookValue() {
-        return newUCI.getRookValue();
-    }
-    
-    /**
-     * Getter-Methode fuer den Wert des Springers.
-     * @return knightValue
-     */
-    public int getKnightValue() {
-        return newUCI.getKnightValue();
-    }
-    
-    /**
-     * Getter-Methode fuer den Wert des Laeufers.
-     * @return bishopValue
-     */
-    public int getBishopValue() {
-        return newUCI.getBishopValue();
-    }
     
     /**
      * Setter-Methode um benutzerdefinierte Werte in die Figurbewertung zu 
