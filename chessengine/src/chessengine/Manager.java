@@ -4,9 +4,9 @@ import chessengine.figurbewertung.FigurBewertung;
 import chessengine.moveevaluator.MoveEvaluatorTree;
 
 /**
- * Manager-Klassen, dient zum inizialisieren der anderen Module und deren
+ * Manager-Klassen, dient zum inizialisieren der anderen Module und deren 
  * Kommunikation untereinander.
- *
+ * 
  * @author Alexander Kessler, Thorsten Jakobs
  */
 public class Manager implements Runnable {
@@ -24,7 +24,6 @@ public class Manager implements Runnable {
     private int binc;
     private String bestZug;
     private boolean engineIsWhite;
-    private int vollzuege;
 
     /**
      * Standartkonstruktor des Managers.
@@ -41,7 +40,6 @@ public class Manager implements Runnable {
         binc = 0;
         bestZug = null;
         engineIsWhite = false;
-        vollzuege = 1;
     }
 
     /**
@@ -96,29 +94,27 @@ public class Manager implements Runnable {
 
     /**
      * Liefert den Wert von engineIsWhite zurueck.
-     *
      * @return engineIsWhite
      */
     public boolean isWhite() {
         return engineIsWhite;
     }
-
+    
     /**
-     * Setter-Methode um benutzerdefinierte Werte in die Figurbewertung zu
+     * Setter-Methode um benutzerdefinierte Werte in die Figurbewertung zu 
      * uebernehmen.
-     *
      * @param queen
      * @param rook
      * @param knight
      * @param bishop
      */
-    public void setWerte(int queen, int rook, int knight, int bishop) {
+    public void setWerte(int queen, int rook, int knight, int bishop){
         figurBewertung.setQueenBewertung(queen);
         figurBewertung.setRookBewertung(rook);
         figurBewertung.setKnightBewertung(knight);
         figurBewertung.setBishopBewertung(bishop);
     }
-
+    
     /**
      * Startpunkt eines Threads. Dieser dient zur Zugberechnung.
      */
@@ -127,19 +123,13 @@ public class Manager implements Runnable {
         getAll();
         String moves = newUCI.getMovesList();
         String move;
-        if (moves != null) {
-            move = moves.substring(moves.length() - 5);
-            this.fen = new ToFen2(fen, move).getNewFen();
+        if (moves != null){
+                move = moves.substring(moves.length() - 5);
+                this.fen = new ToFen2(fen, move).getNewFen();
         }
-
-        if (vollzuege > 10) {
-            MoveEvaluatorTree tree = new MoveEvaluatorTree(fen, figurBewertung, this);
-            bestZug = tree.getBestMove();
-            this.fen = tree.getBestMoveFen();
-            newUCI.bestmove(bestZug);
-        } else {
-            //fakebestmove hier hin
-        }
-        vollzuege++;
+        MoveEvaluatorTree tree = new MoveEvaluatorTree(fen , figurBewertung, this);
+        bestZug = tree.getBestMove();
+        this.fen = tree.getBestMoveFen();
+        newUCI.bestmove(bestZug);
     }
 }
