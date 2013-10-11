@@ -90,11 +90,13 @@ public class ToFen2 {
 			}
 			reiheZiel = Integer.parseInt(String.valueOf(move.charAt(3))) - 1; 
 			
-		
+			
+			
 		
 			fenArray[reiheStartIndex] = modifieFen1(fenArray[reiheStartIndex], linieStartIndexIndex);
 			fenArray[reiheZiel]	= modifieFen2(fenArray[reiheZiel], linieZielIndex);
 			
+				
 				
 //			if (amZug.equals("s") ) {
 //				amZug = "w";
@@ -117,22 +119,15 @@ public class ToFen2 {
 	
 	
 	private String modifieFen1(String fenPart, int aenderungTyp) {
-		String part1, part2, completedString;
 		String tempFen = homologizeFen(fenPart);
 		movedFigure = tempFen.charAt(aenderungTyp);
-		part1 = tempFen.substring(0, aenderungTyp);
-		if (aenderungTyp < 7) {
-			part2 = tempFen.substring(aenderungTyp + 1);
-			completedString = part1 + "0" + part2;
-		} else {
-			completedString = part1 + "0";
-		}
-		tempFen = completedString;
+		tempFen = tempFen.substring(0, aenderungTyp) + "0" + tempFen.substring(aenderungTyp + 1, tempFen.length());
 		return makeFen(tempFen);
 	}
 	
 	private String modifieFen2(String fenPart, int aenderungTyp) {
 		String part1, part2, completedString;
+		
 		String tempFen = homologizeFen(fenPart);
 		part1 = tempFen.substring(0, aenderungTyp);
 		if (aenderungTyp < 7) {
@@ -161,6 +156,18 @@ public class ToFen2 {
 	}
 	
 	private String makeFen(String s) {
+	  
+	    
+	    s = s.replace("00000000","8");
+		s = s.replace("0000000","7");
+		s = s.replace("000000","6");
+		s = s.replace("00000","5");
+		s = s.replace("0000","4");
+		s = s.replace("000","3");
+		s = s.replace("00","2");
+		s = s.replace("0","1");
+	    
+	    /*
 		String ausgabe = "";
 		int felder = 0;
 		for (int i = 0; i < s.length(); i++) {
@@ -179,7 +186,9 @@ public class ToFen2 {
 			ausgabe += s.substring(i, i+1);
 			}
 		}
-		return ausgabe;
+		*/
+		
+		return s;
 	}
 	
 	public String getNewFen() {
