@@ -126,16 +126,18 @@ public class ToFen2 {
 	}
 	
 	private String modifieFen2(String fenPart, int aenderungTyp) {
-		String part1, part2, completedString;
+		String completedString;
 		
 		String tempFen = homologizeFen(fenPart);
-		part1 = tempFen.substring(0, aenderungTyp);
+		completedString = tempFen.substring(0, aenderungTyp) + movedFigure + tempFen.substring(aenderungTyp + 1, tempFen.length());
+		/*
 		if (aenderungTyp < 7) {
 			part2 = tempFen.substring(aenderungTyp + 1);
 			completedString = part1 + movedFigure + part2;
 		} else {
 			completedString = part1 + movedFigure;
 		}
+		*/
 		return makeFen(completedString);
 	}
 	
