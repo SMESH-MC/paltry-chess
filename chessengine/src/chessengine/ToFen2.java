@@ -106,8 +106,8 @@ public class ToFen2 {
 //				halbzug = i.toString();
 //			}
 			
-			newFen = fenArray[0]+"/"+fenArray[1]+"/"+fenArray[2]+"/"+fenArray[3]+"/"+fenArray[4]+"/"+fenArray[5]+
-					"/"+fenArray[6]+"/"+fenArray[7]+" "+amZug+" "+rochade+" "+enPassant+" "+halbzug+" "+zug;
+			newFen = (fenArray[0]+"/"+fenArray[1]+"/"+fenArray[2]+"/"+fenArray[3]+"/"+fenArray[4]+"/"+fenArray[5]+
+					"/"+fenArray[6]+"/"+fenArray[7]+" "+amZug+" "+rochade+" "+enPassant+" "+halbzug+" "+zug);
 			
 	}
 	
