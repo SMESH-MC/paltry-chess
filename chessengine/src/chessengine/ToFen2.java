@@ -14,10 +14,10 @@ public class ToFen2 {
 		String halbzug;
 		String zug;
 		char boardPosition;
-		int aenderung1Pos = 0;
-		int aenderung1Typ;
-		int aenderung2Pos = 0;
-		int aenderung2Typ;
+		int linieStartIndexIndex = 0;
+		int reiheStartIndex;
+		int linieZielIndex = 0;
+		int reiheZiel;
 
 		fenArray = null;
 		zusatzInfo = null;
@@ -34,66 +34,68 @@ public class ToFen2 {
 			boardPosition = move.charAt(0);
 			switch (boardPosition) {
 			case 'a':
-				aenderung1Pos = 0;
+				linieStartIndexIndex = 0;
 				break;
 			case 'b':
-				aenderung1Pos = 1;
+				linieStartIndexIndex = 1;
 				break;
 			case 'c':
-				aenderung1Pos = 2;
+				linieStartIndexIndex = 2;
 				break;
 			case 'd':
-				aenderung1Pos = 3;
+				linieStartIndexIndex = 3;
 				break;
 			case 'e':
-				aenderung1Pos = 4;
+				linieStartIndexIndex = 4;
 				break;
 			case 'f':
-				aenderung1Pos = 5;
+				linieStartIndexIndex = 5;
 				break;
 			case 'g':
-				aenderung1Pos = 6;
+				linieStartIndexIndex = 6;
 				break;
 			case 'h':
-				aenderung1Pos = 7;
+				linieStartIndexIndex = 7;
 				break;
 			}
 			
-			aenderung1Typ = Integer.parseInt(String.valueOf(move.charAt(1))) - 1;
+			reiheStartIndex = Integer.parseInt(String.valueOf(move.charAt(1))) - 1;
 			
 			boardPosition = move.charAt(2);
 			switch (boardPosition) {
 			case 'a':
-				aenderung2Pos = 0;
+				linieZielIndex = 0;
 				break;
 			case 'b':
-				aenderung2Pos = 1;
+				linieZielIndex = 1;
 				break;
 			case 'c':
-				aenderung2Pos = 2;
+				linieZielIndex = 2;
 				break;
 			case 'd':
-				aenderung2Pos = 3;
+				linieZielIndex = 3;
 				break;
 			case 'e':
-				aenderung2Pos = 4;
+				linieZielIndex = 4;
 				break;
 			case 'f':
-				aenderung2Pos = 5;
+				linieZielIndex = 5;
 				break;
 			case 'g':
-				aenderung2Pos = 6;
+				linieZielIndex = 6;
 				break;
 			case 'h':
-				aenderung2Pos = 7;
+				linieZielIndex = 7;
 				break;
 			}
-			aenderung2Typ = Integer.parseInt(String.valueOf(move.charAt(3))) - 1; 
+			reiheZiel = Integer.parseInt(String.valueOf(move.charAt(3))) - 1; 
 			
+		
+		
+			fenArray[reiheStartIndex] = modifieFen1(fenArray[reiheStartIndex], linieStartIndexIndex);
+			fenArray[reiheZiel]	= modifieFen2(fenArray[reiheZiel], linieZielIndex);
 			
-			fenArray[aenderung1Typ] = modifieFen1(fenArray[aenderung1Typ], aenderung1Pos);
-			fenArray[aenderung2Typ]	= modifieFen2(fenArray[aenderung2Typ], aenderung2Pos);
-			
+				
 //			if (amZug.equals("s") ) {
 //				amZug = "w";
 //				Integer i = new Integer((Integer.parseInt(halbzug) + 1));
