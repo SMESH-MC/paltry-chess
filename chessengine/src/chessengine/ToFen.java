@@ -119,19 +119,19 @@ public class ToFen implements ToFenInterface {
 	 * und die Rochademoeglichkeit geloescht
 	 */
 	private void detectRochade() {
-		if (rochadeGrossW && this.lastMove == "e1b1") {
+		if (rochadeGrossW && "e1b1".equals(this.lastMove)) {
 			this.aktuelleRochade = 1;
 			runRochade(aktuelleRochade);
 			rochadeGrossW = false;
-		} else if (rochadeKleinW && this.lastMove == "e1g1") {
+		} else if (rochadeKleinW && "e1g1".equals(this.lastMove)) {
 			this.aktuelleRochade = 2;
 			runRochade(aktuelleRochade);
 			rochadeKleinW = false;
-		} else if (rochadeGrossS && this.lastMove == "e8b8") {
+		} else if (rochadeGrossS && "e8b8".equals(this.lastMove)) {
 			this.aktuelleRochade = 3;
 			runRochade(aktuelleRochade);
 			rochadeGrossS = false;
-		} else if (rochadeKleinS && this.lastMove == "e8g8") {
+		} else if (rochadeKleinS && "e8g8".equals(this.lastMove)) {
 			this.aktuelleRochade = 4;
 			runRochade(aktuelleRochade);
 			rochadeKleinS = false;
@@ -194,7 +194,7 @@ public class ToFen implements ToFenInterface {
 		} else if ((bewegendeFigur == 1) && (startPos.charAt(0) != endPos.charAt(0)) && (this.temp[endFeld] == 0)){
 			runEnPassant(bewegendeFigur, startPos, endPos, false);
 		} else {
-			this.temp[startFeld] = 0;										// Startfeld löschen
+			this.temp[startFeld] = 0;										// Startfeld lï¿½schen
 			this.temp[endFeld] = bewegendeFigur;							// Figur auf Endfeld setzen
 		}
 	}
@@ -330,25 +330,25 @@ public class ToFen implements ToFenInterface {
 		String feld = this.lastMove.substring(0, 2);
 		char figur = figurNachFen(temp[getField(feld)]);
 		// enpassant erkennung fuer weiss
-		if ((this.lastMove == "a2a4" || 
-			this.lastMove == "b2b4" ||
-			this.lastMove == "c2c4" ||
-			this.lastMove == "d2d4" ||
-			this.lastMove == "e2e4" ||
-			this.lastMove == "f2f4" ||
-			this.lastMove == "g2g4" ||
-			this.lastMove == "h2h4") &&
+		if (("a2a4".equals(this.lastMove) || 
+			"b2b4".equals(this.lastMove) ||
+			"c2c4".equals(this.lastMove) ||
+			"d2d4".equals(this.lastMove) ||
+			"e2e4".equals(this.lastMove) ||
+			"f2f4".equals(this.lastMove) ||
+			"g2g4".equals(this.lastMove) ||
+			"h2h4".equals(this.lastMove)) &&
 			figur == 'P') {
 			String enpassant = feld.charAt(0) + "3";
 			return enpassant;
-		} else if ((this.lastMove == "a7a5" ||	// enpassant erkennung fuer schwarz
-					this.lastMove == "b7b5" ||
-					this.lastMove == "c7c5" ||
-					this.lastMove == "d7d5" ||
-					this.lastMove == "e7e5" ||
-					this.lastMove == "f7f5" ||
-					this.lastMove == "g7g5" ||
-					this.lastMove == "h7h5") &&
+		} else if (("a7a5".equals(this.lastMove) ||	// enpassant erkennung fuer schwarz
+					"b7b5".equals(this.lastMove) ||
+					"c7c5".equals(this.lastMove) ||
+					"d7d5".equals(this.lastMove) ||
+					"e7e5".equals(this.lastMove) ||
+					"f7f5".equals(this.lastMove) ||
+					"g7g5".equals(this.lastMove) ||
+					"h7h5".equals(this.lastMove)) &&
 					figur == 'p') {
 			String enpassant = feld.charAt(0) + "6";
 			return enpassant;
