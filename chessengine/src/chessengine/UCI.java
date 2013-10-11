@@ -171,7 +171,7 @@ public class UCI implements UCI_Interface, Runnable {
 
     private void position(String cmdIN, String[] cmdArray) {
         int movesIndex = cmdIN.indexOf(MOVES);
-
+        int mIndexArray = movesArrayPosition(MOVES, cmdArray);
         if (cmdArray[1].equalsIgnoreCase("fen")) {
             String newFen = null;
             if (movesIndex == -1) {
@@ -183,8 +183,12 @@ public class UCI implements UCI_Interface, Runnable {
                 for (int i = 2; i < movesIndex; i++) {
                     newFen += cmdArray[i] + " ";
                 }
-                for (int j = movesIndex + 1; j < cmdArray.length; j++) {
-                    movesList += cmdArray[j] + " ";
+                for (int j = mIndexArray + 1; j < cmdArray.length; j++) {
+                    if (movesList == null) {
+                        movesList = cmdArray[j] + " ";
+                    } else {
+                        movesList += cmdArray[j] + " ";
+                    }
                 }
             }
             fen = newFen;
@@ -192,11 +196,23 @@ public class UCI implements UCI_Interface, Runnable {
             if (movesIndex == -1) {
                 manager.setWhite();
             } else {
-                for (int j = movesIndex + 1; j < cmdArray.length; j++) {
-                    movesList += cmdArray[j] + " ";
+                for (int j = mIndexArray + 1; j < cmdArray.length; j++) {
+                    if (movesList == null) {
+                        movesList = cmdArray[j] + " ";
+                    } else {
+                        movesList += cmdArray[j] + " ";
+                    }
                 }
             }
         }
+    }
+
+    private int movesArrayPosition(String searchFor, String[] cmdArray) {
+        int i = 0;
+        while (!cmdArray[i].equals(searchFor)) {
+            i++;
+        }
+        return i;
     }
 
     private void setoption(String[] cmdArray) {
