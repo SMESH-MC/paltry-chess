@@ -34,28 +34,28 @@ public class ToFen2 {
 			boardPosition = move.charAt(0);
 			switch (boardPosition) {
 			case 'a':
-				aenderung1Pos = 7;
+				aenderung1Pos = 0;
 				break;
 			case 'b':
-				aenderung1Pos = 6;
-				break;
-			case 'c':
-				aenderung1Pos = 5;
-				break;
-			case 'd':
-				aenderung1Pos = 4;
-				break;
-			case 'e':
-				aenderung1Pos = 3;
-				break;
-			case 'f':
-				aenderung1Pos = 2;
-				break;
-			case 'g':
 				aenderung1Pos = 1;
 				break;
+			case 'c':
+				aenderung1Pos = 2;
+				break;
+			case 'd':
+				aenderung1Pos = 3;
+				break;
+			case 'e':
+				aenderung1Pos = 4;
+				break;
+			case 'f':
+				aenderung1Pos = 5;
+				break;
+			case 'g':
+				aenderung1Pos = 6;
+				break;
 			case 'h':
-				aenderung1Pos = 0;
+				aenderung1Pos = 7;
 				break;
 			}
 			
@@ -64,28 +64,28 @@ public class ToFen2 {
 			boardPosition = move.charAt(2);
 			switch (boardPosition) {
 			case 'a':
-				aenderung2Pos = 7;
+				aenderung2Pos = 0;
 				break;
 			case 'b':
-				aenderung2Pos = 6;
-				break;
-			case 'c':
-				aenderung2Pos = 5;
-				break;
-			case 'd':
-				aenderung2Pos = 4;
-				break;
-			case 'e':
-				aenderung2Pos = 3;
-				break;
-			case 'f':
-				aenderung2Pos = 2;
-				break;
-			case 'g':
 				aenderung2Pos = 1;
 				break;
+			case 'c':
+				aenderung2Pos = 2;
+				break;
+			case 'd':
+				aenderung2Pos = 3;
+				break;
+			case 'e':
+				aenderung2Pos = 4;
+				break;
+			case 'f':
+				aenderung2Pos = 5;
+				break;
+			case 'g':
+				aenderung2Pos = 6;
+				break;
 			case 'h':
-				aenderung2Pos = 0;
+				aenderung2Pos = 7;
 				break;
 			}
 			aenderung2Typ = Integer.parseInt(String.valueOf(move.charAt(3))); 
