@@ -22,6 +22,7 @@ public class MoveEvaluatorTree {
 	private String ausgangsFen;
 	private String moveFen;
 	private FigurBewertung figurBewertung;
+	private String bestMove;
 	
 	
         /**
@@ -124,6 +125,8 @@ public class MoveEvaluatorTree {
 		int posZiel = 0;
 		String[] moveFenArray = null;
 		String[] ausgangFenArray = null;
+		
+		bestMove = moveList.get(positionOfMove);
 		
 		moveFen = moveList.get(positionOfMove);
 		String moveFen_a, moveFen_b, moveFen_c, moveFen_d, moveFen_e, moveFen_f, moveFen_g, moveFen_h;
@@ -285,6 +288,7 @@ public class MoveEvaluatorTree {
 		
 		return ausgabe;
 	}
+	
 	private String getLine(int i) {
 		switch (i) {
 		case 0:
@@ -323,7 +327,9 @@ public class MoveEvaluatorTree {
 		return temp;
 	}
 	
-	
+	public String getBestMoveFen() {
+		return bestMove;
+	}
 	
 	
 	public MoveEvaluatorTreeNode getRoot() {
