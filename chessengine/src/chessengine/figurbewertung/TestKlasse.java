@@ -32,7 +32,7 @@ public class TestKlasse {
 			//fen =  "8/P7/8/8/8/8/8/8 w KQkq - 0 1";
 			//Szenarien
 			//fen =  "rnbkqbnr/8/8/PPPP4/8/4pppp/8/RNBQKBNR w KQkq - 0 1";
-			fen =  "8/p2p2p1/1NNP1p1b/5pp1/4pPp1/8/3p3p/2NrN3 b KQkq f3 1 1";
+			fen =  "rnbkqbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 			////////////fen = "k7/3P3P/8/4PpP1/5PP1/5P1B/6P1/K7 w - f6 0 1";
 			//enPassannt
 			//fen = "rnbkqbnr/pppp1ppp/8/3Pp3/4Pp2/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1";
@@ -42,7 +42,7 @@ public class TestKlasse {
 		System.out.println("Alle Zuege fur farbe am Zug---------------------------------------"+fen);	
 
 		
-		//MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
+	 //MoveGeneratorInterface figuren= new ZugGeneratorPhilip();
 		MoveGeneratorInterface figuren= new MoveGenerator();
 		
 		long zeit = 0;

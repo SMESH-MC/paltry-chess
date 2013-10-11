@@ -67,7 +67,7 @@ public class Pawn extends OberFigur {
 							moeglichkeiten.addAll( linienlaeufer.generiereFenPromotion(zielX, zielY, position , null, promotion));
 						}
 					}
-					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 6)   { // vorne rechts schlag per enPassant
+					if( zielX == enPassant.getX() && zielY == enPassant.getY() && enPassant.getY()== 5)   { // vorne rechts schlag per enPassant
 						moeglichkeiten.push( linienlaeufer.generiereEnPassantFenSchlage(zielX, zielY, position, new SchachPosition(zielX,y) ) );
 					}
 				}
