@@ -155,7 +155,7 @@ implements MoveGeneratorInterface, Definitions {
 					//Startfeld leeren
 					neuesBoard[startfeld] = 0;
 					//erhoehe Halbschritte
-					neuesBoard[125]+=1;
+					neuesBoard[126]+=1;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				} else {//wenn Zielfeld besetzt
@@ -168,7 +168,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//setze Halbzuege zurueck
-							neuesBoard[125] = 0;
+							neuesBoard[126] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
@@ -180,7 +180,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//setze Halbzuege zurueck
-							neuesBoard[125] = 0;
+							neuesBoard[126] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
@@ -225,7 +225,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
 					//setze Halbzuege zurueck
-					neuesBoard[125] = 0;
+					neuesBoard[126] = 0;
 					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
 					zugHinzufuegen(boardNachPromotionTest, weissAmZug);
@@ -258,7 +258,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant Feld
 					neuesBoard[125] = (byte)(startfeld + 16);
 					//setze Halbzuege zurueck
-					neuesBoard[125] = 0;
+					neuesBoard[126] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -274,7 +274,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant Feld
 					neuesBoard[125] = (byte)(startfeld - 16);
 					//setze Halbzuege zurueck
-					neuesBoard[125] = 0;
+					neuesBoard[126] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -307,7 +307,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
 					//setze Halbzuege zurueck
-					neuesBoard[125] = 0;
+					neuesBoard[126] = 0;
 					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
 					zugHinzufuegen(boardNachPromotionTest, weissAmZug);
@@ -329,7 +329,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
 					//setze Halbzuege zurueck
-					neuesBoard[125] = 0;
+					neuesBoard[126] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -348,7 +348,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
 					//setze Halbzuege zurueck
-					neuesBoard[125] = 0;
+					neuesBoard[126] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -402,7 +402,7 @@ implements MoveGeneratorInterface, Definitions {
 					//Startfeld leeren
 					neuesBoard[startfeld] = 0;
 					//erhoehe Halbschritte
-					neuesBoard[125]+=1;
+					neuesBoard[126]+=1;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				} else {//wenn Zielfeld besetzt
@@ -415,7 +415,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//setze Halbzuege zurueck
-							neuesBoard[125] = 0;
+							neuesBoard[126] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
@@ -427,7 +427,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//setze Halbzuege zurueck
-							neuesBoard[125] = 0;
+							neuesBoard[126] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
@@ -480,8 +480,10 @@ implements MoveGeneratorInterface, Definitions {
 	private void zugHinzufuegen(byte[] board, boolean weissAmZug) {
 		byte[] neuesBoard = board.clone();
 		if (weissAmZug) { neuesBoard[120] = 0; } else { neuesBoard[120] = 1; };
+		if (!weissAmZug) { neuesBoard[127]++; }
 		FenEncode fe = new FenEncode();
 		fe.setBoard(neuesBoard);
 		outgoingFEN.add(fe.getFEN());
 	}
+	
 }

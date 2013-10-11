@@ -124,7 +124,7 @@ public class Manager implements Runnable {
         String moves = newUCI.getMovesList();
         String move;
         if (moves != null){
-                move = moves.substring(moves.length() - 4);
+                move = moves.substring(moves.length() - 5);
                 this.fen = new ToFen2(fen, move).getNewFen();
         }
         MoveEvaluatorTree tree = new MoveEvaluatorTree(fen , figurBewertung, this);
