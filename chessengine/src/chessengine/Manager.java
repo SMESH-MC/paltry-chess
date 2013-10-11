@@ -31,7 +31,8 @@ public class Manager implements Runnable {
     public Manager() {
         stop = false;
         go = false;
-        fen = null;
+        fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR "
+                + "w KQkq - 0 1";
         wtime = 0;
         btime = 0;
         movetime = 0;
@@ -58,7 +59,7 @@ public class Manager implements Runnable {
      * Uebernimmt alle relevanten Variablenwerte aus UCI.
      */
     private void getAll() {
-        fen = newUCI.getFEN();
+        //fen = newUCI.getFEN();
         wtime = newUCI.getWtime();
         btime = newUCI.getBtime();
         winc = newUCI.getWinc();
