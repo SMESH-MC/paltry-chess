@@ -172,6 +172,7 @@ public class UCI implements UCI_Interface, Runnable {
     private void position(String cmdIN, String[] cmdArray) {
         int movesIndex = cmdIN.indexOf(MOVES);
         int mIndexArray = movesArrayPosition(MOVES, cmdArray);
+        String mList = null;
         if (cmdArray[1].equalsIgnoreCase("fen")) {
             String newFen = null;
             if (movesIndex == -1) {
@@ -184,26 +185,28 @@ public class UCI implements UCI_Interface, Runnable {
                     newFen += cmdArray[i] + " ";
                 }
                 for (int j = mIndexArray + 1; j < cmdArray.length; j++) {
-                    if (movesList == null) {
-                        movesList = cmdArray[j] + " ";
+                    if (mList == null) {
+                        mList = cmdArray[j] + " ";
                     } else {
-                        movesList += cmdArray[j] + " ";
+                        mList += cmdArray[j] + " ";
                     }
                 }
             }
             fen = newFen;
+            movesList = mList;
         } else {
             if (movesIndex == -1) {
                 manager.setWhite();
             } else {
                 for (int j = mIndexArray + 1; j < cmdArray.length; j++) {
-                    if (movesList == null) {
-                        movesList = cmdArray[j] + " ";
+                    if (mList == null) {
+                        mList = cmdArray[j] + " ";
                     } else {
-                        movesList += cmdArray[j] + " ";
+                        mList += cmdArray[j] + " ";
                     }
                 }
             }
+            movesList = mList;
         }
     }
 
