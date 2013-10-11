@@ -18,7 +18,6 @@ public class MoveEvaluatorTree {
 
 	private MoveEvaluatorTreeNode root;
 	private LinkedList<MoveEvaluatorTreeNode> childList; 
-	private MoveGenerator movegen;
 	private LinkedList<String> moveList;
 	private String ausgangsFen;
 	private String moveFen;
@@ -33,7 +32,6 @@ public class MoveEvaluatorTree {
 		this.figurBewertung = figurBewertung;
 		this.ausgangsFen = fen;
 		this.root = new MoveEvaluatorTreeNode( new Board(fen, figurBewertung));
-		this.movegen = new MoveGenerator();
 		generateTree();
 	}
 	
@@ -119,83 +117,39 @@ public class MoveEvaluatorTree {
 	
 	public String getBestMove(){
 		int positionOfMove = findBestMove();
-		String temp;
 		String ausgabe = "";
-		int posOfBreak;
 		String lineStart = "";
 		String lineZiel = "";
 		int posStart = 0;
 		int posZiel = 0;
+		String[] moveFenArray = null;
+		String[] ausgangFenArray = null;
 		
 		moveFen = moveList.get(positionOfMove);
 		String moveFen_a, moveFen_b, moveFen_c, moveFen_d, moveFen_e, moveFen_f, moveFen_g, moveFen_h;
 		String ausgangsFen_a, ausgangsFen_b, ausgangsFen_c, ausgangsFen_d, ausgangsFen_e, ausgangsFen_f, ausgangsFen_g, ausgangsFen_h;
 		
 		//aufsplitten in lines
-		posOfBreak = moveFen.indexOf("/");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_h =  homologizeFen( moveFen.substring(0, posOfBreak) );
-		moveFen = temp;
-		posOfBreak = moveFen.indexOf("/");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_g =  homologizeFen( moveFen.substring(0, posOfBreak) );
-		moveFen = temp;
-		posOfBreak = moveFen.indexOf("/");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_f =  homologizeFen( moveFen.substring(0, posOfBreak) );
-		moveFen = temp;
-		posOfBreak = moveFen.indexOf("/");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_e =  homologizeFen( moveFen.substring(0, posOfBreak) );
-		moveFen = temp;
-		posOfBreak = moveFen.indexOf("/");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_d =  homologizeFen( moveFen.substring(0, posOfBreak) );
-		moveFen = temp;
-		posOfBreak = moveFen.indexOf("/");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_c =  homologizeFen( moveFen.substring(0, posOfBreak) );
-		moveFen = temp;
-		posOfBreak = moveFen.indexOf("/");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_b =  homologizeFen( moveFen.substring(0, posOfBreak) );
-		moveFen = temp;
-		posOfBreak = moveFen.indexOf(" ");
-		temp = moveFen.substring(posOfBreak);
-		moveFen_a =  homologizeFen( moveFen.substring(0, posOfBreak) );
+		moveFenArray = moveFen.split("/");
+		moveFen_h = homologizeFen( moveFenArray[0] );
+		moveFen_g = homologizeFen( moveFenArray[1] );
+		moveFen_f = homologizeFen( moveFenArray[2] );
+		moveFen_e = homologizeFen( moveFenArray[3] );
+		moveFen_d = homologizeFen( moveFenArray[4] ); 
+		moveFen_c = homologizeFen( moveFenArray[5] );
+		moveFen_b = homologizeFen( moveFenArray[6] );
+		moveFen_a = homologizeFen( moveFenArray[7] );
 		
 		// ausgangsFen in Lines
-		posOfBreak = ausgangsFen.indexOf("/");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_h =  homologizeFen(ausgangsFen.substring(0, posOfBreak) );
-		ausgangsFen = temp;
-		posOfBreak = ausgangsFen.indexOf("/");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_g =  homologizeFen( ausgangsFen.substring(0, posOfBreak) );
-		ausgangsFen = temp;
-		posOfBreak = ausgangsFen.indexOf("/");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_f =  homologizeFen( ausgangsFen.substring(0, posOfBreak) );
-		ausgangsFen = temp;
-		posOfBreak = ausgangsFen.indexOf("/");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_e =  homologizeFen( ausgangsFen.substring(0, posOfBreak) );
-		ausgangsFen = temp;
-		posOfBreak = ausgangsFen.indexOf("/");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_d =  homologizeFen( ausgangsFen.substring(0, posOfBreak) );
-		ausgangsFen = temp;
-		posOfBreak = ausgangsFen.indexOf("/");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_c =  homologizeFen( ausgangsFen.substring(0, posOfBreak) );
-		ausgangsFen = temp;
-		posOfBreak = ausgangsFen.indexOf("/");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_b =  homologizeFen( ausgangsFen.substring(0, posOfBreak) );
-		ausgangsFen = temp;
-		posOfBreak = ausgangsFen.indexOf(" ");
-		temp = ausgangsFen.substring(posOfBreak);
-		ausgangsFen_a =  homologizeFen( ausgangsFen.substring(0, posOfBreak) );
+		ausgangFenArray = ausgangsFen.split("/");
+		ausgangsFen_h = homologizeFen( ausgangFenArray[0] );
+		ausgangsFen_g = homologizeFen( ausgangFenArray[1] );
+		ausgangsFen_f = homologizeFen( ausgangFenArray[2] );
+		ausgangsFen_e = homologizeFen( ausgangFenArray[3] );
+		ausgangsFen_d = homologizeFen( ausgangFenArray[4] );
+		ausgangsFen_c = homologizeFen( ausgangFenArray[5] );
+		ausgangsFen_b = homologizeFen( ausgangFenArray[6] );
+		ausgangsFen_a = homologizeFen( ausgangFenArray[7] );
 		
 		//reihe a
 		if( !ausgangsFen_a.equals(moveFen_a) ) {
