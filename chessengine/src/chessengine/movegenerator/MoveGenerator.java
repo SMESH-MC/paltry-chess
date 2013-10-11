@@ -12,7 +12,7 @@ implements MoveGeneratorInterface, Definitions {
 
 	/* Die aktuelle FEN als Byte-Array:
 	 * schachbrett[0] bis schachbrett[119]: A1 bis H8 inkl. des "Geisterboards" rechts des normalen Boards
-	 * d.h. 0-7 gueltige Felder, 8-15 ungï¿½ltige, 16-23 gueltig, ... 112-119 gueltig
+	 * d.h. 0-7 gültige Felder, 8-15 ungültige, 16-23 gültig, ... 112-119 gültig
 	 * schachbrett[120] = 1 (Weiss am Zug) | 0 (Schwarz am Zug)
 	 * schachbrett[121, 122, 123, 124] = Bitmarker ( 0 | 1) fuer Rochademoeglichkeiten: K Q k q 
 	 * schachbrett[125] = En-Passant-Feld des letzten Zuges in 0x88-Darstellung (z.B.: 83 = schachbrett[83] = D6)
@@ -29,7 +29,7 @@ implements MoveGeneratorInterface, Definitions {
     }
     
     /**
-     * Hauptmethode der Klasse, die die Erstellung der Liste aller erlaubten Zuege anstoesst
+     * Hauptmethode der Klasse, die die Erstellung der Liste aller erlaubten Zuege anstoeßt
      * 
      * @param aktuelleFEN Die aktuelle Stellung des Schachbretts als FEN-String
      */
@@ -154,6 +154,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[zielfeld] = neuesBoard[startfeld];
 					//Startfeld leeren
 					neuesBoard[startfeld] = 0;
+					//erhoehe Halbschritte
+					neuesBoard[125]+=1;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				} else {//wenn Zielfeld besetzt
@@ -165,6 +167,8 @@ implements MoveGeneratorInterface, Definitions {
 							neuesBoard[zielfeld] = neuesBoard[startfeld];
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
+							//setze Halbzuege zurueck
+							neuesBoard[125] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
@@ -175,6 +179,8 @@ implements MoveGeneratorInterface, Definitions {
 							neuesBoard[zielfeld] = neuesBoard[startfeld];
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
+							//setze Halbzuege zurueck
+							neuesBoard[125] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
@@ -218,6 +224,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
+					//setze Halbzuege zurueck
+					neuesBoard[125] = 0;
 					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
 					zugHinzufuegen(boardNachPromotionTest, weissAmZug);
@@ -249,6 +257,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant Feld
 					neuesBoard[125] = (byte)(startfeld + 16);
+					//setze Halbzuege zurueck
+					neuesBoard[125] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -263,6 +273,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant Feld
 					neuesBoard[125] = (byte)(startfeld - 16);
+					//setze Halbzuege zurueck
+					neuesBoard[125] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -294,6 +306,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
+					//setze Halbzuege zurueck
+					neuesBoard[125] = 0;
 					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
 					zugHinzufuegen(boardNachPromotionTest, weissAmZug);
@@ -314,6 +328,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
+					//setze Halbzuege zurueck
+					neuesBoard[125] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -331,6 +347,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[startfeld] = 0;
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
+					//setze Halbzuege zurueck
+					neuesBoard[125] = 0;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
@@ -383,6 +401,8 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[zielfeld] = board[startfeld];
 					//Startfeld leeren
 					neuesBoard[startfeld] = 0;
+					//erhoehe Halbschritte
+					neuesBoard[125]+=1;
 					//Zug hinzufuegen
 					zugHinzufuegen(neuesBoard, weissAmZug);
 				} else {//wenn Zielfeld besetzt
@@ -394,6 +414,8 @@ implements MoveGeneratorInterface, Definitions {
 							neuesBoard[zielfeld] = board[startfeld];
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
+							//setze Halbzuege zurueck
+							neuesBoard[125] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
@@ -404,6 +426,8 @@ implements MoveGeneratorInterface, Definitions {
 							neuesBoard[zielfeld] = board[startfeld];
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
+							//setze Halbzuege zurueck
+							neuesBoard[125] = 0;
 							//Zug hinzufuegen
 							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
