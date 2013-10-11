@@ -117,14 +117,14 @@ public class ToFen2 {
 	private String modifieFen1(String fenPart, int aenderungTyp) {
 		String tempFen = homologizeFen(fenPart);
 		movedFigure = tempFen.charAt(aenderungTyp - 1);
-		tempFen.replace(movedFigure, '0');
+		tempFen = tempFen.replace(movedFigure, '0');
 		return makeFen(tempFen);
 	}
 	
 	private String modifieFen2(String fenPart, int aenderungTyp) {
 		String part1, part2, completedString;
 		String tempFen = homologizeFen(fenPart);
-		part1 = tempFen.substring(0, aenderungTyp - 1 );
+		part1 = tempFen.substring(0, aenderungTyp);
 		part2 = tempFen.substring(aenderungTyp + 1);
 		completedString = part1 + movedFigure + part2;
 		return makeFen(completedString);
