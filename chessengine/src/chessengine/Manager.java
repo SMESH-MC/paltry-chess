@@ -121,8 +121,12 @@ public class Manager implements Runnable {
     @Override
     public void run() {
         getAll();
-        String move = newUCI.getMovesList().substring(newUCI.getMovesList().length() - 4);
-        this.fen = new ToFen2(fen, move).getNewFen();
+        String moves = newUCI.getMovesList();
+        String move;
+        if (moves != null){
+                move = moves.substring(moves.length() - 4);
+                this.fen = new ToFen2(fen, move).getNewFen();
+        }
         MoveEvaluatorTree tree = new MoveEvaluatorTree(fen , figurBewertung, this);
         bestZug = tree.getBestMove();
         this.fen = tree.getBestMoveFen();
