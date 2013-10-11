@@ -59,7 +59,7 @@ public class ToFen2 {
 				break;
 			}
 			
-			aenderung1Typ = Integer.parseInt(String.valueOf(move.charAt(1)));
+			aenderung1Typ = Integer.parseInt(String.valueOf(move.charAt(1))) - 1;
 			
 			boardPosition = move.charAt(2);
 			switch (boardPosition) {
@@ -88,7 +88,7 @@ public class ToFen2 {
 				aenderung2Pos = 7;
 				break;
 			}
-			aenderung2Typ = Integer.parseInt(String.valueOf(move.charAt(3))); 
+			aenderung2Typ = Integer.parseInt(String.valueOf(move.charAt(3))) - 1; 
 			
 			
 			fenArray[aenderung1Typ] = modifieFen1(fenArray[aenderung1Typ], aenderung1Pos);
