@@ -153,8 +153,10 @@ public class Manager implements Runnable {
     @Override
     public void run() {
         getAll();
+        //TODO ToFen aufruf.
         MoveEvaluatorTree tree = new MoveEvaluatorTree(fen , figurBewertung, this);
         bestZug = tree.getBestMove();
+        this.fen = tree.getBestMoveFen();
         newUCI.bestmove(bestZug);
     }
 }
