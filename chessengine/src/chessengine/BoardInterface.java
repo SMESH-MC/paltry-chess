@@ -1,6 +1,5 @@
 package chessengine;
 
-import chessengine.figurbewertung.FigurBewertung;
 
 public interface BoardInterface {
 
