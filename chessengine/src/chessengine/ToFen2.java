@@ -91,8 +91,8 @@ public class ToFen2 {
 			aenderung2Typ = Integer.parseInt(String.valueOf(move.charAt(3))); 
 			
 			
-			fenArray[aenderung1Pos] = modifieFen1(fenArray[aenderung1Pos], aenderung1Typ);
-			fenArray[aenderung2Pos]	= modifieFen2(fenArray[aenderung2Pos], aenderung2Typ);
+			fenArray[aenderung1Typ] = modifieFen1(fenArray[aenderung1Typ], aenderung1Pos);
+			fenArray[aenderung2Typ]	= modifieFen2(fenArray[aenderung2Typ], aenderung2Pos);
 			
 //			if (amZug.equals("s") ) {
 //				amZug = "w";
@@ -106,14 +106,15 @@ public class ToFen2 {
 //				halbzug = i.toString();
 //			}
 			
-			newFen = fenArray[0]+fenArray[1]+fenArray[2]+fenArray[3]+fenArray[4]+fenArray[5]+fenArray[6]+fenArray[7]+" "+amZug+" "+rochade+" "+enPassant+" "+halbzug+" "+zug;
+			newFen = fenArray[0]+"/"+fenArray[1]+"/"+fenArray[2]+"/"+fenArray[3]+"/"+fenArray[4]+"/"+fenArray[5]+
+					"/"+fenArray[6]+"/"+fenArray[7]+" "+amZug+" "+rochade+" "+enPassant+" "+halbzug+" "+zug;
 			
 	}
 	
 	
 	
 	
-	private String modifieFen1(String fenPart, int aenderungTyp) {
+	private String modifieFen1(String fenPart, int aenderungTyp, int enderungPos) {
 		String tempFen = homologizeFen(fenPart);
 		movedFigure = tempFen.charAt(aenderungTyp - 1);
 		tempFen.replace(movedFigure, '0');
