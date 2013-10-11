@@ -116,7 +116,7 @@ public class ToFen2 {
 	
 	private String modifieFen1(String fenPart, int aenderungTyp) {
 		String tempFen = homologizeFen(fenPart);
-		movedFigure = tempFen.charAt(aenderungTyp - 1);
+		movedFigure = tempFen.charAt(aenderungTyp);
 		tempFen = tempFen.replace(movedFigure, '0');
 		return makeFen(tempFen);
 	}
@@ -125,8 +125,12 @@ public class ToFen2 {
 		String part1, part2, completedString;
 		String tempFen = homologizeFen(fenPart);
 		part1 = tempFen.substring(0, aenderungTyp);
-		part2 = tempFen.substring(aenderungTyp + 1);
-		completedString = part1 + movedFigure + part2;
+		if (aenderungTyp < 7) {
+			part2 = tempFen.substring(aenderungTyp + 1);
+			completedString = part1 + movedFigure + part2;
+		} else {
+			completedString = part1 + movedFigure;
+		}
 		return makeFen(completedString);
 	}
 	
