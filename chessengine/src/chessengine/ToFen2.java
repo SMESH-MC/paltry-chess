@@ -58,7 +58,7 @@ public class ToFen2 {
 				aenderung1Pos = 0;
 				break;
 			}
-			aenderung1Typ = Integer.parseInt(move.substring(1,1));
+			aenderung1Typ = (int)(move.charAt(1));
 			
 			boardPosition = move.charAt(2);
 			switch (boardPosition) {
@@ -87,23 +87,23 @@ public class ToFen2 {
 				aenderung2Pos = 0;
 				break;
 			}
-			aenderung2Typ = Integer.parseInt(move.substring(3,3)); 
+			aenderung2Typ = (int)(move.charAt(3)); 
 			
 			
 			fenArray[aenderung1Pos] = modifieFen1(fenArray[aenderung1Pos], aenderung1Typ);
 			fenArray[aenderung2Pos]	= modifieFen2(fenArray[aenderung2Pos], aenderung2Typ);
 			
-			if (amZug.equals("s") ) {
-				amZug = "w";
-				Integer i = new Integer((Integer.parseInt(halbzug) + 1));
-				halbzug = i.toString();
-				Integer j = new Integer((Integer.parseInt(zug) + 1));
-				zug = j.toString();
-			} else {
-				amZug = "s";
-				Integer i = new Integer((Integer.parseInt(halbzug) + 1));
-				halbzug = i.toString();
-			}
+//			if (amZug.equals("s") ) {
+//				amZug = "w";
+//				Integer i = new Integer((Integer.parseInt(halbzug) + 1));
+//				halbzug = i.toString();
+//				Integer j = new Integer((Integer.parseInt(zug) + 1));
+//				zug = j.toString();
+//			} else {
+//				amZug = "s";
+//				Integer i = new Integer((Integer.parseInt(halbzug) + 1));
+//				halbzug = i.toString();
+//			}
 			
 			newFen = fenArray[0]+fenArray[1]+fenArray[2]+fenArray[3]+fenArray[4]+fenArray[5]+fenArray[6]+fenArray[7]+" "+amZug+" "+rochade+" "+enPassant+" "+halbzug+" "+zug;
 			
