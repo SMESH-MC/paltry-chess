@@ -157,12 +157,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_a.substring(i, i + 1);
 				String move = moveFen_a.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "a";
-						posStart = i + 1;
-					} else if (ausgang.equals("1")) {
-						lineZiel = "a";
-						posZiel = i + 1;	
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 1;
+					} else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 1;	
 					}
 				}
 			}
@@ -173,12 +173,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_b.substring(i, i + 1);
 				String move = moveFen_b.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "b";
-						posStart = i + 1;
-					} else if (ausgang.equals("1")) {
-						lineZiel = "b";
-						posZiel = i + 1;
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 2;
+					} else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 2;
 					}
 				}
 			}
@@ -189,12 +189,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_c.substring(i, i + 1);
 				String move = moveFen_c.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "c";
-						posStart = i + 1;
-					} else if (ausgang.equals("1")) {
-						lineZiel = "c";
-						posZiel = i + 1;
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 3;
+					} else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 3;
 					}
 				}
 			}
@@ -205,12 +205,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_d.substring(i, i + 1);
 				String move = moveFen_d.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "d";
-						posStart = i + 1;
-					} else if (ausgang.equals("1")) {
-						lineZiel = "d";
-						posZiel = i + 1;	
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 4;
+					} else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 4;	
 					}
 				}
 			}
@@ -221,12 +221,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_e.substring(i, i + 1);
 				String move = moveFen_e.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "e";
-						posStart = i + 1;
-					} else if (ausgang.equals("1")) {
-						lineZiel = "e";
-						posZiel = i + 1;	
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 5;
+					} else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 5;	
 					}
 				}
 			}
@@ -237,12 +237,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_f.substring(i, i + 1);
 				String move = moveFen_f.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "f";
-						posStart = i + 1;
-					} else if (ausgang.equals("1")) {
-						lineZiel = "f";
-						posZiel = i + 1;	
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 6;
+					} else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 6;	
 					}
 				}
 			}
@@ -253,12 +253,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_g.substring(i, i + 1);
 				String move = moveFen_g.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "g";
-						posStart = i + 1;
-					} else if (ausgang.equals("1")) {
-						lineZiel = "g";
-						posZiel = i + 1;	
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 7;
+					} else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 7;	
 					}
 				}
 			}
@@ -269,12 +269,12 @@ public class MoveEvaluatorTree {
 				String ausgang = ausgangsFen_h.substring(i, i + 1);
 				String move = moveFen_h.substring(i, i + 1);
 				if ( !ausgang.equals(move) ) {
-					if (!ausgang.equals("1")) {
-						lineStart = "h";
-						posStart = i + 1;
-					}  else if (ausgang.equals("1")) {
-						lineZiel = "h";
-						posZiel = i + 1;
+					if (!ausgang.equals("0")) {
+						lineStart = getLine(i);
+						posStart = 8;
+					}  else if (ausgang.equals("0")) {
+						lineZiel = getLine(i);
+						posZiel = 8;
 					}
 				}
 			}
@@ -285,6 +285,28 @@ public class MoveEvaluatorTree {
 		
 		return ausgabe;
 	}
+	private String getLine(int i) {
+		switch (i) {
+		case 0:
+			return "h";
+		case 1:
+			return "g";
+		case 2:
+			return "f";
+		case 3:
+			return "e";
+		case 4:
+			return "d";
+		case 5:
+			return "c";
+		case 6:
+			return "b";
+		case 7: 
+			return "a";
+		default :
+			return null;
+		}
+	}
 	
 	private String homologizeFen(String s) {
 		String temp = "";
@@ -292,7 +314,7 @@ public class MoveEvaluatorTree {
 			if (s.substring(i, i+ 1).matches("[1-8]") ) {
 				int leerFelder = Integer.parseInt(s.substring(i, i+ 1)); 
 				for (int j = 0; j < leerFelder; j++) {
-					temp= temp + "1";
+					temp= temp + "0";
 				}
 			} else {
 				temp= temp + s.substring(i, i+ 1);
