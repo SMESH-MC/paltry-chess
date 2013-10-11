@@ -1,7 +1,5 @@
 package chessengine;
 
-import chessengine.figurbewertung.FigurBewertung;
-
 /**
  * Klasse zur Umschreibung des letzten Zug des Spielers in einen FEN String
  * Benutzung:
