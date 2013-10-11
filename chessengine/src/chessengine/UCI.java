@@ -171,7 +171,10 @@ public class UCI implements UCI_Interface, Runnable {
 
     private void position(String cmdIN, String[] cmdArray) {
         int movesIndex = cmdIN.indexOf(MOVES);
-        int mIndexArray = movesArrayPosition(MOVES, cmdArray);
+        int mIndexArray = 0;
+        if (movesIndex != -1) {
+             mIndexArray = movesArrayPosition(MOVES, cmdArray);
+        }
         String mList = null;
         if (cmdArray[1].equalsIgnoreCase("fen")) {
             String newFen = null;
