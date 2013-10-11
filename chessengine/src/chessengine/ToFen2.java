@@ -98,17 +98,17 @@ public class ToFen2 {
 			
 				
 				
-//			if (amZug.equals("s") ) {
-//				amZug = "w";
+     		if (amZug.equals("s") ) {
+				amZug = "w";
 //				Integer i = new Integer((Integer.parseInt(halbzug) + 1));
 //				halbzug = i.toString();
 //				Integer j = new Integer((Integer.parseInt(zug) + 1));
 //				zug = j.toString();
-//			} else {
-//				amZug = "s";
+			} else {
+				amZug = "s";
 //				Integer i = new Integer((Integer.parseInt(halbzug) + 1));
 //				halbzug = i.toString();
-//			}
+			}
 			
 			newFen = (fenArray[0]+"/"+fenArray[1]+"/"+fenArray[2]+"/"+fenArray[3]+"/"+fenArray[4]+"/"+fenArray[5]+
 					"/"+fenArray[6]+"/"+fenArray[7]+" "+amZug+" "+rochade+" "+enPassant+" "+halbzug+" "+zug);
