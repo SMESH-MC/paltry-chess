@@ -53,7 +53,7 @@ public class MoveEvaluatorTree {
 		//Tiefe 1
 		MoveGenerator mg1 = new MoveGenerator();
 		mg1.setFEN(ausgangsFen);
-		moveList=mg1.getZuege();
+		moveList = mg1.getZuege();
 		root.setChildBoards( moveList, figurBewertung );
 		countOfRootLeaf = root.hasChild();
 		//Tiefe 2
@@ -62,7 +62,7 @@ public class MoveEvaluatorTree {
 			currentNode = root.getChildAtPos(i);
 			MoveGenerator mg2 = new MoveGenerator();
 			mg2.setFEN(currentNode.getBoardFen());
-			currentNode.setChildBoards( moveList=mg2.getZuege() , figurBewertung );
+			currentNode.setChildBoards( mg2.getZuege() , figurBewertung );
 		}
 	}
 
