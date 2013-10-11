@@ -237,13 +237,13 @@ implements Definitions {
 					case knight_b: 	for (byte b : knight_moves) {if (i - b == zielFeld){return true;} }
 						break;
 					//berechne mit Hilfsmethode, ob schwarze Dame das Zielfeld schlagen koennte und gib, falls ja, true aus  
-					case queen_b : 	if (slidingPieceMove(queen_moves, (byte)i, board, zielFeld)) {return true;};
+					case queen_b : 	if (slidingPieceMove(queen_moves, (byte)i, board, zielFeld, weissAmZug)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob schwarzer Laeufer das Zielfeld schlagen koennte und gib, falls ja, true aus
-					case bishop_b: 	if (slidingPieceMove(bishop_moves, (byte)i, board, zielFeld)) {return true;};
+					case bishop_b: 	if (slidingPieceMove(bishop_moves, (byte)i, board, zielFeld, weissAmZug)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob schwarzer Turm das Zielfeld schlagen koennte und gib, falls ja, true aus						
-					case rook_b : 	if (slidingPieceMove(rook_moves, (byte)i, board, zielFeld)) {return true;};
+					case rook_b : 	if (slidingPieceMove(rook_moves, (byte)i, board, zielFeld, weissAmZug)) {return true;};
 						//if (slidingZug(rook_moves, (byte)i, board, zielFeld)) {return true;};
 						break;
 					//addiere das Feld, auf dem der schwarze Koenig steht, mit seinen moegliche Schlagzuegen und
@@ -273,13 +273,13 @@ implements Definitions {
 					case knight_w: 	for (byte b : knight_moves) {if (i + b == zielFeld){return true;} }
 						break;
 					//berechne mit Hilfsmethode, ob weisse Dame das Zielfeld schlagen koennte und gib, falls ja, true aus  
-					case queen_w : 	if (slidingPieceMove(queen_moves, (byte)i, board, zielFeld)) {return true;};
+					case queen_w : 	if (slidingPieceMove(queen_moves, (byte)i, board, zielFeld, weissAmZug)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob weisser Laeufer das Zielfeld schlagen koennte und gib, falls ja, true aus
-					case bishop_w: 	if (slidingPieceMove(bishop_moves, (byte)i, board, zielFeld)) {return true;};
+					case bishop_w: 	if (slidingPieceMove(bishop_moves, (byte)i, board, zielFeld, weissAmZug)) {return true;};
 						break;
 					//berechne mit Hilfsmethode, ob weisser Turm das Zielfeld schlagen koennte und gib, falls ja, true aus						
-					case rook_w : 	if (slidingPieceMove(rook_moves, (byte)i, board, zielFeld)) {return true;};
+					case rook_w : 	if (slidingPieceMove(rook_moves, (byte)i, board, zielFeld, weissAmZug)) {return true;};
 						break;
 					//addiere das Feld, auf dem der weisse Koenig steht, mit seinen moegliche Schlagzuegen und
 					//gib true aus, wenn er auf das Zielfeld schlagen kann
@@ -305,7 +305,7 @@ implements Definitions {
 	 * @param	zielfeld	Das zu ueberpruefende Zielfeld
 	 * @return true = Figur vom Startfeld bedroht das Zielfeld
 	 */
-	private boolean slidingPieceMove(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld) {
+	private boolean slidingPieceMove(byte[] erlaubteZuege, byte startfeld, byte[] board, byte zielfeld, boolean weissAmZug) {
 		//fuer jede Schrittrichtung
 		outer:
 			for (byte b : erlaubteZuege) {
@@ -313,7 +313,7 @@ implements Definitions {
 				for (int nextFeld = startfeld+b; (nextFeld & 136) == 0; nextFeld+=b) {
 					if (nextFeld == zielfeld) {return true;} //gib true aus, wenn der Schritt auf dem zu ueberpruefenden Feld gelandet ist
 					if (board[nextFeld] != 0) {	//wenn auf dem Feld keine Figur steht, gehe zur Schleife, die einen Schritt weiter macht
-						if (board[nextFeld] == king_w) { //wenn auf dem Feld der Koenig steht, gib true aus
+						if ((weissAmZug && board[nextFeld] == king_w) || (!weissAmZug && board[nextFeld] == king_b)) { //wenn auf dem Feld der Koenig steht, gib true aus
 							return true;
 						} else {
 							continue outer;
