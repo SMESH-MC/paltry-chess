@@ -39,10 +39,13 @@ public class MoveEvaluator {
 	}
 	
 	
-	private String fakeBestMove(LinkedList<String> fenList) { 
+	private String fakeBestMove(String fen) {
+		MoveGenerator fakeMoveGen= new MoveGenerator();
+		fakeMoveGen.setFEN(fen);
+		LinkedList<String> fenList = fakeMoveGen.getZuege();
+		
 		int randomWert = (int)Math.floor(Math.random() * fenList.size()); 
-		String ausgabeFEN = fenList.get(randomWert);
-		String currentFen = ausgabeFEN;
+		ausgabeFEN = fenList.get(randomWert);
 		return ausgabeFEN; 
 	}
 	
@@ -53,7 +56,7 @@ public class MoveEvaluator {
 
 	public String getAusgabeFEN() {
 		Movelist();
-		fakeBestMove(fenList);
+		//fakeBestMove(fenList);
 		return ausgabeFEN;
 	}
 	
