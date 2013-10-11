@@ -152,7 +152,7 @@ public class ToFen2 {
 		for (int i = 0; i < s.length(); i++) {
 			felder = 0;
 			while(true) {
-				if (s.substring(i, i).equalsIgnoreCase("0") && i < s.length()) {
+				if (i < s.length() && s.substring(i, i+1).equals("0")) {
 					felder++;
 					i++;
 				} else {
