@@ -114,7 +114,7 @@ public class ToFen2 {
 	
 	
 	
-	private String modifieFen1(String fenPart, int aenderungTyp, int enderungPos) {
+	private String modifieFen1(String fenPart, int aenderungTyp) {
 		String tempFen = homologizeFen(fenPart);
 		movedFigure = tempFen.charAt(aenderungTyp - 1);
 		tempFen.replace(movedFigure, '0');
