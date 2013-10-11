@@ -87,7 +87,7 @@ public class ToFen2 {
 				aenderung2Pos = 0;
 				break;
 			}
-			aenderung2Typ = Integer.parseInt(move.substring(3,3));
+			aenderung2Typ = Integer.parseInt(move.substring(3,3)); 
 			
 			
 			fenArray[aenderung1Pos] = modifieFen1(fenArray[aenderung1Pos], aenderung1Typ);
