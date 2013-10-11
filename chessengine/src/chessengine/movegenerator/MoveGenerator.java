@@ -479,7 +479,7 @@ implements MoveGeneratorInterface, Definitions {
 	 */
 	private void zugHinzufuegen(byte[] board, boolean weissAmZug) {
 		byte[] neuesBoard = board.clone();
-		if (weissAmZug) { neuesBoard[120] = 0; } else { neuesBoard[120] = 1; };
+	//	if (weissAmZug) { neuesBoard[120] = 0; } else { neuesBoard[120] = 1; };
 		if (!weissAmZug) { neuesBoard[127]++; }
 		FenEncode fe = new FenEncode();
 		fe.setBoard(neuesBoard);
