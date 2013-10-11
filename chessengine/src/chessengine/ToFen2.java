@@ -151,9 +151,13 @@ public class ToFen2 {
 		int felder = 0;
 		for (int i = 0; i < s.length(); i++) {
 			felder = 0;
-			int j=i;
-			while (s.substring(j, j+ 1).equalsIgnoreCase("0")) {
-				felder++;				
+			while(true) {
+				if (s.substring(i, i+ 1).equalsIgnoreCase("0")) {
+					felder++;
+					i++;
+				} else {
+					break;
+				}
 			}
 			if (felder != 0) {
 				ausgabe += felder;
