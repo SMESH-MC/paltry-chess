@@ -38,10 +38,10 @@ public class ZuggeneratorTest {
 		generator = new MoveGenerator();
 	    //generator = new ZugGeneratorPhilip();
 
-		//teste("Testlauf Bauer Weis: ","pawnwhite.txt");  //zuviel bauer zuwenig koenig??
+		teste("Testlauf Bauer Weis: ","pawnwhite.txt");  //zuviel bauer zuwenig koenig??
 		teste("Testlauf Bauer Weis: ","pawnwhite2.txt");
 
-		//teste("Testlauf Bauer black:","pawnblack.txt"); // a 2 problem und der absturz ruiniert meinen test
+		teste("Testlauf Bauer black:","pawnblack.txt"); // a 2 problem und der absturz ruiniert meinen test
 		teste("Testlauf Bauer black2:","pawnblack2.txt");
 		
 		teste("Testlauf Knight Weis:","knightwhite.txt");
@@ -141,6 +141,7 @@ public class ZuggeneratorTest {
 		            	protokolle.push(seg);
 		            }
 		            protokolle.push( new  ProtokollSegment( ausgangsFen , ""));
+		            bIn.close();
 		      }
 		      catch ( IOException e ) {
 		        System.err.println( "cat: Fehler beim Verarbeiten von " + filename +e);

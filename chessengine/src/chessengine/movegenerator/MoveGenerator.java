@@ -155,7 +155,7 @@ implements MoveGeneratorInterface, Definitions {
 					//Startfeld leeren
 					neuesBoard[startfeld] = 0;
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(neuesBoard, weissAmZug);
 				} else {//wenn Zielfeld besetzt
 					//wenn weiss am Zug ist
 					if (weissAmZug) {
@@ -166,7 +166,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(neuesBoard);
+							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
 					} else { //schwarz ist am Zug
 						//wenn auf dem Zielfeld der Gegner weiss steht
@@ -176,7 +176,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(neuesBoard);
+							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
 					}//endifelse weiss/schwarz am Zug
 				}//endifelse Feld leer/besetzt
@@ -220,7 +220,7 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[125] = -1;
 					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
-					zugHinzufuegen(boardNachPromotionTest);
+					zugHinzufuegen(boardNachPromotionTest, weissAmZug);
 				}
 			
 		}
@@ -250,7 +250,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant Feld
 					neuesBoard[125] = (byte)(startfeld + 16);
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
 			}
 		} else { //wenn schwarz am Zug ist
@@ -264,7 +264,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant Feld
 					neuesBoard[125] = (byte)(startfeld - 16);
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
 			}
 		}//endifelse Ueberpruefung Zweischrittzug
@@ -296,7 +296,7 @@ implements MoveGeneratorInterface, Definitions {
 					neuesBoard[125] = -1;
 					byte[] boardNachPromotionTest = umwandlung(neuesBoard, zielfeld, weissAmZug);
 					//Zug hinzufuegen
-					zugHinzufuegen(boardNachPromotionTest);
+					zugHinzufuegen(boardNachPromotionTest, weissAmZug);
 				} 
 			}
 			/* en passant-Schlaege berechnen */
@@ -315,7 +315,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
 			}
 			//wenn en Passant-Schlag moeglich ist && fuer schwarz moeglich ist && schwarz am Zug ist
@@ -332,7 +332,7 @@ implements MoveGeneratorInterface, Definitions {
 					//setze en passant zurueck
 					neuesBoard[125] = -1;
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(neuesBoard, weissAmZug);
 				}
 			}
 		}
@@ -384,7 +384,7 @@ implements MoveGeneratorInterface, Definitions {
 					//Startfeld leeren
 					neuesBoard[startfeld] = 0;
 					//Zug hinzufuegen
-					zugHinzufuegen(neuesBoard);
+					zugHinzufuegen(neuesBoard, weissAmZug);
 				} else {//wenn Zielfeld besetzt
 					//wenn weiss am Zug ist
 					if (weissAmZug) {
@@ -395,7 +395,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(neuesBoard);
+							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn weiss am Zug und weiss auf Zielfeld, mache nichts
 					} else { //schwarz ist am Zug
 						//wenn auf dem Zielfeld der Gegner weiss steht
@@ -405,7 +405,7 @@ implements MoveGeneratorInterface, Definitions {
 							//Startfeld leeren
 							neuesBoard[startfeld] = 0;
 							//Zug hinzufuegen
-							zugHinzufuegen(neuesBoard);
+							zugHinzufuegen(neuesBoard, weissAmZug);
 						}//wenn schwarz am Zug und schwarz auf Zielfeld, mache nichts
 					}//endifelse weiss/schwarz am Zug
 				}//endifelse Feld leer/besetzt
@@ -453,9 +453,11 @@ implements MoveGeneratorInterface, Definitions {
 	 * 
 	 * @param board Das aktuelle Board in 0x88-Darstellung
 	 */
-	private void zugHinzufuegen(byte[] board) {
+	private void zugHinzufuegen(byte[] board, boolean weissAmZug) {
+		byte[] neuesBoard = board.clone();
+		if (weissAmZug) { neuesBoard[120] = 0; } else { neuesBoard[120] = 1; };
 		FenEncode fe = new FenEncode();
-		fe.setBoard(board);
+		fe.setBoard(neuesBoard);
 		outgoingFEN.add(fe.getFEN());
 	}
 }
