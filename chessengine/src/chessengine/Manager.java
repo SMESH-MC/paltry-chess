@@ -31,7 +31,8 @@ public class Manager implements Runnable {
     public Manager() {
         stop = false;
         go = false;
-        fen = null;
+        fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR "
+                + "w KQkq - 0 1";
         wtime = 0;
         btime = 0;
         movetime = 0;
@@ -58,7 +59,7 @@ public class Manager implements Runnable {
      * Uebernimmt alle relevanten Variablenwerte aus UCI.
      */
     private void getAll() {
-        fen = newUCI.getFEN();
+        //fen = newUCI.getFEN();
         wtime = newUCI.getWtime();
         btime = newUCI.getBtime();
         winc = newUCI.getWinc();
@@ -98,38 +99,6 @@ public class Manager implements Runnable {
     public boolean isWhite() {
         return engineIsWhite;
     }
-
-    /**
-     * Getter-Methode fuer den Wert der Dame.
-     * @return queenValue
-     */
-    public int getQueenValue() {
-        return newUCI.getQueenValue();
-    }
-    
-    /**
-     * Getter-Methode fuer den Wert des Turms.
-     * @return rookValue
-     */
-    public int getRookValue() {
-        return newUCI.getRookValue();
-    }
-    
-    /**
-     * Getter-Methode fuer den Wert des Springers.
-     * @return knightValue
-     */
-    public int getKnightValue() {
-        return newUCI.getKnightValue();
-    }
-    
-    /**
-     * Getter-Methode fuer den Wert des Laeufers.
-     * @return bishopValue
-     */
-    public int getBishopValue() {
-        return newUCI.getBishopValue();
-    }
     
     /**
      * Setter-Methode um benutzerdefinierte Werte in die Figurbewertung zu 
@@ -152,8 +121,10 @@ public class Manager implements Runnable {
     @Override
     public void run() {
         getAll();
+        //TODO ToFen aufruf.
         MoveEvaluatorTree tree = new MoveEvaluatorTree(fen , figurBewertung, this);
         bestZug = tree.getBestMove();
+        this.fen = tree.getBestMoveFen();
         newUCI.bestmove(bestZug);
     }
 }
