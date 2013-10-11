@@ -10,7 +10,7 @@ import chessengine.tools.SchachPosition;
 
 
 /**
- *  erzeugt zugmoeglichkeiten für klassische linieneinheiten wie Laeufer und Turm und Koenig
+ *  erzeugt zugmoeglichkeiten fuer klassische linieneinheiten wie Laeufer und Turm und Koenig
  *  und generiet Fen mithilfe des FendDecoder
  * @author Philip Hunsicker
  * Stand : 25.09.2013
@@ -180,7 +180,7 @@ public class LinienLaeufer {
 		int y = position.getY();
 		int weite;
 		
-		while( zeiger < bewegungsMuster.length  ){//läuft alle Muster ab
+		while( zeiger < bewegungsMuster.length  ){//laeuft alle Muster ab
 			x =  position.getX(); //setze auf Ausgangsposition
 			y =  position.getY();
 			weite = 0;
@@ -193,14 +193,14 @@ public class LinienLaeufer {
 					if(istWeis != figur.istWeis()){// Wenn feindlich figure
 						treffer.add(figur);
 					}
-					x=8; //in beiden fällen beende schleife
+					x=8; //in beiden faellen beende schleife
 					
 				}else{//else keine figure auf dem Feld
 					
 					x = x + bewegungsMuster[zeiger].getX();//bewege nach muster
 					y = y + bewegungsMuster[zeiger].getY();
 				}//else
-				weite++ ; //weite +1 das nächstes Feld  geprüft wird. Diesen komentar ignorieren
+				weite++ ; //weite +1 das naechstes Feld  geprueft wird. Diesen komentar ignorieren
 				
 			}//linie /Muster
 			zeiger++;// naechste muster bearbeiten

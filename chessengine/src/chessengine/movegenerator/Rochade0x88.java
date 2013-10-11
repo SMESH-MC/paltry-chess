@@ -26,7 +26,7 @@ implements Definitions {
 	 * @param	board	Die aktuelle Stellung als 0x88-Board:
 	 * 
 	 * board[0] bis board[119]: A1 bis H8 inkl. des "Geisterboards" rechts des normalen Boards
-	 * d.h. 0-7 gültige Felder, 8-15 ungültige, 16-23 gültig, ... 112-119 gültig
+	 * d.h. 0-7 gueltige Felder, 8-15 ungueltige, 16-23 gueltig, ... 112-119 gueltig
 	 * board[120] = 1 (Weiss am Zug) | 0 (Schwarz am Zug)
 	 * board[121, 122, 123, 124] = Bitmarker ( 0 | 1) fuer Rochademoeglichkeiten: K Q k q 
 	 * board[125] =  En-Passant-Feld des letzten Zuges in 0x88-Darstellung (z.B.: 83 = board[83] = D6)
@@ -52,7 +52,7 @@ implements Definitions {
 	/**
 	 * Diese Methode fuehrt eine kurze Rochade von Weiss durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
-	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
+	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgefuehrt werden soll
 	 */
 	private void rochiereKurzWeiss(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (F1 und G1) frei ist
@@ -83,7 +83,7 @@ implements Definitions {
 	/**
 	 * Diese Methode fuehrt eine lange Rochade von Weiss durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
-	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
+	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgefuehrt werden soll
 	 */
 	private void rochiereLangWeiss(byte[] boardZuRochieren) {
 		if ( //uberpruefen, ob Zwischenraum (B1, C1, D1) frei ist
@@ -114,7 +114,7 @@ implements Definitions {
 	/**
 	 * Diese Methode fuehrt eine kurze Rochade von Schwarz durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
-	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
+	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgefuehrt werden soll
 	 */
 
 	private void rochiereKurzSchwarz(byte[] boardZuRochieren) {
@@ -146,7 +146,7 @@ implements Definitions {
 	/**
 	 * Diese Methode fuehrt eine lange Rochade von Schwarz durch und schreibt diesen Zug in die Liste der moeglichen Zuege
 	 * 
-	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgeführt werden soll
+	 * @param	boardZuRochieren	Die aktuelle Stellung, von der aus die Rochade durchgefuehrt werden soll
 	 */
 
 	private void rochiereLangSchwarz(byte[] boardZuRochieren) {
@@ -259,7 +259,7 @@ implements Definitions {
 			for (int i=0; i<=119; i++) {
 				if  ((i & 136) == 0) {
 				/*
-				 * Hinweis: fuer i+b kann der Wert über Byte.MAX steigen und wird daher negativ (Ueberlauf).
+				 * Hinweis: fuer i+b kann der Wert ueber Byte.MAX steigen und wird daher negativ (Ueberlauf).
 				 * Da jedoch mit dem stets positiven zielFeld verglichen wird, ist dies unerheblich,
 				 * da das Vergleichsergebnis auch im negativen Fall dann ungleich zielFeld ist.
 				 */
@@ -309,7 +309,7 @@ implements Definitions {
 		//fuer jede Schrittrichtung
 		outer:
 			for (byte b : erlaubteZuege) {
-				//gehe ersten Schritt und breche ab, wenn der Schritt außerhalb des Bretts endet. Zaehle nach jedem Durchlauf einen Schritt weiter
+				//gehe ersten Schritt und breche ab, wenn der Schritt ausserhalb des Bretts endet. Zaehle nach jedem Durchlauf einen Schritt weiter
 				for (int nextFeld = startfeld+b; (nextFeld & 136) == 0; nextFeld+=b) {
 					if (nextFeld == zielfeld) {return true;} //gib true aus, wenn der Schritt auf dem zu ueberpruefenden Feld gelandet ist
 					if (board[nextFeld] != 0) {	//wenn auf dem Feld keine Figur steht, gehe zur Schleife, die einen Schritt weiter macht

@@ -180,7 +180,7 @@ implements Definitions {
 	private String enPassant(String enPassantFeld) {
 		String enPassant0x88 = "";
 		switch (enPassantFeld) {
-		case "-" : enPassant0x88 = "-1"; //negativ, wenn kein en Passant möglich
+		case "-" : enPassant0x88 = "-1"; //negativ, wenn kein en Passant moeglich
 			break;
 		case "a3" : enPassant0x88 = "32";		break;
 		case "b3" : enPassant0x88 = "33";		break;

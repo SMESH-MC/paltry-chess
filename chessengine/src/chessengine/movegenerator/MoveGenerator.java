@@ -12,7 +12,7 @@ implements MoveGeneratorInterface, Definitions {
 
 	/* Die aktuelle FEN als Byte-Array:
 	 * schachbrett[0] bis schachbrett[119]: A1 bis H8 inkl. des "Geisterboards" rechts des normalen Boards
-	 * d.h. 0-7 gültige Felder, 8-15 ungültige, 16-23 gültig, ... 112-119 gültig
+	 * d.h. 0-7 gueltige Felder, 8-15 ungï¿½ltige, 16-23 gueltig, ... 112-119 gueltig
 	 * schachbrett[120] = 1 (Weiss am Zug) | 0 (Schwarz am Zug)
 	 * schachbrett[121, 122, 123, 124] = Bitmarker ( 0 | 1) fuer Rochademoeglichkeiten: K Q k q 
 	 * schachbrett[125] = En-Passant-Feld des letzten Zuges in 0x88-Darstellung (z.B.: 83 = schachbrett[83] = D6)
@@ -29,7 +29,7 @@ implements MoveGeneratorInterface, Definitions {
     }
     
     /**
-     * Hauptmethode der Klasse, die die Erstellung der Liste aller erlaubten Zuege anstoeßt
+     * Hauptmethode der Klasse, die die Erstellung der Liste aller erlaubten Zuege anstoesst
      * 
      * @param aktuelleFEN Die aktuelle Stellung des Schachbretts als FEN-String
      */

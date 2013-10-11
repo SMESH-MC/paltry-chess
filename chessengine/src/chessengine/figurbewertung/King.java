@@ -189,12 +189,12 @@ public class King extends OberFigur{
 		rochadeCharArray = rochade.toCharArray();
 	}
 	/**
-	 * gibt nur die Muster zurück die auf einen nicht bedrohte feld sind
+	 * gibt nur die Muster zurueck die auf einen nicht bedrohte feld sind
 	 * @return
 	 */
 	
 	public Stack<SchachPosition> getNichtBedrohteMuster(SchachPosition position, boolean istWeis) {
-		/* könnte von Rook und Bishop uebernommen werden.
+		/* koennte von Rook und Bishop uebernommen werden.
 		 * 
 		 */
 		Stack<SchachPosition> bewegungsMuster = new Stack<SchachPosition>(); // erstelle eine Reihe an bewegungsmuster
